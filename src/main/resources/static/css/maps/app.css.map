@@ -1,0 +1,1 @@
+{"version":3,"sources":["app.scss"],"names":[],"mappings":"AAAA,cAEQ,MAAO","file":"../app.css","sourcesContent":[".test {\r\n    .test-a {\r\n        color: blue;\r\n    }\r\n}"]}
