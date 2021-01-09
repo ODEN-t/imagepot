@@ -1,5 +1,14 @@
 .test {
     .test-a {
-        color: blue;
+        color: red;
+        font-size: 39px;
+        position: relative;
+    }
+    .te-s {
+        color: adjust-hue($color: #000000, $degrees: 0);
+        font-size: 20px;
+        display: flex;
+        flex-direction: column-reverse;
+        flex-shrink: inherit;
     }
 }
