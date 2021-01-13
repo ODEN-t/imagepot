@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="meta_header(title, links, scripts)">
+  <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- タイトルフォーマット -->
+  <title th:text="${title}+' | imagepot">各ページタイトル | imagepot</title>
+  <!-- 共通で読み込むCSS/JS -->
+  <link rel="stylesheet" href="/css/index.css">
+  <!-- 各View固有で読み込むもの -->
+  <th:block th:replace="${links} ?: _" />
+  <th:block th:replace="${scripts} ?: _" />
+</head>
+
+<body>
+  <!-- body内で共通化したい部品をfragment化する -->
+  <header th:fragment="header">
+    <h1><a th:href="@{'/'}">sample app</a></h1>
+  </header>
+</body>
+
+</html>

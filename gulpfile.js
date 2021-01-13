@@ -8,7 +8,7 @@ const postcss = require('gulp-postcss')
 
 
 gulp.task('sass', (done) => {
-    gulp.src('assets/stylesheets/*.scss')
+    gulp.src('assets/stylesheets/index.scss')
         .pipe(plumber())
         .pipe(postcss([
             autoprefixer()
