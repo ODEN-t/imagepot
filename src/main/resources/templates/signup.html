@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="common::meta_header('Login', ~{::link}, ~{meta_header/script})">
-  <link rel="stylesheet" th:href="@{/css/page/login.min.css}">
+<head th:replace="common::meta_header('Signup', ~{::link}, ~{meta_header/script})">
+  <link rel="stylesheet" th:href="@{/css/page/signup.min.css}">
 </head>
 
 <body>
   <header th:replace="common::header">
   </header>
-  <section class="p-login">
-    <div class="p-login__wrap">
+  <section class="p-signup">
+    <div class="p-signup__wrap">
       <div class="p-form">
         <div class="p-form__wrap">
-          <div class="p-form__logo">
-            <img th:src="@{/images/logo-round.png}" alt="">
-          </div>
-          <h2 class="p-form__title">Login</h2>
+          <h2 class="p-form__title">Sign Up</h2>
+          <p class="p-form__text">Already have an account?<br><a href=""><span>Login</span></a></p>
           <div class="p-form__inputWrap">
             <form class="p-form__inputField" action="">
+              <label for="firstname"><span>First Name</span></label>
+              <input class="c-textInput" type="text" name="firstname" id="firstname">
+              <label for="lastname"><span>Last Name</span></label>
+              <input class="c-textInput" type="text" name="lastname" id="lastname">
               <label for="id"><span>ID</span></label>
               <input class="c-textInput" type="text" name="id" id="id">
               <label for="password"><span>PASSWORD</span></label>
               <input class="c-textInput" type="text" name="password" id="password">
               <div class="buttonCTA_box">
-                <a class="buttonCTA" href="/login">Login</a>
+                <a class="buttonCTA" href="/signup">signup</a>
               </div>
             </form>
           </div>
