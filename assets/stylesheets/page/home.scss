@@ -1,8 +1,8 @@
 .p-home {
-  max-width: 1200px;
   margin: 0 auto;
   &__head {
-    margin-top: 3em;
+    margin: 3em auto 0;
+    max-width: 1200px;
     position: relative;
 
     h2 {
@@ -25,8 +25,32 @@
   }
 
   &__contents {
-    height: 800px;
+    padding: 30px 0 5px;
+    min-height: 100px;
     background-color: #eadded;
+    margin: 1em 0 5em;
+  }
+
+  &__mansonry {
+    max-width: 1200px;
+    margin: 0 auto;
+    column-count: 3;
+    column-gap: 25px;
+
+    &___imgWrap {
+      position: relative;
+    }
+
+    figure {
+      position:relative;
+      display: inline-block;
+      width: 100%;
+      padding-bottom: 25px;
+    }
+
+    img {
+      width: 100%;
+    }
   }
 }
 
