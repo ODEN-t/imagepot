@@ -8,7 +8,7 @@ const postcss = require('gulp-postcss')
 
 
 gulp.task('sass', (done) => {
-    gulp.src('assets/stylesheets/index.scss')
+    gulp.src('assets/stylesheets/common/index.scss')
         .pipe(plumber())
         .pipe(postcss([
             autoprefixer()
@@ -20,10 +20,26 @@ gulp.task('sass', (done) => {
         .pipe(rename({
             extname: '.min.css'
         }))
-        .pipe(gulp.dest('src/main/resources/static/css'))
+        .pipe(gulp.dest('src/main/resources/static/css/common'))
+    done();
+
+    gulp.src('assets/stylesheets/page/*.scss')
+        .pipe(plumber())
+        .pipe(postcss([
+            autoprefixer()
+        ]))
+        .pipe(sass({
+            outputStyle: 'compressed'
+        }))
+        .pipe(cleanCSS())
+        .pipe(rename({
+            extname: '.min.css'
+        }))
+        .pipe(gulp.dest('src/main/resources/static/css/page'));
     done();
 });
 
 gulp.task('default', () => {
-    gulp.watch('assets/stylesheets/*.scss', gulp.task('sass'));
+    gulp.watch('assets/stylesheets/common/*.scss', gulp.task('sass'));
+    gulp.watch('assets/stylesheets/page/*.scss', gulp.task('sass'));
 });

@@ -7,7 +7,7 @@
   <!--/* タイトルフォーマット */-->
   <title th:text="${title==null}? 'imagepot' : ${title}+' | imagepot'">各ページタイトル | imagepot</title>
   <!-- 共通で読み込むCSS/JS -->
-  <link rel="stylesheet" th:href="@{/css/index.min.css}" type="text/css">
+  <link rel="stylesheet" th:href="@{/css/common/index.min.css}" type="text/css">
   <!-- 各View固有で読み込むもの -->
   <th:block th:replace="${links} ?: _" />
   <th:block th:replace="${scripts} ?: _" />
