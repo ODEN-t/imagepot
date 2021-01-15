@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="common::meta_header('Login', ~{meta_header/link}, ~{meta_header/script})">
-  <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head th:replace="common::meta_header('Login', ~{::link}, ~{meta_header/script})">
+  <link rel="stylesheet" th:href="@{/css/page/login.min.css}">
 </head>
 
 <body>
@@ -13,13 +12,21 @@
     <div class="p-login__wrap">
       <div class="p-form">
         <div class="p-form__wrap">
-          <h2>Login</h2>
-          <form action="">
-            <label for="id">ID：</label>
-            <input type="text" name="id">
-            <label for="password">ID：</label>
-            <input type="text" name="password">
-          </form>
+          <div class="p-form__logo">
+            <img th:src="@{/images/logo-round.png}" alt="">
+          </div>
+          <h2 class="p-form__title">Login</h2>
+          <div class="p-form__inputWrap">
+            <form class="p-form__inputField" action="">
+              <label for="id"><span>ID</span></label>
+              <input class="c-textInput" type="text" name="id">
+              <label for="password"><span>PASSWORD</span></label>
+              <input class="c-textInput" type="text" name="password">
+              <div class="buttonCTA_box">
+                <a class="buttonCTA" href="/login">Login</a>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,23 @@
+.c-textInput {
+  background-color: #fff;
+  font-size: 16px;
+  line-height: 1.1;
+  border: solid 1px whitesmoke;
+  padding: 0.3em 0.5em;
+  border-radius: 3px;
+  width: 100%;
+}
+
+.buttonCTA {
+  background-color: #72A067;
+  color: #fff;
+  width: 150px;
+  display: inline-block;
+  padding: 0.5em;
+  text-align: center;
+  border-radius: 3px;
+  &:hover {
+    color: #fff;
+    background: #5a8151;
+  }
+}
