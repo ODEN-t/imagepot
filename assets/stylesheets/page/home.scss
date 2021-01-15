@@ -1,0 +1,32 @@
+.p-home {
+  max-width: 1200px;
+  margin: 0 auto;
+  &__head {
+    margin-top: 3em;
+    position: relative;
+
+    h2 {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 45px;
+    }
+    h2 > img {
+      height: 45px;
+      margin-bottom: 0.3em;
+    }
+  }
+
+  &__sort {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+  }
+
+  &__contents {
+    height: 800px;
+    background-color: #eadded;
+  }
+}
+

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common::meta_header('Home', ~{::link}, ~{meta_header/script})">
+  <link rel="stylesheet" th:href="@{/css/page/home.min.css}">
+</head>
+
+<body>
+  <header th:replace="common::header">
+  </header>
+  <article class="p-home">
+    <section class="p-home__head">
+      <h2><img th:src="@{/images/logo-round.png}" alt="">Images In Pot</h2>
+      <div class="p-home__sort">
+        <select name="" id="">
+          <option value="">新しい順</option>
+          <option value="">古い順</option>
+        </select>
+        <div class="buttonCTA_box">
+          <a class="buttonCTA" href="">並び替え</a>
+        </div>
+      </div>
+    </section>
+    <section class="p-home__contents"></section>
+  </article>
+  <footer th:replace="common::footer">
+  </footer>
+</body>
+
+</html>
