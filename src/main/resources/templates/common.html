@@ -14,11 +14,28 @@
 </head>
 
 <body>
-  <header th:fragment="header">
-    <h1><a th:href="@{'/'}">sample app</a></h1>
+  <header class="c-header" th:fragment="header">
+    <nav class="c-header__nav">
+      <div class="c-header__left">
+        <a class="c-header__navItem" href="/login">
+          <h1>Image Pot</h1>
+        </a>
+      </div>
+      <div class="c-header__right">
+        <a class="c-header__navItem" href="/login">
+          ログイン
+        </a>
+        <a class="c-header__navItem" href="/login">
+          ログイン
+        </a>
+      </div>
+    </nav>
   </header>
-  <footer th:fragment="footer">
-    copyright
+  <footer class="c-footer" th:fragment="footer">
+    <div class="c-footer__wrap">
+      <p>Image Pot</p>
+      <small>Copyright &copy; 2021 ODEN. All Rights Reserved.</small>
+    </div>
   </footer>
 </body>
 

@@ -1,0 +1,23 @@
+.c-footer {
+  background-color: #2a2a2a;
+  color: #fff;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__wrap {
+    text-align: center;
+    > p {
+      font-size: 18px;
+      letter-spacing: 0.1em;
+    }
+    > small {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 8px;
+      letter-spacing: 0.1em;
+    }
+  }
+}
+
