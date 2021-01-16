@@ -4,7 +4,7 @@ const cleanCSS = require('gulp-clean-css');
 const plumber = require('gulp-plumber');
 const rename = require('gulp-rename');
 const autoprefixer = require('autoprefixer');
-const postcss = require('gulp-postcss')
+const postcss = require('gulp-postcss');
 
 
 gulp.task('sass', (done) => {
@@ -38,6 +38,7 @@ gulp.task('sass', (done) => {
         .pipe(gulp.dest('src/main/resources/static/css/page'));
     done();
 });
+
 
 gulp.task('default', () => {
     gulp.watch('assets/stylesheets/common/*.scss', gulp.task('sass'));

@@ -6,11 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title th:text="${title==null}? 'imagepot' : ${title}+' | imagepot'">各ページタイトル | imagepot</title>
   <link rel="stylesheet" th:href="@{/css/common/index.min.css}" type="text/css">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link
     href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Yrsa:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
+
   <th:block th:replace="${links} ?: _" />
   <th:block th:replace="${scripts} ?: _" />
 </head>

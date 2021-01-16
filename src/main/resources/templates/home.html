@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="common::meta_header('Home', ~{::link}, ~{meta_header/script})">
+<head th:replace="common::meta_header('Home', ~{::link}, ~{::script})">
   <link rel="stylesheet" th:href="@{/css/page/home.min.css}">
+  <script th:src="@{/dist/home/index.js}"></script>
 </head>
 
 <body>
