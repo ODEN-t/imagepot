@@ -20,9 +20,9 @@ public class UsersDaoJdbcImpl implements UsersDao {
     public Users selectOne(String userId) throws DataAccessException {
         // queryForMap(sql, パラメータ); 1レコードを取得
         // 戻り値は String → カラム名 Object → 値(どんな型にも対応できるためObject)
-        // loacl Map<String, Object> map = jdbc.queryForMap("SELECT * FROM mywork.users"
-        // + " WHERE user_id = ?", userId);
-        Map<String, Object> map = jdbc.queryForMap("SELECT * FROM public.users" + " WHERE user_id = ?", userId);
+        Map<String, Object> map = jdbc.queryForMap("SELECT * FROM mywork.users" + " WHERE user_id = ?", userId);
+        // Map<String, Object> map = jdbc.queryForMap("SELECT * FROM public.users" + "
+        // WHERE user_id = ?", userId);
         // 返却用変数
         Users users = new Users();
 
