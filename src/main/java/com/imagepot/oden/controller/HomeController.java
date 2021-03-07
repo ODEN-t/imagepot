@@ -1,7 +1,4 @@
-package com.imagepot.oden.login.controller;
-
-import com.imagepot.oden.login.model.Users;
-import com.imagepot.oden.login.service.UsersService;
+package com.imagepot.oden.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
