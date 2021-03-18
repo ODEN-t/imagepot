@@ -9,15 +9,22 @@
 }
 
 .buttonCTA {
-  background-color: #72A067;
+  background-color: #EF476F;
   color: #fff;
-  width: 150px;
-  display: inline-block;
-  padding: 0.5em;
-  text-align: center;
-  border-radius: 3px;
+  width: 190px;
+  height: 46px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 17px;
+  font-weight: 700;
+  padding: 0 21px;
+  vertical-align: baseline;
+  cursor: pointer;
   &:hover {
-    color: #fff;
-    background: #5a8151;
+    transition: all .15s ease;
+    background-color: #ED315D;
   }
 }
