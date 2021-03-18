@@ -15,20 +15,18 @@
           <h2 class="p-form__title">Sign Up</h2>
           <p class="p-form__text">Already have an account?<br><a href=""><span>Login</span></a></p>
           <div class="p-form__inputWrap">
-            <form class="p-form__inputField" action="/signup" th:object="${signupForm}">
-              <label for="firstname"><span>First Name</span></label>
-              <input class="c-textInput" type="text" name="firstname" id="firstname" th:field="*{firstName}">
-              <label for="lastname"><span>Last Name</span></label>
-              <input class="c-textInput" type="text" name="lastname" id="lastname" th:field="*{lastName}">
-              <label for="nickname"><span>Nick Name in ImagePot</span></label>
-              <input class="c-textInput" type="text" name="nickname" id="nickname" th:field="*{nickName}">
+            <form class="p-form__inputField" method="POST" action="/signup" th:object="${signupForm}">
+              <label for="userName"><span>User Name</span></label>
+              <input class="c-textInput" type="text" name="name" id="name" th:field="*{userName}">
               <label for="id"><span>ID</span></label>
               <input class="c-textInput" type="text" name="id" id="id" th:field="*{loginId}">
-              <label for="password"><span>PASSWORD</span></label>
+              <label for="password"><span>Password</span></label>
               <input class="c-textInput" type="text" name="password" id="password" th:field="*{password}">
-              <div class="buttonCTA_box">
-                <a class="buttonCTA" href="/signup">signup</a>
-              </div>
+              <label for="confirm"><span>Confirm Password</span></label>
+              <input class="c-textInput" type="text" name="confirm" id="confirm" th:field="*{password}">
+              <button class="buttonCTA_box" type="submit">
+                <span>signup</span>
+              </button>
             </form>
           </div>
         </div>
