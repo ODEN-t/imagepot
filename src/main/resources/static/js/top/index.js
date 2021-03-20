@@ -15,10 +15,9 @@ import $ from 'jquery/dist/jquery.min';
 // console.log(b);
 
 new jBox('Modal', {
-    width: 600,
-    height: 800,
+    width: 470,
+    height: 600,
     attach: '#signup',
-    title: 'title',
     content: $('#modalContent'),
     overlayClass: 'add-jboxOverRay'
 });
