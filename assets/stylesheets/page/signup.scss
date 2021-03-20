@@ -1,18 +1,13 @@
 .p-signup {
-  height: calc(100vh - 120px);
-  font-size: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-image: url("/images/top-image_1920.png");
   background-size: cover;
+  width: 100%;
+  min-height: calc(100vh - 50px);
 
   &__wrap {
-    width: 370px;
-    height: 425px;
-    background-color: #EADDED;
-    padding: 1em;
-    border-radius: 3px;
+    height: 100%;
+    width: 100%;
+    padding: 100px 30px 30px;
   }
 
   .p-form {

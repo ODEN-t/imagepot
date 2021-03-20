@@ -3,7 +3,7 @@
 
 <head th:replace="common::meta_header('Login', ~{::link}, ~{::script})">
   <link rel="stylesheet" th:href="@{/css/page/top.min.css}">
-  <script th:src="@{/dist/login/index.js}"></script>
+  <script th:src="@{/dist/top/index.js}"></script>
 </head>
 
 <body>
@@ -18,7 +18,7 @@
           <div class="buttonCTA">
             Sign in
           </div>
-          <div class="buttonCTA">
+          <div id="signin" class="buttonCTA">
             Sign up
           </div>
         </div>
