@@ -60,11 +60,22 @@
     margin-top: 32px;
 
     .buttonCTA {
-      margin-top: 20px;
+      margin-top: 33px;
     }
   }
 
   &__inputGroup {
+    position: relative;
+
+    > i {
+      font-size: 20px;
+      color: #ddd;
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      transition: all .15s ease;
+    }
 
     .inputText {
       border: 2px solid #ddd;
@@ -77,12 +88,16 @@
         color: #ddd;
         font-weight: 600;
       }
+      &:focus {
+        border: 2px solid #ef476f;
+      }
+      &:focus+i {
+        color: #ef476f !important;
+      }
     }
 
     &:not(:nth-of-type(1)) {
       margin-top: 20px;
     }
   }
-
-  
 }
