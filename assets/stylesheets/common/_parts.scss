@@ -11,7 +11,7 @@
 .buttonCTA {
   background-color: #EF476F;
   color: #fff;
-  width: 190px;
+  width: fit-content;
   height: 46px;
   display: inline-flex;
   justify-content: center;
@@ -27,4 +27,8 @@
     transition: all .15s ease;
     background-color: #ED315D;
   }
+}
+
+.add-jboxOverRay {
+  background-color: rgba(0,0,0,.6) !important;
 }

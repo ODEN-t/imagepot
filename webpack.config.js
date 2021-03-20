@@ -16,6 +16,21 @@ const entryObj = Object.fromEntries(entries);
 
 module.exports = {
     mode: 'development',
+    watch: true,
+    module: {
+        rules: [
+            {
+                test: /\.css/,
+                use: [
+                    "style-loader",
+                    {
+                        loader: "css-loader",
+                        options: { url: false }
+                    }
+                ]
+            }
+        ]
+    },
     entry: entryObj,
     output: {
         path: path.join(__dirname, './src/main/resources/static', "dist"),

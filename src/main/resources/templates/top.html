@@ -3,7 +3,6 @@
 
 <head th:replace="common::meta_header('Login', ~{::link}, ~{::script})">
   <link rel="stylesheet" th:href="@{/css/page/top.min.css}">
-  <script th:src="@{/dist/top/index.js}"></script>
 </head>
 
 <body>
@@ -15,18 +14,39 @@
         <h1>The simple and fast<br>storage service<br>for images!</h1>
         <p>Store secret images that you don't want to see.</p>
         <div class="buttonWrap">
-          <div class="buttonCTA">
+          <button id="signin" class="buttonCTA">
             Sign in
-          </div>
-          <div id="signin" class="buttonCTA">
+          </button>
+          <button id="signup" class="buttonCTA">
             Sign up
-          </div>
+          </button>
         </div>
+      </div>
+      <div style="display: none;" id="modalContent" class="p-top__modalContent">
+        <div class="p-top__modalBody">
+          <form class="p-top__modalForm" method="POST">
+            <div class="p-top__inputGroup">
+              <input type="text">
+            </div>
+            <div class="p-top__inputGroup">
+              <input type="text">
+            </div>
+            <div class="p-top__inputGroup">
+              <input type="text">
+            </div>
+            <button class="buttonCTA">
+              Create your account
+            </button>
+          </form>
+        </div>
+
       </div>
     </div>
   </section>
   <footer th:replace="common::footer">
   </footer>
 </body>
+
+<script th:src="@{/dist/top/index.js}"></script>
 
 </html>
