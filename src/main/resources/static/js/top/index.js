@@ -2,7 +2,7 @@ import jBox from 'jbox';
 import 'jbox/dist/jBox.all.css';
 import $ from 'jquery/dist/jquery.min';
 
-new jBox('Modal', {
+const formModal = new jBox('Modal', {
     width: 405,
     height: 573,
     attach: '#signup',
@@ -11,3 +11,25 @@ new jBox('Modal', {
     closeOnClick: false,
     closeButton: 'box'
 });
+
+const errorModal = new jBox('Modal', {
+    content: $('#formError'),
+    addClass: 'add-jboxErrorMessage',
+    overlay: false,
+    closeOnClick: false,
+    closeButton: false,
+    offset: {
+        y: 310
+    },
+    autoClose: 3000,
+    fade: 250,
+    animation: {
+        open: 'slide:bottom',
+        close: 'slide:bottom'
+    }
+});
+
+if ($('#formError').length) {
+    formModal.open();
+    errorModal.open();
+}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="common::meta_header('Login', ~{::link}, ~{::script})">
   <link rel="stylesheet" th:href="@{/css/page/top.min.css}">
@@ -22,28 +22,29 @@
           </button>
         </div>
       </div>
+
       <div style="display: none;" id="modalContent" class="p-top__modalContent">
         <div class="p-top__modalBody">
           <h2>Join Imagepot</h2>
           <p>Use image storage for free.</p>
-          <form class="p-top__modalForm" method="POST">
+          <form class="p-top__modalForm" method="POST" th:object="${signupForm}">
             <div class="p-top__inputGroup">
-              <input class="inputText" type="text" placeholder="Name">
+              <input class="inputText" type="text" placeholder="Name" th:field="*{name}">
               <i class="icon-user"></i>
             </div>
             <div class="p-top__inputGroup">
-              <input class="inputText" type="text" placeholder="Email">
+              <input class="inputText" type="text" placeholder="Email" th:field="*{email}">
               <i class="icon-envelop"></i>
             </div>
             <div class="p-top__inputGroup">
-              <input class="inputText" type="text" placeholder="Password">
+              <input class="inputText" type="text" placeholder="Password" th:field="*{password}">
               <i class="icon-lock"></i>
             </div>
             <div class="p-top__inputGroup">
-              <input class="inputText" type="text" placeholder="Confirm Password">
+              <input class="inputText" type="text" placeholder="Confirm Password" th:field=*{confirmPassword}>
               <i class="icon-lock"></i>
             </div>
-            <button class="buttonCTA buttonCTA-fullWidth">
+            <button class="buttonCTA buttonCTA-fullWidth" id="create">
               Create account
             </button>
           </form>
@@ -51,6 +52,9 @@
         <div class="p-top__modalFooter">
           Already registered? <a href="">Sign in</a>
         </div>
+      </div>
+      <div th:if="${#fields.hasErrors('${signupForm.*}')}" id="formError" class="p-top__errorMessage">
+        <span th:errors="${signupForm.*}"></span>
       </div>
     </div>
   </section>
