@@ -33,3 +33,15 @@ if ($('#formError').length) {
     formModal.open();
     errorModal.open();
 }
+
+
+showToggle('#showButtonPassword');
+showToggle('#showButtonConfirm');
+
+function showToggle(elem) {
+    $(elem).on('click', function () {
+        const target = $(this).prevAll('input').get(0);
+        console.log(target);
+        target.type == 'password' ? target.type = 'text' : target.type = 'password';
+    })
+}

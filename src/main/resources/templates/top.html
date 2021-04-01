@@ -29,7 +29,7 @@
           <p>Use image storage for free.</p>
           <form class="p-top__modalForm" method="POST" th:object="${signupForm}">
             <div class="p-top__inputGroup">
-              <input class="inputText" type="text" placeholder="Name" th:field="*{name}">
+              <input class="inputText" type="text" placeholder="Name" th:field="*{name}" maxlength="10">
               <i class="icon-user"></i>
             </div>
             <div class="p-top__inputGroup">
@@ -37,14 +37,16 @@
               <i class="icon-envelop"></i>
             </div>
             <div class="p-top__inputGroup">
-              <input class="inputText" type="text" placeholder="Password" th:field="*{password}">
+              <input class="inputText" type="password" placeholder="Password" th:field="*{password}">
               <i class="icon-lock"></i>
+              <span class="buttonCTA buttonCTA-show" id="showButtonPassword">Show</span>
             </div>
             <div class="p-top__inputGroup">
-              <input class="inputText" type="text" placeholder="Confirm Password" th:field=*{confirmPassword}>
+              <input class="inputText" type="password" placeholder="Confirm Password" th:field=*{confirmPassword}>
               <i class="icon-lock"></i>
+              <span class="buttonCTA buttonCTA-show" id="showButtonConfirm">Show</span>
             </div>
-            <button class="buttonCTA buttonCTA-fullWidth" id="create">
+            <button class="buttonCTA buttonCTA-fullWidth">
               Create account
             </button>
           </form>
