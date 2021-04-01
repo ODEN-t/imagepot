@@ -23,7 +23,8 @@
         </div>
       </div>
 
-      <div style="display: none;" id="modalContent" class="p-top__modalContent">
+      <!-- SignUp Form -->
+      <div style="display: none;" id="signupContent" class="p-top__modalContent">
         <div class="p-top__modalBody">
           <h2>Join Imagepot</h2>
           <p>Use image storage for free.</p>
@@ -46,18 +47,48 @@
               <i class="icon-lock"></i>
               <span class="buttonCTA buttonCTA-show" id="showButtonConfirm">Show</span>
             </div>
-            <button class="buttonCTA buttonCTA-fullWidth">
+            <button class="buttonCTA buttonCTA-fullWidth" name="signupAccount">
               Create account
             </button>
+            <div th:if="${#fields.hasErrors('${signupForm.*}')}" id="formError" class="p-top__errorMessage">
+              <span th:errors="${signupForm.*}"></span>
+            </div>
           </form>
         </div>
         <div class="p-top__modalFooter">
-          Already registered? <a href="">Sign in</a>
+          Already registered? <span id="signinSub">Sign in</span>
         </div>
       </div>
-      <div th:if="${#fields.hasErrors('${signupForm.*}')}" id="formError" class="p-top__errorMessage">
-        <span th:errors="${signupForm.*}"></span>
+
+
+      <!-- SignIn Form -->
+      <div style="display: none;" id="signinContent" class="p-top__modalContent">
+        <div class="p-top__modalBody">
+          <h2>Hello!</h2>
+          <p>Sign into your account here.</p>
+          <form class="p-top__modalForm" method="POST" th:object="${signinForm}">
+            <div class="p-top__inputGroup">
+              <input class="inputText" type="text" placeholder="Email" th:field="*{email}">
+              <i class="icon-envelop"></i>
+            </div>
+            <div class="p-top__inputGroup">
+              <input class="inputText" type="password" placeholder="Password" th:field="*{password}">
+              <i class="icon-lock"></i>
+              <span class="buttonCTA buttonCTA-show" id="showButtonPassword">Show</span>
+            </div>
+            <button class="buttonCTA buttonCTA-fullWidth" name="signinAccount">
+              Sign in
+            </button>
+            <div th:if="${#fields.hasErrors('${signinForm.*}')}" id="formError2" class="p-top__errorMessage">
+              <span th:errors="${signinForm.*}"></span>
+            </div>
+          </form>
+        </div>
+        <div class="p-top__modalFooter">
+          Don't have an account?? <span id="signupSub">Sign up</span>
+        </div>
       </div>
+
     </div>
   </section>
   <footer th:replace="common::footer">

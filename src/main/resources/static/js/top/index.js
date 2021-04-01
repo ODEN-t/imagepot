@@ -2,16 +2,32 @@ import jBox from 'jbox';
 import 'jbox/dist/jBox.all.css';
 import $ from 'jquery/dist/jquery.min';
 
-const formModal = new jBox('Modal', {
+// Signup Modal の設定値
+const signupModal = new jBox('Modal', {
     width: 405,
     height: 573,
     attach: '#signup',
-    content: $('#modalContent'),
+    content: $('#signupContent'),
     overlayClass: 'add-jboxOverRay',
     closeOnClick: false,
-    closeButton: 'box'
+    closeButton: 'box',
+    createOnInit: true,
 });
 
+
+// Signin Modal の設定値
+const signinModal = new jBox('Modal', {
+    width: 405,
+    height: 443,
+    attach: '#signin',
+    content: $('#signinContent'),
+    overlayClass: 'add-jboxOverRay',
+    closeOnClick: false,
+    closeButton: 'box',
+    createOnInit: true,
+});
+
+// Error modal の設定値
 const errorModal = new jBox('Modal', {
     content: $('#formError'),
     addClass: 'add-jboxErrorMessage',
@@ -30,14 +46,19 @@ const errorModal = new jBox('Modal', {
 });
 
 if ($('#formError').length) {
-    formModal.open();
+    signupModal.open();
     errorModal.open();
 }
 
 
-showToggle('#showButtonPassword');
-showToggle('#showButtonConfirm');
+$('#signupSub, #signinSub').on('click', function () {
+    signinModal.toggle();
+    signupModal.toggle();
+});
 
+
+
+// type=password <=> type=text の切り替え
 function showToggle(elem) {
     $(elem).on('click', function () {
         const target = $(this).prevAll('input').get(0);
@@ -45,3 +66,6 @@ function showToggle(elem) {
         target.type == 'password' ? target.type = 'text' : target.type = 'password';
     })
 }
+showToggle('#showButtonPassword-signin');
+showToggle('#showButtonPassword');
+showToggle('#showButtonConfirm');

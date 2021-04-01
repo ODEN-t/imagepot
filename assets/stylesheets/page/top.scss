@@ -125,8 +125,9 @@
     font-size: 16px;
     line-height: 1.4;
     text-align: center;
-    a {
+    > span {
       color: #ef476f;
+      cursor: pointer;
       &:hover {
         border-bottom: solid 1px #ef476f;
       }
