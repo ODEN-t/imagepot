@@ -7,20 +7,10 @@
 </head>
 
 <body>
-  <header th:replace="common::header">
-  </header>
+  <div th:replace="common::sidebar">
+  </div>
   <article class="p-home">
     <section class="p-home__head">
-      <h2><img th:src="@{/images/logo-round.png}" alt="">Images In Pot</h2>
-      <div class="p-home__sort">
-        <select name="" id="">
-          <option value="">新しい順</option>
-          <option value="">古い順</option>
-        </select>
-        <div class="buttonCTA_box">
-          <a class="buttonCTA" href="">並び替え</a>
-        </div>
-      </div>
     </section>
     <section class="p-home__contents">
       <div class="p-home__mansonry">
@@ -66,13 +56,6 @@
             <img th:src="@{/images/testA.jpg}" alt="">
           </div>
         </figure>
-        <!-- <figure><img th:src="@{/images/testC.jpg}" alt=""></figure>
-        <figure><img th:src="@{/images/testD.jpg}" alt=""></figure>
-        <figure><img th:src="@{/images/testB.jpg}" alt=""></figure>
-        <figure><img th:src="@{/images/testC.jpg}" alt=""></figure>
-        <figure><img th:src="@{/images/testA.jpg}" alt=""></figure>
-        <figure><img th:src="@{/images/testD.jpg}" alt=""></figure>
-        <figure><img th:src="@{/images/testB.jpg}" alt=""></figure> -->
       </div>
     </section>
   </article>

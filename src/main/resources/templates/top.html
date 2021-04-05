@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="common::meta_header('Login', ~{::link}, ~{::script})">
+<head th:replace="common::meta_header(null, ~{::link}, ~{::script})">
   <link rel="stylesheet" th:href="@{/css/page/top.min.css}">
   <script th:src="@{/dist/top/index.js}" defer></script>
 </head>
 
 <body>
-  <header th:replace="common::header">
+  <header class="c-header">
+    <a class="c-header__title" href="/">
+      <h1>Image Pot</h1>
+    </a>
   </header>
   <section class="p-top">
     <div class="p-top__wrap">
