@@ -36,7 +36,7 @@ public class TopContorller {
 
     @PostMapping(params = "signinAccount")
     public String postSignIn(
-            @ModelAttribute @Validated() SigninForm signinform,
+            @ModelAttribute @Validated(ValidationAll.class) SigninForm signinform,
             BindingResult resultSignin,
             SignupForm signupform,
             RedirectAttributes atts) {

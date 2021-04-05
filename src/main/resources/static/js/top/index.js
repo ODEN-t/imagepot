@@ -29,7 +29,7 @@ const signinModal = new jBox('Modal', {
 
 // Error modal の設定値
 const errorModal = new jBox('Modal', {
-    content: $('#formError'),
+    content: $('.p-top__errorMessage'),
     addClass: 'add-jboxErrorMessage',
     overlay: false,
     closeOnClick: false,
@@ -45,27 +45,41 @@ const errorModal = new jBox('Modal', {
     }
 });
 
-if ($('#formError').length) {
-    signupModal.open();
-    errorModal.open();
+
+// 表示中のモーダルを閉じ他のモーダルを開く
+const modalSwitch = (...buttons) => {
+    for (const button of buttons) {
+        document.getElementById(button).addEventListener('click', () => {
+            signinModal.toggle();
+            signupModal.toggle();
+        })
+    }
 }
-
-
-$('#signupSub, #signinSub').on('click', function () {
-    signinModal.toggle();
-    signupModal.toggle();
-});
-
+modalSwitch('signupSub', 'signinSub');
 
 
 // type=password <=> type=text の切り替え
-function showToggle(elem) {
-    $(elem).on('click', function () {
-        const target = $(this).prevAll('input').get(0);
-        console.log(target);
-        target.type == 'password' ? target.type = 'text' : target.type = 'password';
-    })
+const inputTypeToggle = (elementClass) => {
+    const nodeList = document.querySelectorAll(elementClass);
+    for (const node of nodeList) {
+        node.addEventListener('click', () => {
+            const target = node.previousElementSibling;
+            target.type == 'password' ? target.type = 'text' : target.type = 'password';
+        })
+    }
 }
-showToggle('#showButtonPassword-signin');
-showToggle('#showButtonPassword');
-showToggle('#showButtonConfirm');
+inputTypeToggle('.buttonCTA-show');
+
+
+// errorメッセージのモーダル表示
+const showErrorMessage = (elementClass) => {
+    const messageElem = document.querySelectorAll(elementClass);
+    if (messageElem.length === 1) {
+        const modalType = messageElem[0].dataset.error;
+        signinModal.close();
+        signupModal.close();
+        modalType == 'signin' ? signinModal.open() : signupModal.open();
+        errorModal.open();
+    }
+}
+showErrorMessage('.p-top__errorMessage');
