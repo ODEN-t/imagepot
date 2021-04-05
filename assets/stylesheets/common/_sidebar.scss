@@ -1,5 +1,87 @@
 .c-sidebar {
-  width: 200px;
-  height: 100px;
-  background-color: blue;
+  width: 242px;
+  height: 100%;
+  color: #fff;
+  background: #ed315d;
+  position: sticky;
+  flex-shrink: 0;
+  /*サイドバーをコンテンツの高さに揃える*/
+  padding-bottom: 10000px;
+  margin-bottom: -10000px;
+
+  &__wrap {
+    padding-top: 41px;
+  }
+
+  &__userInfo {
+    text-align: center;
+    padding: 15px 10px;
+    
+    &__image {
+      width: 95px;
+      height: 95px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+      > img {
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &__name {
+      margin-top: 10px;
+      font-size: 16px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    &__id {
+      font-size: 12px;
+      margin-top: 5px;
+      line-height: 1.2;
+      font-weight: 400;
+    }
+  }
+
+  &__menu {
+    margin-top: 38px;
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    &__item {
+      height: 56px;
+      line-height: 1;
+      transition: all .15s ease;
+      &:hover {
+        background: #ef476f;
+      }
+    }
+
+    &__itemLink{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 25px;
+      >span {
+        padding-left: 1.1em;
+        line-height: 1.4;
+        font-weight: 600;
+        font-size: 15px;
+      }
+      >i {
+        font-size: 16px;
+      }
+    }
+  }
 }

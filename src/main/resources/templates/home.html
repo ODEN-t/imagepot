@@ -7,11 +7,9 @@
 </head>
 
 <body>
-  <div th:replace="common::sidebar">
-  </div>
   <article class="p-home">
-    <section class="p-home__head">
-    </section>
+    <div th:replace="common::sidebar">
+    </div>
     <section class="p-home__contents">
       <div class="p-home__mansonry">
         <figure>
@@ -57,10 +55,12 @@
           </div>
         </figure>
       </div>
+      <footer th:replace="common::footer">
+      </footer>
     </section>
   </article>
-  <footer th:replace="common::footer">
-  </footer>
+
+
 </body>
 
 </html>

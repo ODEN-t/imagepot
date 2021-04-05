@@ -18,7 +18,53 @@
 
 <body>
   <div class="c-sidebar" th:fragment="sidebar">
-
+    <div class="c-sidebar__wrap">
+      <div class="c-sidebar__userInfo">
+        <figure class="c-sidebar__userInfo__image">
+          <img th:src="@{/images/mike.jpg}" alt="">
+        </figure>
+        <div class="c-sidebar__userInfo__name">
+          Michael Wazowski
+        </div>
+        <div class="c-sidebar__userInfo__id">
+          ekg_iielsvg@gmail.com
+        </div>
+      </div>
+      <nav class="c-sidebar__menu">
+        <ol class="c-sidebar__menu__list">
+          <li class="c-sidebar__menu__item">
+            <a class="c-sidebar__menu__itemLink" href="">
+              <i class="icon-home3"></i>
+              <span>Home</span>
+            </a>
+          </li>
+          <li class="c-sidebar__menu__item">
+            <a class="c-sidebar__menu__itemLink" href="">
+              <i class="icon-bin2"></i>
+              <span>Deleted</span>
+            </a>
+          </li>
+          <li class="c-sidebar__menu__item">
+            <a class="c-sidebar__menu__itemLink" href="">
+              <i class="icon-cog"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+          <li class="c-sidebar__menu__item">
+            <a class="c-sidebar__menu__itemLink" href="">
+              <i class="icon-cogs"></i>
+              <span>Manage</span>
+            </a>
+          </li>
+          <li class="c-sidebar__menu__item">
+            <a class="c-sidebar__menu__itemLink" href="">
+              <i class="icon-exit"></i>
+              <span>Sign out</span>
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </div>
   </div>
   <footer class="c-footer" th:fragment="footer">
     <div class="c-footer__wrap">

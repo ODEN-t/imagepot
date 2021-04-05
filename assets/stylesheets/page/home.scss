@@ -1,38 +1,15 @@
 .p-home {
-  margin: 0 auto;
-  &__head {
-    margin: 3em auto 0;
-    max-width: 1200px;
-    position: relative;
-
-    h2 {
-      font-size: 30px;
-      font-weight: 700;
-      line-height: 45px;
-    }
-    h2 > img {
-      height: 45px;
-      margin-bottom: 0.3em;
-    }
-  }
-
-  &__sort {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-  }
+  overflow: hidden;
+  display: flex;
 
   &__contents {
-    padding: 30px 0 5px;
     min-height: 100px;
-    background-color: #eadded;
-    margin: 1em 0 5em;
+    background-color: #fff;
+    width: 100%;
   }
 
   &__mansonry {
-    max-width: 1200px;
+    max-width: 1320px;
     margin: 0 auto;
     column-count: 3;
     column-gap: 25px;
