@@ -15,9 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/")
-public class TopContorller {
+public class TopController {
     @GetMapping
-    public String getSignin(@ModelAttribute SignupForm signupform, @ModelAttribute SigninForm signinform) {
+    public String getTopPage(@ModelAttribute SignupForm signupform, @ModelAttribute SigninForm signinform) {
         return "top";
     }
 
@@ -29,7 +29,7 @@ public class TopContorller {
             RedirectAttributes atts) {
         if (resultSignup.hasErrors()) {
             atts.addAttribute("hasErrors", true);
-            return getSignin(signupform, signinform);
+            return getTopPage(signupform, signinform);
         }
         return "redirect:/";
     }
@@ -42,7 +42,7 @@ public class TopContorller {
             RedirectAttributes atts) {
         if (resultSignin.hasErrors()) {
             atts.addAttribute("hasErrors", true);
-            return getSignin(signupform, signinform);
+            return getTopPage(signupform, signinform);
         }
         return "redirect:/";
     }
