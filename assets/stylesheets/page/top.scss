@@ -87,10 +87,16 @@
         font-weight: 600;
       }
       &:focus {
-        border: 2px solid #ef476f;
+        border: 1px solid #ef476f;
       }
       &:focus+i {
         color: #ef476f;
+      }
+      &.is-error {
+        border: 1px solid #ef476f;
+        &+i {
+          color: #ef476f;
+        }
       }
     }
 
