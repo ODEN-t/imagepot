@@ -6,13 +6,14 @@
     min-height: 100px;
     background-color: #fff;
     width: 100%;
+    padding: 30px 22px 0;
   }
 
   &__mansonry {
     max-width: 1320px;
     margin: 0 auto;
     column-count: 3;
-    column-gap: 25px;
+    column-gap: 10px;
 
     &___imgWrap {
       position: relative;
@@ -22,7 +23,7 @@
       position:relative;
       display: inline-block;
       width: 100%;
-      padding-bottom: 25px;
+      margin-bottom: 10px;
     }
 
     img {

@@ -11,27 +11,11 @@
     <div th:replace="common::sidebar">
     </div>
     <section class="p-home__contents">
-      <div class="p-home__mansonry">
+      <section class="p-home__head"></section>
+      <section class="p-home__mansonry">
         <figure>
           <div class="p-home__mansonry__imgWrap">
             <img th:src="@{/images/testA.jpg}" alt="">
-
-          </div>
-        </figure>
-        <figure>
-          <div class="p-home__mansonry__imgWrap">
-            <img th:src="@{/images/testB.jpg}" alt="">
-
-          </div>
-        </figure>
-        <figure>
-          <div class="p-home__mansonry__imgWrap">
-            <img th:src="@{/images/testC.jpg}" alt="">
-          </div>
-        </figure>
-        <figure>
-          <div class="p-home__mansonry__imgWrap">
-            <img th:src="@{/images/testD.jpg}" alt="">
           </div>
         </figure>
         <figure>
@@ -51,10 +35,25 @@
         </figure>
         <figure>
           <div class="p-home__mansonry__imgWrap">
+            <img th:src="@{/images/testB.jpg}" alt="">
+          </div>
+        </figure>
+        <figure>
+          <div class="p-home__mansonry__imgWrap">
+            <img th:src="@{/images/testC.jpg}" alt="">
+          </div>
+        </figure>
+        <figure>
+          <div class="p-home__mansonry__imgWrap">
+            <img th:src="@{/images/testD.jpg}" alt="">
+          </div>
+        </figure>
+        <figure>
+          <div class="p-home__mansonry__imgWrap">
             <img th:src="@{/images/testA.jpg}" alt="">
           </div>
         </figure>
-      </div>
+      </section>
       <footer th:replace="common::footer">
       </footer>
     </section>
