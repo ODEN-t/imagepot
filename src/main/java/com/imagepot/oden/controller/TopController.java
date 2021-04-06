@@ -1,9 +1,14 @@
 package com.imagepot.oden.controller;
 
+import java.util.List;
+
 import com.imagepot.oden.model.SigninForm;
 import com.imagepot.oden.model.SignupForm;
+import com.imagepot.oden.model.User;
 import com.imagepot.oden.model.ValidationAll;
+import com.imagepot.oden.service.UserService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -16,8 +21,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/")
 public class TopController {
+
+    @Autowired
+    UserService userService;
+
     @GetMapping
     public String getTopPage(@ModelAttribute SignupForm signupform, @ModelAttribute SigninForm signinform) {
+        User user = userService.selectOne(2);
+        List<User> user2 = userService.selectAll();
+        System.out.println(user);
+        System.out.println(user2);
         return "top";
     }
 
@@ -44,7 +57,7 @@ public class TopController {
             atts.addAttribute("hasErrors", true);
             return getTopPage(signupform, signinform);
         }
-        return "redirect:/";
+        return "redirect:/home";
     }
 
 }

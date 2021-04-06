@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:Mapperインターフェースを指定 -->
+<mapper namespace="com.imagepot.oden.repository.mybatis.UserMapper">
+    <!-- id:マップ名 type:紐付けるbean名 -->
+    <resultMap id="user" type="com.imagepot.oden.model.User">
+        <!-- id:PK column:DB  property:field -->
+        <id column="user_id" property="id" />
+        <result column="user_email" property="email" />
+        <result column="user_password" property="password" />
+        <result column="user_name" property="name" />
+        <result column="user_icon" property="icon" />
+        <result column="user_role" property="role" />
+        <result column="user_created_at" property="createdAt" />
+        <result column="user_updated_at" property="updatedAt" />
+        <result column="user_logging_in" property="loggingIn" />
+    </resultMap>
+    <!-- id名は対応するmapperのメソッド名 -->
+    <!-- メソッドの引数が１つの場合のみ(2つ以上の場合指定しない)、parameterType属性に引数のデータ型を指定 -->
+    <insert id="insert" parameterType="com.imagepot.oden.model.User">
+        INSERT INTO mywork.pot_user (
+            user_email,
+            user_password,
+            user_name
+        ) VALUES (
+            #{id},
+            #{password},
+            #{name}
+        )
+    </insert>
+    <!-- 検索(READ)のSQLの場合のみ、resultType属性に戻り値のデータ型を指定 -->
+    <select id="selectOne" parameterType="integer" resultMap="user">
+        SELECT
+            user_id,
+            user_email,
+            user_name,
+            user_created_at,
+            user_updated_at,
+            user_logging_in
+        FROM
+            mywork.pot_user
+        WHERE
+            user_id = #{id}
+    </select>
+    <select id="selectAll" resultMap="user">
+        SELECT
+            user_id,
+            user_email,
+            user_password,
+            user_name,
+            user_role
+        FROM
+            mywork.pot_user
+    </select>
+    <update id="updateOne" parameterType="com.imagepot.oden.model.User">
+        UPDATE mywork.pot_user
+        SET
+            user_email = #{email},
+            user_password = #{password},
+            user_name = #{name},
+        WHERE
+            user_id = #{id}
+    </update>
+    <delete id="deleteOne" parameterType="integer">
+        DELETE FROM mywork.pot_user WHERE user_id = #{id}
+    </delete>
+</mapper>
