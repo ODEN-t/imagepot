@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:Mapperインターフェースを指定 -->
+<mapper namespace="com.imagepot.oden.repository.mybatis.SigninFormMapper">
+    <!-- id:マップ名 type:紐付けるbean名 -->
+    <resultMap id="signinForm" type="com.imagepot.oden.model.SigninForm">
+        <!-- id:PK column:DB  property:field -->
+        <result column="user_email" property="signinEmail" />
+        <result column="user_password" property="signinPassword" />
+    </resultMap>
+    <!-- id名は対応するmapperのメソッド名 -->
+    <!-- メソッドの引数が１つの場合のみ(2つ以上の場合指定しない)、parameterType属性に引数のデータ型を指定 -->
+    <select id="checkUserForSignin" parameterType="com.imagepot.oden.model.SigninForm" resultType="integer">
+        SELECT
+        COUNT(*)
+        FROM
+            mywork.pot_user
+        WHERE
+            user_email = #{signinEmail}
+        AND
+            user_password = #{signinPassword}
+    </select>
+</mapper>
