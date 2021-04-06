@@ -16,6 +16,3 @@ public class User {
     private Timestamp updatedAt;
     private boolean loggingIn;
 }
-
-
-///////????

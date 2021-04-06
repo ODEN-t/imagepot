@@ -27,8 +27,8 @@ public class TopController {
 
     @GetMapping
     public String getTopPage(@ModelAttribute SignupForm signupform, @ModelAttribute SigninForm signinform) {
-        User user = userService.selectOne(2);
-        List<User> user2 = userService.selectAll();
+        User user = userService.selectOneUser(2);
+        List<User> user2 = userService.selectAllUser();
         System.out.println(user);
         System.out.println(user2);
         return "top";

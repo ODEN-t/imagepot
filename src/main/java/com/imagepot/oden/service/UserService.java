@@ -15,11 +15,23 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public User selectOne(Integer id) {
-        return userMapper.selectOne(id);
+    // 特定のユーザ情報を全て取得
+    public User selectOneUser(Integer id) {
+        return userMapper.selectOneUser(id);
     }
 
-    public List<User> selectAll() {
-        return userMapper.selectAll();
+    // 全ユーザの情報を取得
+    public List<User> selectAllUser() {
+        return userMapper.selectAllUser();
+    }
+
+    // 特定のユーザを削除
+    public boolean deleteOneUser(Integer id) {
+        return userMapper.deleteOneUser(id);
+    }
+
+    // 特定のユーザのアイコンを変更
+    public boolean updateIcon(User user) {
+        return userMapper.updateIcon(user);
     }
 }

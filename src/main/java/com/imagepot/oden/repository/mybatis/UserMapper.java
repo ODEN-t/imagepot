@@ -8,18 +8,16 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
-    // 登録用メソッド
-    public boolean insert(User user);
 
-    // 1件検索用メソッド
-    public User selectOne(Integer id);
+    // 特定のユーザ情報を全て取得
+    public User selectOneUser(Integer id);
 
-    // 全件検索用メソッド
-    public List<User> selectAll();
+    // 全ユーザの情報を取得
+    public List<User> selectAllUser();
 
-    // 更新用メソッド
-    public boolean updateOne(User user);
+    // 特定のユーザを削除
+    public boolean deleteOneUser(Integer id);
 
-    // 1件削除用メソッド
-    public boolean deleteOne(String userId);
+    // 特定のユーザのアイコンを変更
+    public boolean updateIcon(User user);
 }
