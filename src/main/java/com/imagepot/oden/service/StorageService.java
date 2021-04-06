@@ -24,6 +24,7 @@ public class StorageService {
     @Value("${aws.s3.bucket.name}")
     private String bucketName;
 
+    // クライアント経由でs3を操作
     @Autowired
     private AmazonS3 s3Cliant;
 
@@ -52,6 +53,10 @@ public class StorageService {
         return fileName + " removed ...";
     }
 
+    /*
+     * MultipartFile ファイルのアップロード機能をアプリケーションコード内で透過的に扱うためのクラス
+     * マルチパートリクエストで受信したアップロードファイルを扱う
+     */
     private File convertMultiPartFileToFile(MultipartFile file) {
         File convertedFile = new File(file.getOriginalFilename());
         try (FileOutputStream fos = new FileOutputStream(convertedFile)) {

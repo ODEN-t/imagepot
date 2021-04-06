@@ -23,6 +23,7 @@ public class StroageConfig {
     private String region;
 
     @Bean
+    // 認証情報を元にクライアントを確立
     public AmazonS3 s3Cliant() {
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
         return AmazonS3ClientBuilder.standard()
