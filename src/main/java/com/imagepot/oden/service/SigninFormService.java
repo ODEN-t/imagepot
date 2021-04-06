@@ -13,7 +13,11 @@ public class SigninFormService {
     @Autowired
     SigninFormMapper signinFormMapper;
 
-    public Integer checkUserForSignin(SigninForm signinForm) {
-        return signinFormMapper.checkUserForSignin(signinForm);
+    public Integer checkEmailForSignin(String email) {
+        return signinFormMapper.checkEmailForSignin(email);
+    }
+
+    public Integer checkEmailAndPasswordForSignin(SigninForm signinForm) {
+        return signinFormMapper.checkEmailAndPasswordForSignin(signinForm);
     }
 }
