@@ -38,8 +38,42 @@
     padding: 9px 21px 9px;
     letter-spacing: 1px;
   }
+
+  &-blue {
+    background: #118AB2;
+    &:hover {
+      background: #0F7CA0;
+    }
+  }
 }
 
 .add-jboxOverRay {
   background-color: rgba(0,0,0,.6) !important;
+}
+
+  
+.add-popupCustomStyle {
+  .jBox-title {
+    font-size: 20px;
+    font-weight: 600;
+    background: #fff !important;
+  }
+  .jBox-Confirm-button-cancel {
+    background: #f5f5f5;
+    &:hover, &:active {
+      background: #f1f1f1;
+    }
+    &:active {
+      box-shadow: none;
+    }
+  }
+  .jBox-Confirm-button-submit {
+    background: #FFD166;
+    &:hover, &:active {
+      background: #ffcc40;
+    }
+    &:active {
+      box-shadow: none;
+    }
+  }
 }

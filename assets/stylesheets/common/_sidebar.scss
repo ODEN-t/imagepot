@@ -60,6 +60,7 @@
     &__item {
       height: 56px;
       line-height: 1;
+      cursor: pointer;
       transition: all .15s ease;
       &:hover {
         background: #ef476f;

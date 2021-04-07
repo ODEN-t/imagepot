@@ -11,7 +11,7 @@
     href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&family=Open+Sans:wght@300;400;600;700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" th:href="@{/icomoon/style.css}" type="text/css">
-
+  <script th:src="@{/dist/common/index.js}" defer></script>
   <th:block th:replace="${links} ?: _" />
   <th:block th:replace="${scripts} ?: _" />
 </head>
@@ -57,10 +57,10 @@
             </a>
           </li>
           <li class="c-sidebar__menu__item">
-            <a class="c-sidebar__menu__itemLink" href="">
+            <span class="c-sidebar__menu__itemLink" id="signout" data-confirm="Are you sure you want to sign out?">
               <i class="icon-exit"></i>
               <span>Sign out</span>
-            </a>
+            </span>
           </li>
         </ol>
       </nav>
