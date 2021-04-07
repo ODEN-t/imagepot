@@ -1,4 +1,4 @@
-package com.imagepot.oden.aspect;
+package com.imagepot.oden.util.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

@@ -11,13 +11,13 @@ import lombok.Data;
 
 @Data
 public class SigninForm {
-    @NotBlank(groups = Group10.class)
-    @Email(groups = Group11.class)
-    @Length(max = 255, groups = Group12.class)
+    @NotBlank(groups = Group11.class)
+    @Email(groups = Group12.class)
+    @Length(max = 255, groups = Group13.class)
     private String signinEmail;
 
-    @NotBlank(groups = Group13.class)
-    @Length(min = 8, max = 10, groups = Group14.class)
-    @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = Group15.class)
+    @NotBlank(groups = Group14.class)
+    @Length(min = 8, max = 10, groups = Group15.class)
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = Group16.class)
     private String signinPassword;
 }

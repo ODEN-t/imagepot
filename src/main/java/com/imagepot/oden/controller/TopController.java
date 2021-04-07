@@ -42,12 +42,6 @@ public class TopController {
             atts.addAttribute("hasErrors", true);
             return getTopPage(signupform, signinform);
         }
-
-        String email = signinform.getSigninEmail();
-        if (signupFormService.checkDuplicateEmail(email) == 1) {
-            atts.addAttribute("hasErrors", true);
-            return getTopPage(signupform, signinform);
-        }
         return "redirect:/";
     }
 
