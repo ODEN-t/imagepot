@@ -55,25 +55,6 @@ public class TopController {
             atts.addAttribute("hasErrors", true);
             return getTopPage(signupform, signinform);
         }
-
-        SigninForm inputAuth = new SigninForm();
-        inputAuth.setSigninPassword(signinform.getSigninPassword());
-        inputAuth.setSigninEmail(signinform.getSigninEmail());
-
-        Integer checkEmail = signinFormService.checkEmailForSignin(signinform.getSigninEmail());
-        Integer resultAuth = signinFormService.checkEmailAndPasswordForSignin(inputAuth);
-
-        System.out.println(inputAuth);
-        if (checkEmail == 0) {
-            System.out.println("Your email address doesn't match any account.");
-            atts.addAttribute("hasErrors", true);
-            return getTopPage(signupform, signinform);
-        } else if (resultAuth == 0) {
-            System.out.println("Your password is incorrect.");
-            atts.addAttribute("hasErrors", true);
-            return getTopPage(signupform, signinform);
-        }
-
         return "redirect:/home";
     }
 

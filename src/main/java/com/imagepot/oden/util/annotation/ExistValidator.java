@@ -3,25 +3,23 @@ package com.imagepot.oden.util.annotation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.imagepot.oden.service.SignupFormService;
+import com.imagepot.oden.service.SigninFormService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class UnusedValidator implements ConstraintValidator<Unused, String> {
+public class ExistValidator implements ConstraintValidator<Exist, String> {
 
     @Autowired
-    SignupFormService signupFormService;
+    SigninFormService signinFormService;
 
     @Override
-    public void initialize(Unused constraintAnnotaion) {
+    public void initialize(Exist constraintAnnotaion) {
     }
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
-
-        // 入力されたemailに重複があれば1が返却される
-        Integer result = signupFormService.checkDuplicateEmail(email);
-        if (result == 0) {
+        boolean result = signinFormService.checkEmailForSignin(email);
+        if (result) {
             return true;
         }
         return false;

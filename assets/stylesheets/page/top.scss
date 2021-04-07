@@ -93,12 +93,12 @@
       &:focus {
         border: 1px solid #ef476f;
       }
-      &:focus+i {
+      &:focus~i {
         color: #ef476f;
       }
       &.is-error {
         border: 1px solid #ef476f;
-        &+i {
+        &~i {
           color: #ef476f;
         }
       }

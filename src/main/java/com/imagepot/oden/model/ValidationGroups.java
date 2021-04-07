@@ -48,4 +48,10 @@ public class ValidationGroups {
 
     public interface Group16 {
     };
+
+    public interface Group17 {
+    };
+
+    public interface Group18 {
+    };
 }

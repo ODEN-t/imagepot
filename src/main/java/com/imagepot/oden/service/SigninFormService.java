@@ -13,11 +13,13 @@ public class SigninFormService {
     @Autowired
     SigninFormMapper signinFormMapper;
 
-    public Integer checkEmailForSignin(String email) {
+    // 入力されたemailに一致するアカウントが存在するかチェック
+    public boolean checkEmailForSignin(String email) {
         return signinFormMapper.checkEmailForSignin(email);
     }
 
-    public Integer checkEmailAndPasswordForSignin(SigninForm signinForm) {
-        return signinFormMapper.checkEmailAndPasswordForSignin(signinForm);
+    // 入力されたemail,passwordに一致するアカウントが存在するかチェック
+    public boolean auth(SigninForm signinForm) {
+        return signinFormMapper.auth(signinForm);
     }
 }
