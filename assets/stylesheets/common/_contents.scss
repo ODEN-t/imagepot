@@ -1,0 +1,16 @@
+/* 
+* TopPage以外のコンテンツ部の共通ラッパー
+*/
+
+// sidebarとcontents左右に並べるトップページ配下の共通ラッパー
+.c-globalContainer {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+// Pageコンテンツとfooterをラップする
+.c-contents {
+  position: relative;
+  width: 100%;
+}

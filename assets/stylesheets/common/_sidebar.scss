@@ -1,13 +1,11 @@
 .c-sidebar {
   width: 242px;
-  height: 100%;
+  height: 100vh;
   color: #fff;
   background: #ed315d;
-  position: sticky;
   flex-shrink: 0;
-  /*サイドバーをコンテンツの高さに揃える*/
-  padding-bottom: 10000px;
-  margin-bottom: -10000px;
+  position: sticky;
+  top: 0;
 
   &__wrap {
     padding-top: 41px;

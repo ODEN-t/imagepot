@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common::meta_header('Admin', ~{::link}, ~{::script})">
+  <link rel="stylesheet" th:href="@{/css/page/admin.min.css}">
+  <script th:src="@{/dist/home/index.js}"></script>
+</head>
+
+<body>
+  <div class="p-admin">
+    <div th:replace="common::sidebar">
+    </div>
+    <section class="p-admin__contents">
+      <h1>User List</h1>
+      <dl class="p-admin__userList">
+        <dt>ID</dt>
+        <dd>aaa</dd>
+        <dt>Email</dt>
+        <dd>gjahevslrhiga@gmail.com</dd>
+        <dt>Name</dt>
+        <dd></dd>
+        <dt>Icon</dt>
+        <dd></dd>
+        <dt>Created At</dt>
+        <dd></dd>
+        <dt>Logging In</dt>
+        <dd></dd>
+      </dl>
+      <div>Total：<span></span></div>
+      <footer th:replace="common::footer">
+      </footer>
+    </section>
+    </article>
+</body>
+
+</html>

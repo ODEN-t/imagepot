@@ -1,22 +1,16 @@
 .p-home {
-  overflow: hidden;
-  display: flex;
-
-  &__contents {
-    min-height: 100px;
-    background-color: #fff;
-    width: 100%;
-    padding-top: 30px;
-  }
+  background-color: #fff;
+  width: 100%;
+  padding: 30px 0;
 
   &__head {
-    margin: 15px auto 0;
     max-width: 1320px;
+    margin: 15px auto 0;
+    padding: 0 22px;
     &__wrap {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      padding: 10px 22px;
     }
     &__sortArea {
       position: relative;
@@ -55,7 +49,7 @@
 
   &__mansonry {
     max-width: 1320px;
-    margin: 18px auto 0;
+    margin: 28px auto 0;
     column-count: 3;
     column-gap: 10px;
     padding: 0 22px;

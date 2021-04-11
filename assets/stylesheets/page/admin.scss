@@ -1,0 +1,16 @@
+.p-admin {
+  overflow: hidden;
+  display: flex;
+  
+  &__contents {
+    min-height: 100px;
+    background-color: #fff;
+    width: 100%;
+  }
+
+  &__userList {
+    padding: 0 22px;
+    max-width: 1320px;
+    margin: 18px auto 0;
+  }
+}

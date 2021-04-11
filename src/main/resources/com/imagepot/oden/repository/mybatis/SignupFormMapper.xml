@@ -12,7 +12,7 @@
         <result column="user_password" property="signupPassword" />
     </resultMap>
     <select id="checkDuplicateEmail" parameterType="string" resultType="boolean">
-        SELECT EXISTS (SELECT * from mywork.pot_user WHERE user_email = #{signupEmail});
+        SELECT EXISTS (SELECT * from mywork.pot_user WHERE user_email = #{email});
     </select>
     <insert id="registUser" parameterType="com.imagepot.oden.model.User">
         INSERT INTO mywork.pot_user 
