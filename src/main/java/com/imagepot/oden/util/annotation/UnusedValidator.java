@@ -19,11 +19,11 @@ public class UnusedValidator implements ConstraintValidator<Unused, String> {
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
 
-        // 入力されたemailに重複があれば1が返却される
-        Integer result = signupFormService.checkDuplicateEmail(email);
-        if (result == 0) {
-            return true;
+        // 入力されたemailに重複があればtrueが返却される
+        boolean result = signupFormService.checkDuplicateEmail(email);
+        if (result) {
+            return false;
         }
-        return false;
+        return true;
     }
 }

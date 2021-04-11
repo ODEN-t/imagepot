@@ -2,7 +2,7 @@ package com.imagepot.oden.controller;
 
 import com.imagepot.oden.model.SigninForm;
 import com.imagepot.oden.model.SignupForm;
-
+import com.imagepot.oden.model.User;
 import com.imagepot.oden.model.ValidationAll;
 import com.imagepot.oden.service.SigninFormService;
 import com.imagepot.oden.service.SignupFormService;
@@ -42,6 +42,22 @@ public class TopController {
             atts.addAttribute("hasErrors", true);
             return getTopPage(signupform, signinform);
         }
+
+        System.out.println("formの中身＝＞" + signupform);
+
+        User user = new User();
+        user.setEmail(signupform.getSignupEmail());
+        user.setPassword(signupform.getSignupPassword());
+        user.setName(signupform.getName());
+
+        Integer result = signupFormService.registUser(user);
+
+        if (result == 1) {
+            System.out.println("insert成功");
+        } else {
+            System.out.println("insert失敗");
+        }
+
         return "redirect:/";
     }
 

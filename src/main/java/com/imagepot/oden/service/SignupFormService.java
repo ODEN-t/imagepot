@@ -1,6 +1,6 @@
 package com.imagepot.oden.service;
 
-import com.imagepot.oden.model.SignupForm;
+import com.imagepot.oden.model.User;
 import com.imagepot.oden.repository.mybatis.SignupFormMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +14,12 @@ public class SignupFormService {
     SignupFormMapper signupFormMapper;
 
     // ユーザのemail重複チェック
-    public Integer checkDuplicateEmail(String email) {
+    public boolean checkDuplicateEmail(String email) {
         return signupFormMapper.checkDuplicateEmail(email);
     }
 
     // Formからユーザ登録
-    public Integer registUser(SignupForm signupForm) {
-        return signupFormMapper.registUser(signupForm);
+    public Integer registUser(User user) {
+        return signupFormMapper.registUser(user);
     }
 }

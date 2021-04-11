@@ -89,8 +89,7 @@
             <button class="buttonCTA buttonCTA-fullWidth" name="signinAccount">
               Sign in
             </button>
-            <div th:if="${#fields.hasErrors('${signinForm.*}')}" data-error="signin" id="iddd"
-              class="p-top__errorMessage">
+            <div th:if="${#fields.hasErrors('${signinForm.*}')}" data-error="signin" class="p-top__errorMessage">
               <span th:errors="${signinForm.*}"></span>
             </div>
           </form>
