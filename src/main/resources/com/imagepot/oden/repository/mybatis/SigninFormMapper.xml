@@ -13,7 +13,7 @@
     <select id="checkEmailForSignin" parameterType="string" resultType="boolean">
         SELECT EXISTS (SELECT * from mywork.pot_user WHERE user_email = #{signinEmail})
     </select>
-    <select id="auth" resultType="boolean">
-        SELECT EXISTS (SELECT * from mywork.pot_user WHERE user_email = #{signinEmail} and user_password = #{signinPassword})
+    <select id="auth" resultType="integer">
+        UPDATE mywork.pot_user SET user_logging_in = TRUE WHERE user_email = #{signinEmail} and user_password = #{signinPassword};
     </select>
 </mapper>

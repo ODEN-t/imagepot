@@ -19,8 +19,10 @@ public class AuthValidator implements ConstraintValidator<Auth, SigninForm> {
 
     @Override
     public boolean isValid(SigninForm form, ConstraintValidatorContext context) {
-        boolean result = signinFormService.auth(form);
-        if (result) {
+        Integer result = signinFormService.auth(form);
+
+        // UPDATE件数が0の場合hasErrorをtrueにする
+        if (result == null) {
             return true;
         }
         return false;

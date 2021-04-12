@@ -19,7 +19,7 @@ public class SigninFormService {
     }
 
     // 入力されたemail,passwordに一致するアカウントが存在するかチェック
-    public boolean auth(SigninForm signinForm) {
+    public Integer auth(SigninForm signinForm) {
         return signinFormMapper.auth(signinForm);
     }
 }
