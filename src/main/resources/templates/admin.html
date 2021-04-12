@@ -7,30 +7,46 @@
 </head>
 
 <body>
-  <div class="p-admin">
+  <div class="c-globalContainer">
     <div th:replace="common::sidebar">
     </div>
-    <section class="p-admin__contents">
-      <h1>User List</h1>
-      <dl class="p-admin__userList">
-        <dt>ID</dt>
-        <dd>aaa</dd>
-        <dt>Email</dt>
-        <dd>gjahevslrhiga@gmail.com</dd>
-        <dt>Name</dt>
-        <dd></dd>
-        <dt>Icon</dt>
-        <dd></dd>
-        <dt>Created At</dt>
-        <dd></dd>
-        <dt>Logging In</dt>
-        <dd></dd>
-      </dl>
-      <div>Total：<span></span></div>
+    <div class="c-contents">
+      <div class="p-admin">
+        <section class="p-admin__contents">
+          <h1>User List</h1>
+          <dl class="p-admin__userList">
+            <div class="p-admin__userList__dataBlock p-admin__userList__dataBlock-id">
+              <dt>ID</dt>
+              <dd>2</dd>
+            </div>
+            <div class="p-admin__userList__dataBlock p-admin__userList__dataBlock-email">
+              <dt>Email</dt>
+              <dd>monstersinc2311@gmail.com </dd>
+            </div>
+            <div class="p-admin__userList__dataBlock p-admin__userList__dataBlock-name">
+              <dt>Name</dt>
+              <dd>☆Michael Wazowski★</dd>
+            </div>
+            <div class="p-admin__userList__dataBlock p-admin__userList__dataBlock-role">
+              <dt>Role</dt>
+              <dd>ROLE_ADMIN</dd>
+            </div>
+            <div class="p-admin__userList__dataBlock p-admin__userList__dataBlock-createdAt">
+              <dt>Created At</dt>
+              <dd>2021/04/06</dd>
+            </div>
+            <div class="p-admin__userList__dataBlock p-admin__userList__dataBlock-logginIn">
+              <dt>Logging In</dt>
+              <dd>False</dd>
+            </div>
+          </dl>
+          <div class="p-admin__total">Total：<span>2</span></div>
+        </section>
+      </div>
       <footer th:replace="common::footer">
       </footer>
-    </section>
-    </article>
+    </div>
+  </div>
 </body>
 
 </html>
