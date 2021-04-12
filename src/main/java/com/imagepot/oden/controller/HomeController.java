@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class HomeController {
@@ -30,5 +31,11 @@ public class HomeController {
         int count = userList.size();
         model.addAttribute("count", count);
         return "admin";
+    }
+
+    @PostMapping("/signout")
+    public String getSignout() {
+        System.out.println("Sign Out....");
+        return "redirect:/";
     }
 }

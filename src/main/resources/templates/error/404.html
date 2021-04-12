@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common::meta_header('404Error', ~{::link}, ~{::script})">
+  <link rel="stylesheet" th:href="@{/css/page/error.min.css}">
+</head>
+
+<body>
+  <div class="p-error">
+    <h1 th:text="${status} + ' ' + ${error}"></h1>
+    <form method="POST" th:action="@{/signout}">
+      <button class="buttonCTA" type="submit">
+        Go back to the login page
+      </button>
+    </form>
+  </div>
+</body>

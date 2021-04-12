@@ -22,9 +22,9 @@ public class AuthValidator implements ConstraintValidator<Auth, SigninForm> {
         Integer result = signinFormService.auth(form);
 
         // UPDATE件数が0の場合hasErrorをtrueにする
-        if (result == null) {
-            return true;
+        if (result == 1) {
+            return false;
         }
-        return false;
+        return true;
     }
 }
