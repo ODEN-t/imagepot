@@ -15,43 +15,33 @@
   }
 
   &__userList {
-    display: flex;
+    width: 100%;
     margin-top: 24px;
-    border: solid 1px #000;
+    border-collapse: collapse;
 
-    &__dataBlock {
-      display: flex;
-      flex-direction: column;
-      &:not(.p-admin__userList__dataBlock-logginIn) {
-        border-right: solid 1px #000;
-      }
+    &__head {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 37px;
+      height: 37px;
+      background: #118AB2;
+      color: #fff;
 
-      > dt {
-        font-size: 15px;
-        font-weight: 600;
-        line-height: 37px;
-        height: 37px;
-        border-bottom: solid 1px #000;
+      > th {
         padding: 3px;
-        background: #118AB2;
-        color: #fff;
+        border: solid 1px #DCDCDC		;
       }
+    }
 
-      > dd {
-        font-size: 14px;
-        line-height: 29px;
-        height: 29px;
+    &__data {
+      font-size: 14px;
+      line-height: 29px;
+      height: 29px;
+      padding: 3px;
+
+      > td {
         padding: 3px;
-      }
-
-      &-id, &-role, &-loggingIn {
-        flex-grow: 1;
-      }
-      &-name, &-createdAt {
-        flex-grow: 2;
-      }
-      &-email {
-        flex-grow: 3;
+        border: solid 1px #DCDCDC		;
       }
     }
   }
@@ -59,6 +49,7 @@
   &__total {
     margin-top: 15px;
     font-size: 16px;
-    font-weight: 400;
+    line-height: 1.4;
+    font-weight: 600;
   }
 }

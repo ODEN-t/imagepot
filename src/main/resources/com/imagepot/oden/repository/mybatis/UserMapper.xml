@@ -32,14 +32,7 @@
             user_id = #{id}
     </select>
     <select id="selectAllUser" resultMap="user">
-        SELECT
-            user_id,
-            user_email,
-            user_password,
-            user_name,
-            user_role
-        FROM
-            mywork.pot_user
+        SELECT * FROM mywork.pot_user;
     </select>
     <delete id="deleteOneUser" parameterType="integer">
         DELETE FROM mywork.pot_user WHERE user_id = #{id}

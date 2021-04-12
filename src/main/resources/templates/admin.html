@@ -12,35 +12,27 @@
     </div>
     <div class="c-contents">
       <div class="p-admin">
-        <section class="p-admin__contents">
+        <section class="p-admin__contents" th:fragment="admin__contents">
           <h1>User List</h1>
-          <dl class="p-admin__userList">
-            <div class="p-admin__userList__dataBlock p-admin__userList__dataBlock-id">
-              <dt>ID</dt>
-              <dd>2</dd>
-            </div>
-            <div class="p-admin__userList__dataBlock p-admin__userList__dataBlock-email">
-              <dt>Email</dt>
-              <dd>monstersinc2311@gmail.com </dd>
-            </div>
-            <div class="p-admin__userList__dataBlock p-admin__userList__dataBlock-name">
-              <dt>Name</dt>
-              <dd>☆Michael Wazowski★</dd>
-            </div>
-            <div class="p-admin__userList__dataBlock p-admin__userList__dataBlock-role">
-              <dt>Role</dt>
-              <dd>ROLE_ADMIN</dd>
-            </div>
-            <div class="p-admin__userList__dataBlock p-admin__userList__dataBlock-createdAt">
-              <dt>Created At</dt>
-              <dd>2021/04/06</dd>
-            </div>
-            <div class="p-admin__userList__dataBlock p-admin__userList__dataBlock-logginIn">
-              <dt>Logging In</dt>
-              <dd>False</dd>
-            </div>
-          </dl>
-          <div class="p-admin__total">Total：<span>2</span></div>
+          <table class="p-admin__userList">
+            <tr class="p-admin__userList__head">
+              <th>ID</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Created At</th>
+              <th>Logging In</th>
+            </tr>
+            <tr th:each="user:${userList}" class="p-admin__userList__data">
+              <td th:text="${user.id}"></td>
+              <td th:text="${user.email}"></td>
+              <td th:text="${user.name}"></td>
+              <td th:text="${user.role}"></td>
+              <td th:text="${#dates.format(user.createdAt, 'YYYY/MM/dd')}"></td>
+              <td th:text="${user.loggingIn}"></td>
+            </tr>
+          </table>
+          <div class="p-admin__total" th:text="'Total：' + ${count}"></div>
         </section>
       </div>
       <footer th:replace="common::footer">
