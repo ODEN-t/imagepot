@@ -68,6 +68,7 @@ public class TopController {
             SignupForm signupform,
             RedirectAttributes atts) {
         if (resultSignin.hasErrors()) {
+            System.out.println("これ" + resultSignin);
             atts.addAttribute("hasErrors", true);
             return getTopPage(signupform, signinform);
         }

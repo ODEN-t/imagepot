@@ -1,6 +1,6 @@
 <mxfile>
     <diagram id="QV3cCd6eq64nft1bvd9X" name="テーブル表">
-        <mxGraphModel dx="1042" dy="407" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="543" dy="407" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="KHWvVhG0guuP3SYzxtQW-0"/>
                 <mxCell id="KHWvVhG0guuP3SYzxtQW-1" parent="KHWvVhG0guuP3SYzxtQW-0"/>
@@ -491,7 +491,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="5Cn4iMFR66sD8KCR1BDw" name="Mapper">
-        <mxGraphModel dx="1042" dy="407" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="543" dy="407" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="4OcaEQ_S3MehbXQRo18Z-0"/>
                 <mxCell id="4OcaEQ_S3MehbXQRo18Z-1" parent="4OcaEQ_S3MehbXQRo18Z-0"/>

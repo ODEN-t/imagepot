@@ -11,5 +11,5 @@ public interface SigninFormMapper {
     public boolean checkEmailForSignin(String email);
 
     // 入力されたemail,passwordに一致するアカウントが存在するかチェック
-    public Integer auth(SigninForm signinForm);
+    public boolean auth(SigninForm signinForm);
 }

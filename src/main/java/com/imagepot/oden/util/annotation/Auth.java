@@ -24,6 +24,6 @@ public @interface Auth {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     public @interface List {
-        Exist[] value();
+        Auth[] value();
     }
 }

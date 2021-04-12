@@ -44,4 +44,11 @@
         WHERE
             user_id = #{id}
     </update>
+    <update id="updateLoggingIn" parameterType="com.imagepot.oden.model.User">
+        UPDATE mywork.pot_user
+        SET
+            user_logging_in = '1'
+        WHERE
+            user_email = #{email}
+    </update>
 </mapper>
