@@ -3,6 +3,7 @@ package com.imagepot.oden.controller;
 import java.util.List;
 
 import com.imagepot.oden.model.User;
+import com.imagepot.oden.service.StorageService;
 import com.imagepot.oden.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,12 @@ public class HomeController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    StorageService s3Service;
+
     @GetMapping("/home")
     public String getHome(Model model) {
+        s3Service.getObjList();
         return "home";
     }
 

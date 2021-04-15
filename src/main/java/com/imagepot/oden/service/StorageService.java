@@ -3,11 +3,14 @@ package com.imagepot.oden.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.util.IOUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,18 @@ public class StorageService {
     // クライアント経由でs3を操作
     @Autowired
     private AmazonS3 s3Cliant;
+
+    public void getObjList() {
+        ObjectListing objListing = s3Cliant.listObjects(bucketName);
+        List<S3ObjectSummary> objList = objListing.getObjectSummaries();
+
+        for (S3ObjectSummary obj : objList) {
+            System.out.println(s3Cliant.getUrl(bucketName, obj.getKey()));
+            // System.out.println("Key [" + obj.getKey() + "] / Size [" + obj.getSize() + "
+            // B] / Last Modified ["
+            // + obj.getLastModified() + "]");
+        }
+    }
 
     public String uploadFile(MultipartFile file) {
         File fileObj = convertMultiPartFileToFile(file);
