@@ -30,28 +30,4 @@ public class ValidationGroups {
 
     public interface Group10 {
     };
-
-    public interface Group11 {
-    };
-
-    public interface Group12 {
-    };
-
-    public interface Group13 {
-    };
-
-    public interface Group14 {
-    };
-
-    public interface Group15 {
-    };
-
-    public interface Group16 {
-    };
-
-    public interface Group17 {
-    };
-
-    public interface Group18 {
-    };
 }

@@ -40,6 +40,10 @@ DROP SEQUENCE user_id_seq;
 insert into mywork.pot_user (user_email, user_password, user_name, user_icon, user_role) values (
     'monstersinc2311@gmail.com', 'password', '☆Michael Wazowski★', pg_read_binary_file('/testimage/monster/mike.jpg'), 'ROLE_ADMIN'
 );
+insert into mywork.pot_user (user_email, user_password, user_name, user_role) values (
+    'aaaaa@gmail.com', 'password1', '田中太郎', 'ROLE_USER'
+);
+
 
 -- 初期insert pot_image
 insert into mywork.pot_image (image_id, image_path, user_id, image_title, image_extension, image_record_status) values (

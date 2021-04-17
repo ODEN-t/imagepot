@@ -65,16 +65,18 @@ public class TopController {
         return "redirect:/";
     }
 
-    @PostMapping(params = "signinAccount")
+    @PostMapping(value = "/signin", params = "signinAccount")
     public String postSignIn(
-            @ModelAttribute @Validated(ValidationAll.class) SigninForm signinform,
+            @ModelAttribute SigninForm signinform,
             BindingResult resultSignin,
             SignupForm signupform,
             RedirectAttributes atts) {
         if (resultSignin.hasErrors()) {
+            System.out.println("あいおうえおあお");
             atts.addAttribute("hasErrors", true);
             return getTopPage(signupform, signinform);
         }
+        System.out.println("sdsdw");
         return "redirect:/home";
     }
 
