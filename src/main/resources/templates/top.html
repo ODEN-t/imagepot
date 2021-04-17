@@ -26,15 +26,13 @@
         <div class="p-top__modalBody">
           <h2>Hello!</h2>
           <p>Sign into your account here.</p>
-          <form class="p-top__modalForm" method="post" th:object="${signinForm}" th:action="@{/signin}">
+          <form class="p-top__modalForm" method="post" th:action="@{/signin}">
             <div class="p-top__inputGroup">
-              <input class="inputText" th:classappend="${#fields.hasErrors('signinEmail')}?'is-error'" type="text"
-                placeholder="Email" th:field="*{signinEmail}" name="signinEmail">
+              <input class="inputText" type="text" placeholder="Email" name="signinEmail">
               <i class="icon-envelop"></i>
             </div>
             <div class="p-top__inputGroup">
-              <input class="inputText" th:classappend="${#fields.hasErrors('signinPassword')}?'is-error'"
-                type="password" placeholder="Password" th:field="*{signinPassword}" name="signinPassword">
+              <input class="inputText" type="password" placeholder="Password" name="signinPassword">
               <span class="buttonCTA buttonCTA-show" id="showButtonPassword">Show</span>
               <i class="icon-lock"></i>
             </div>

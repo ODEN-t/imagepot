@@ -1,15 +1,14 @@
 package com.imagepot.oden.controller;
 
-import com.imagepot.oden.model.SigninForm;
 import com.imagepot.oden.model.SignupForm;
 import com.imagepot.oden.model.User;
 import com.imagepot.oden.model.ValidationAll;
-import com.imagepot.oden.service.SigninFormService;
 import com.imagepot.oden.service.SignupFormService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,11 +27,8 @@ public class TopController {
     @Autowired
     SignupFormService signupFormService;
 
-    @Autowired
-    SigninFormService signinFormService;
-
     @GetMapping
-    public String getTopPage(@ModelAttribute SignupForm signupform, @ModelAttribute SigninForm signinform) {
+    public String getTopPage(@ModelAttribute SignupForm signupform) {
         return "top";
     }
 
@@ -40,11 +36,10 @@ public class TopController {
     public String postSignUp(
             @ModelAttribute @Validated(ValidationAll.class) SignupForm signupform,
             BindingResult resultSignup,
-            SigninForm signinform,
             RedirectAttributes atts) {
         if (resultSignup.hasErrors()) {
             atts.addAttribute("hasErrors", true);
-            return getTopPage(signupform, signinform);
+            return getTopPage(signupform);
         }
 
         System.out.println("formの中身＝＞" + signupform);
@@ -66,17 +61,7 @@ public class TopController {
     }
 
     @PostMapping(value = "/signin", params = "signinAccount")
-    public String postSignIn(
-            @ModelAttribute SigninForm signinform,
-            BindingResult resultSignin,
-            SignupForm signupform,
-            RedirectAttributes atts) {
-        if (resultSignin.hasErrors()) {
-            System.out.println("あいおうえおあお");
-            atts.addAttribute("hasErrors", true);
-            return getTopPage(signupform, signinform);
-        }
-        System.out.println("sdsdw");
+    public String postSignIn(Model model) {
         return "redirect:/home";
     }
 

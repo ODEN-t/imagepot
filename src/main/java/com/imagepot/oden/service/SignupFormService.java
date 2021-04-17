@@ -4,6 +4,7 @@ import com.imagepot.oden.model.User;
 import com.imagepot.oden.repository.mybatis.SignupFormMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,9 @@ public class SignupFormService {
     @Autowired
     SignupFormMapper signupFormMapper;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     // ユーザのemail重複チェック
     public boolean checkDuplicateEmail(String email) {
         return signupFormMapper.checkDuplicateEmail(email);
@@ -20,6 +24,9 @@ public class SignupFormService {
 
     // Formからユーザ登録
     public Integer registUser(User user) {
+
+        // パスワードをハッシュ化
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return signupFormMapper.registUser(user);
     }
 }
