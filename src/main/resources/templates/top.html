@@ -40,6 +40,7 @@
               in</button>
             <div th:if="${registSuccess}" class="p-top__message p-top__message-error">User Registration Successful!
               Please Login.</div>
+
             <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
               th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="p-top__message p-top__message-error"
               data-error="signin">ログインエラーメッセージ</div>

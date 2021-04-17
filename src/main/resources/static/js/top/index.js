@@ -27,8 +27,8 @@ const signinModal = new jBox('Modal', {
     createOnInit: true,
 });
 
-// Error modal の設定値
-const errorModal = new jBox('Modal', {
+// Message modal の設定値
+const messageModal = new jBox('Modal', {
     content: $('.p-top__message'),
     addClass: 'add-jboxErrorMessage',
     overlay: false,
@@ -74,12 +74,14 @@ inputTypeToggle('.buttonCTA-show');
 // errorメッセージ表示時、エラー発生モーダルをオープン
 const showErrorMessage = (elementClass) => {
     const messageElem = document.querySelectorAll(elementClass);
+    console.log(messageElem);
     if (messageElem.length === 1) {
+        console.log("messageあり");
         const modalType = messageElem[0].dataset.error;
         signinModal.close();
         signupModal.close();
         modalType == 'signin' ? signinModal.open() : signupModal.open();
-        errorModal.open();
+        messageModal.open();
     }
 }
-showErrorMessage('.p-top__errorMessage');
+showErrorMessage('.p-top__message');
