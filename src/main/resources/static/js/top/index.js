@@ -29,7 +29,7 @@ const signinModal = new jBox('Modal', {
 
 // Error modal の設定値
 const errorModal = new jBox('Modal', {
-    content: $('.p-top__errorMessage'),
+    content: $('.p-top__message'),
     addClass: 'add-jboxErrorMessage',
     overlay: false,
     closeOnClick: false,
@@ -71,7 +71,7 @@ const inputTypeToggle = (elementClass) => {
 inputTypeToggle('.buttonCTA-show');
 
 
-// errorメッセージのモーダル表示
+// errorメッセージ表示時、エラー発生モーダルをオープン
 const showErrorMessage = (elementClass) => {
     const messageElem = document.querySelectorAll(elementClass);
     if (messageElem.length === 1) {

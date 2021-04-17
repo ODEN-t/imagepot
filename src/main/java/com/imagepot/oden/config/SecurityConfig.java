@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -35,40 +36,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        // アクセス許可設定
+        // SpringSecurity除外設定
         http.authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/dist/**").permitAll()
                 .antMatchers("/icomoon/**").permitAll()
                 .antMatchers("/images/**").permitAll()
-                .antMatchers("/").permitAll() // ログインページは直リンクOK
+                .antMatchers(HttpMethod.POST, "/signup").permitAll()
                 .antMatchers("/admin").hasAnyAuthority("ROLE_ADMIN") // adminのみ許可
                 .antMatchers("/signout").permitAll()
-                .anyRequest().authenticated()// それ以外は直リンク禁止
-                .and()
-                // ログイン処理
-                .formLogin()
-                .loginPage("/top") // ログインページのhtmlファイルを指定
+                .anyRequest().authenticated();// それ以外は直リンク禁止
+
+        // ログイン処理
+        http.formLogin()
+                .loginPage("/").permitAll() // ログインページのhtmlファイルを指定
                 .loginProcessingUrl("/signin") // ログイン画面のaction属性
                 .failureUrl("/") // ログイン失敗時の遷移先
                 .usernameParameter("signinEmail") // ログインに必要なパラメータ
                 .passwordParameter("signinPassword")
-                .defaultSuccessUrl("/home", true) // ログイン成功後の遷移先
-                .and()
-                // ログアウト処理
-                .logout()
+                .defaultSuccessUrl("/home", true); // ログイン成功後の遷移先
+
+        // ログアウト処理
+        http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
                 .logoutSuccessUrl("/");
-
-        // RESTのみCSRF対策を無効に設定
-        http.csrf().disable();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery(
-                        "SELECT user_email as username, user_password, true FROM mywork.pot_user WHERE user_email = ?")
+                        "SELECT user_email as username, user_password, true FROM mywork.pot_user WHERE user_email = ?") // serviceで実装したい
                 .authoritiesByUsernameQuery(
                         "SELECT user_email, user_role FROM mywork.pot_user WHERE user_email = ?")
                 .passwordEncoder(passwordEncoder()); // 復号

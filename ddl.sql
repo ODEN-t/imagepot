@@ -41,7 +41,7 @@ insert into mywork.pot_user (user_email, user_password, user_name, user_icon, us
     'monstersinc2311@gmail.com', 'password', '☆Michael Wazowski★', pg_read_binary_file('/testimage/monster/mike.jpg'), 'ROLE_ADMIN'
 );
 insert into mywork.pot_user (user_email, user_password, user_name, user_role) values (
-    'aaaaa@gmail.com', 'password1', '田中太郎', 'ROLE_USER'
+    'eren@gmail.com', 'password', 'Eren Yeager', 'ROLE_ADMIN'
 );
 
 

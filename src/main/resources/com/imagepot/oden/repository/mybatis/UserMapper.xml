@@ -32,7 +32,7 @@
             user_id = #{id}
     </select>
     <select id="selectAllUser" resultMap="user">
-        SELECT * FROM mywork.pot_user;
+        SELECT * FROM mywork.pot_user ORDER BY user_id;
     </select>
     <delete id="deleteOneUser" parameterType="integer">
         DELETE FROM mywork.pot_user WHERE user_id = #{id}

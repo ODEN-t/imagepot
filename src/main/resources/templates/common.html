@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="meta_header(title, links, scripts)">
   <meta charset="UTF-8">
@@ -50,7 +50,7 @@
               <span>Settings</span>
             </a>
           </li>
-          <li class="c-sidebar__menu__item">
+          <li class="c-sidebar__menu__item" sec:authorize="hasRole('ADMIN')">
             <a class="c-sidebar__menu__itemLink" th:href="@{'/admin'}">
               <i class="icon-cogs"></i>
               <span>Manage</span>

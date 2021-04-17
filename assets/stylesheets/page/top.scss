@@ -143,10 +143,12 @@
     }
   }
 
-  &__errorMessage {
-    color: #9E5869;
+  &__message {
     font-size: 15px;
     line-height: 1.2;
+    &-error {
+      color: #9E5869;
+    }
   }
   
 }

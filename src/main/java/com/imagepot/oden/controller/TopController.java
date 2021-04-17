@@ -17,42 +17,46 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/")
 public class TopController {
 
     @Autowired
     SignupFormService signupFormService;
 
-    @GetMapping
+    @GetMapping("/")
     public String getTopPage(@ModelAttribute SignupForm signupform) {
+        System.out.println("getTopPage走る");
         return "top";
     }
 
-    @PostMapping(params = "signupAccount")
+    // @GetMapping("/login")
+    // public String getLogin(@ModelAttribute SignupForm signupform) {
+    // System.out.println("getLogin走る");
+    // return "top";
+    // }
+
+    @PostMapping(value = "signup", params = "signupAccount")
     public String postSignUp(
             @ModelAttribute @Validated(ValidationAll.class) SignupForm signupform,
             BindingResult resultSignup,
-            RedirectAttributes atts) {
+            RedirectAttributes atts,
+            Model model) {
         if (resultSignup.hasErrors()) {
             atts.addAttribute("hasErrors", true);
             return getTopPage(signupform);
         }
 
-        System.out.println("formの中身＝＞" + signupform);
-
         User user = new User();
         user.setEmail(signupform.getSignupEmail());
         user.setPassword(signupform.getSignupPassword());
         user.setName(signupform.getName());
-
         Integer result = signupFormService.registUser(user);
 
         if (result == 1) {
             System.out.println("insert成功");
+            model.addAttribute("registSuccess", true);
         } else {
             System.out.println("insert失敗");
         }
@@ -60,7 +64,7 @@ public class TopController {
         return "redirect:/";
     }
 
-    @PostMapping(value = "/signin", params = "signinAccount")
+    @PostMapping(params = "signinAccount")
     public String postSignIn(Model model) {
         return "redirect:/home";
     }
