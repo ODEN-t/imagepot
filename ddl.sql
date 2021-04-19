@@ -6,18 +6,21 @@ CREATE SEQUENCE user_id_seq
 
 CREATE TABLE mywork.pot_user(
     user_id integer DEFAULT nextval('user_id_seq') PRIMARY KEY,
+    user_name varchar(20) NOT NULL,
     user_email varchar(255) NOT NULL UNIQUE,
     user_password varchar(60) NOT NULL,
-    user_name varchar(20) NOT NULL,
     user_icon bytea,
     user_role varchar(10) NOT NULL CHECK(user_role = 'ROLE_USER' or user_role = 'ROLE_ADMIN') DEFAULT 'ROLE_USER',
-    user_created_at timestamp DEFAULT current_timestamp,
+    user_password_updated_at timestamp DEFAULT current_timestamp,
+    user_signin_miss_times integer DEFAULT 0,
+    user_unlock boolean DEFAULT true,
+    user_enabled boolean DEFAULT true,
     user_updated_at timestamp DEFAULT current_timestamp,
-    user_logging_in boolean NOT NULL DEFAULT false
+    user_created_at timestamp DEFAULT current_timestamp
 );
 
-create table mywork.pot_image(
-    image_id char(18) PRIMARY KEY,
+CREATE TABLE mywork.pot_image(
+    image_id char(18),
     image_path varchar(2048) NOT NULL,
     user_id integer NOT NULL REFERENCES mywork.pot_user(user_id),
     image_title varchar(20) DEFAULT NULL,
@@ -25,7 +28,8 @@ create table mywork.pot_image(
     image_posted_at timestamp DEFAULT current_timestamp,
     image_deleted_at timestamp DEFAULT NULL,
     image_restored_at timestamp DEFAULT NULL,
-    image_record_status integer NOT NULL CHECK(image_record_status = 0 or image_record_status = 1) DEFAULT 1
+    image_is_deleted DEFAULT false,
+    PRIMARY KEY(image_id, user_id)
 );
 
 -- 削除(依存関係から上から順に)
@@ -38,7 +42,7 @@ DROP SEQUENCE user_id_seq;
 
 -- 初期insert pot_user
 insert into mywork.pot_user (user_email, user_password, user_name, user_icon, user_role) values (
-    'monstersinc2311@gmail.com', 'password', '☆Michael Wazowski★', pg_read_binary_file('/testimage/monster/mike.jpg'), 'ROLE_ADMIN'
+    'monstersinc2311@gmail.com', '$2a$10$TqJfagRv7dqeL8yip5DbwOE.jcIMQ0K1EHhltD01JFC2zgon4DAza', '☆Michael Wazowski★', pg_read_binary_file('/testimage/monster/mike.jpg'), 'ROLE_ADMIN'
 );
 insert into mywork.pot_user (user_email, user_password, user_name, user_role) values (
     'eren@gmail.com', 'password', 'Eren Yeager', 'ROLE_ADMIN'
@@ -46,8 +50,8 @@ insert into mywork.pot_user (user_email, user_password, user_name, user_role) va
 
 
 -- 初期insert pot_image
-insert into mywork.pot_image (image_id, image_path, user_id, image_title, image_extension, image_record_status) values (
-    to_char(current_timestamp, 'yyyymmddhh24mmssms'), '1617672574670_body_120204.jpeg', 2, 'アラジンの画像', 'jpg', 1
+insert into mywork.pot_image (image_id, image_path, user_id, image_title, image_extension, image_is_deleted) values (
+    to_char(current_timestamp, 'yyyymmddhh24mmssms'), 'https://imagepot-app.s3-ap-northeast-1.amazonaws.com/album1/321_main_visual_name_1-min.jpg', 1, 'モンスターズ・インク', 'jpg', false
 );
 
 -- バイナリデータ読み込み

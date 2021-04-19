@@ -7,12 +7,16 @@ import com.imagepot.oden.service.StorageService;
 import com.imagepot.oden.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class HomeController {
 
     @Autowired
@@ -22,7 +26,9 @@ public class HomeController {
     StorageService s3Service;
 
     @GetMapping("/home")
-    public String getHome(Model model) {
+    public String getHome(Model model, @AuthenticationPrincipal User user) {
+        log.info("HomeController Start");
+        log.info(user.toString());
         s3Service.getObjList();
         return "home";
     }
