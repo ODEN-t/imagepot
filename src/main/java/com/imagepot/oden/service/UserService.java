@@ -34,9 +34,4 @@ public class UserService {
     public boolean updateIcon(User user) {
         return userMapper.updateIcon(user);
     }
-
-    // 特定のユーザログイン状況を更新
-    public boolean updateLoggingIn(User user) {
-        return userMapper.updateLoggingIn(user);
-    }
 }

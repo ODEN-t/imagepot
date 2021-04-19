@@ -2,6 +2,7 @@ package com.imagepot.oden.controller;
 
 import java.util.List;
 
+import com.imagepot.oden.model.AppUserDetails;
 import com.imagepot.oden.model.User;
 import com.imagepot.oden.service.StorageService;
 import com.imagepot.oden.service.UserService;
@@ -26,10 +27,10 @@ public class HomeController {
     StorageService s3Service;
 
     @GetMapping("/home")
-    public String getHome(Model model, @AuthenticationPrincipal User user) {
+    public String getHome(Model model, @AuthenticationPrincipal AppUserDetails user) {
         log.info("HomeController Start");
         log.info(user.toString());
-        s3Service.getObjList();
+        // s3Service.getObjList();
         return "home";
     }
 

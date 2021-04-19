@@ -20,7 +20,4 @@ public interface UserMapper {
 
     // 特定のユーザアイコンを更新
     public boolean updateIcon(User user);
-
-    // 特定のユーザログイン状況を更新
-    public boolean updateLoggingIn(User user);
 }

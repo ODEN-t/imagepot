@@ -7,12 +7,15 @@ import lombok.Data;
 @Data
 public class User {
     private Integer id;
+    private String name;
     private String email;
     private String password;
-    private String name;
     private byte[] icon;
     private String role;
+    private Timestamp passwordUpdatedAt;
+    private Integer signinMissTimes;
+    private boolean unlock;
+    private boolean enabled;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    private boolean loggingIn;
 }

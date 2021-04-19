@@ -3,6 +3,7 @@ package com.imagepot.oden.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -18,6 +20,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    @Qualifier("UserDetailsServiceImpl")
+    private UserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -64,11 +70,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery(
-                        "SELECT user_email as username, user_password, true FROM mywork.pot_user WHERE user_email = ?") // serviceで実装したい
-                .authoritiesByUsernameQuery(
-                        "SELECT user_email, user_role FROM mywork.pot_user WHERE user_email = ?")
-                .passwordEncoder(passwordEncoder()); // 復号
+        // auth.jdbcAuthentication().dataSource(dataSource)
+        // .usersByUsernameQuery(
+        // "SELECT user_email as username, user_password, true FROM mywork.pot_user
+        // WHERE user_email = ?") // serviceで実装したい
+        // .authoritiesByUsernameQuery(
+        // "SELECT user_email, user_role FROM mywork.pot_user WHERE user_email = ?")
+        // .passwordEncoder(passwordEncoder()); // 復号
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 }

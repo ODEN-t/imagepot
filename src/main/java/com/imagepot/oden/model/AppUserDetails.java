@@ -18,23 +18,23 @@ import lombok.NoArgsConstructor;
 public class AppUserDetails implements UserDetails {
 
     // Springで必要なフィールド
-    private String userID; // ユーザID
+    private String userId; // ユーザID
     private String password; // パスワード
     private Date passUpdateDate; // パスワード更新日付
-    private int loginMissTimes; // ログイン失敗回数
+    private int signinMissTimes; // サインイン失敗回数
     private boolean unlock; // ロック状態フラグ
     private boolean enabled; // 有効・無効フラグ
     private Date userDueDate; // ユーザ有効期限
-    private Collection<? extends GrantedAuthority> authority; // 権限
+    private Collection<? extends GrantedAuthority> role; // 権限
 
     // 独自フィールド
     private String email; // メールアドレス
-    private String userName; // ユーザ名
+    private String appUserName; // ユーザ名
     private byte[] icon; // アイコン
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authority;
+        return role;
     }
 
     @Override
@@ -44,22 +44,18 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.userName;
+        return this.appUserName;
     }
 
     /**
      * アカウントの有効期限チェック
-     * ture:有効 false:無効
+     * 使用しないので常にtrue
      * 
      * @return boolean
      */
     @Override
     public boolean isAccountNonExpired() {
-        if (this.userDueDate.after(new Date())) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -75,17 +71,13 @@ public class AppUserDetails implements UserDetails {
 
     /**
      * パスワードの有効期限チェック
-     * ture:有効 false:無効
+     * 使用しないので常にtrue
      * 
      * @return boolean
      */
     @Override
     public boolean isCredentialsNonExpired() {
-        if (this.passUpdateDate.after(new Date())) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
     /**

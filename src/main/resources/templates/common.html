@@ -24,10 +24,10 @@
           <img th:src="@{/images/mike.jpg}" alt="">
         </figure>
         <div class="c-sidebar__userInfo__name">
-          Michael Wazowski
+          <span sec:authentication="principal.appUserName"></span>
         </div>
         <div class="c-sidebar__userInfo__id">
-          ekg_iielsvg@gmail.com
+          <span sec:authentication="principal.email"></span>
         </div>
       </div>
       <nav class="c-sidebar__menu">
