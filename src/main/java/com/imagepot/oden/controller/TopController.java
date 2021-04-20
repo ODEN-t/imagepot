@@ -53,7 +53,6 @@ public class TopController {
         user.setPassword(signupform.getSignupPassword());
         user.setName(signupform.getName());
         Integer result = signupFormService.registUser(user);
-
         if (result == 1) {
             System.out.println("insert成功");
             model.addAttribute("registSuccess", true);
@@ -74,7 +73,6 @@ public class TopController {
         model.addAttribute("error", "内部サーバエラー(DB)：ExceptionHandler");
         model.addAttribute("message", "SignupControllerでDataAccessExceptionが発生しました。");
         model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
-
         return "error";
     }
 
@@ -83,8 +81,6 @@ public class TopController {
         model.addAttribute("error", "内部サーバエラー：ExceptionHandler");
         model.addAttribute("message", "SignupControllerでExceptionが発生しました。");
         model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
-
         return "error";
     }
-
 }

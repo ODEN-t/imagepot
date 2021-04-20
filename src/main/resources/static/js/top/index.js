@@ -2,25 +2,24 @@ import jBox from 'jbox';
 import 'jbox/dist/jBox.all.css';
 import $ from 'jquery/dist/jquery.min';
 
-// Signup Modal の設定値
-const signupModal = new jBox('Modal', {
+// Signin Modal の設定値
+const signinModal = new jBox('Modal', {
     width: 405,
-    height: 573,
-    attach: '#signup',
-    content: $('#signupContent'),
+    height: 443,
+    attach: '#signin',
+    content: $('#signinModal'),
     overlayClass: 'add-jboxOverRay',
     closeOnClick: false,
     closeButton: 'box',
     createOnInit: true,
 });
 
-
-// Signin Modal の設定値
-const signinModal = new jBox('Modal', {
+// Signup Modal の設定値
+const signupModal = new jBox('Modal', {
     width: 405,
-    height: 443,
-    attach: '#signin',
-    content: $('#signinContent'),
+    height: 573,
+    attach: '#signup',
+    content: $('#signupModal'),
     overlayClass: 'add-jboxOverRay',
     closeOnClick: false,
     closeButton: 'box',
@@ -72,11 +71,10 @@ inputTypeToggle('.buttonCTA-show');
 
 
 // errorメッセージ表示時、エラー発生モーダルをオープン
+// signinのエラーメッセージが消えないためsignupモーダルが開かない要修正
 const showErrorMessage = (elementClass) => {
     const messageElem = document.querySelectorAll(elementClass);
-    console.log(messageElem);
     if (messageElem.length === 1) {
-        console.log("messageあり");
         const modalType = messageElem[0].dataset.error;
         signinModal.close();
         signupModal.close();

@@ -56,6 +56,9 @@ public class LoginUserRepository {
         boolean unlock = (boolean) userMap.get("user_unlock");
         boolean enabled = (boolean) userMap.get("user_enabled");
 
+        // byte[] iconA = (byte[]) userMap.get("user_icon");
+        // byte[] iconB = Base64.getDecoder().decode(iconA);
+
         new AppUserDetails();
         AppUserDetails user = AppUserDetails
                 .builder()
@@ -66,6 +69,7 @@ public class LoginUserRepository {
                 .signinMissTimes(signinMissTimes)
                 .unlock(unlock)
                 .enabled(enabled)
+                // .icon(iconB)
                 .build();
 
         return user;

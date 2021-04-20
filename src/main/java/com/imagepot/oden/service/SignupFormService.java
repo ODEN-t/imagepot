@@ -14,8 +14,8 @@ public class SignupFormService {
     @Autowired
     SignupFormMapper signupFormMapper;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    // @Autowired
+    // PasswordEncoder passwordEncoder; 一時的に無効
 
     // ユーザのemail重複チェック
     public boolean checkDuplicateEmail(String email) {
@@ -26,7 +26,7 @@ public class SignupFormService {
     public Integer registUser(User user) {
 
         // パスワードをハッシュ化
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // user.setPassword(passwordEncoder.encode(user.getPassword()));
         return signupFormMapper.registUser(user);
     }
 }

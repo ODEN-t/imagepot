@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,9 +29,10 @@ public class HomeController {
     StorageService s3Service;
 
     @GetMapping("/home")
-    public String getHome(Model model, @AuthenticationPrincipal AppUserDetails user) {
+    //@AuthenticationPrincipal AppUserDetails user
+    public String getHome(Model model) {
         log.info("HomeController Start");
-        log.info(user.toString());
+        //log.info(user.toString());
         // s3Service.getObjList();
         return "home";
     }
@@ -49,5 +52,17 @@ public class HomeController {
     public String getSignout() {
         System.out.println("Sign Out....");
         return "redirect:/";
+    }
+
+    @PostMapping("/home/icon")
+    public void post(
+            @RequestParam("upload_file") MultipartFile multipartFile,
+            @RequestParam("filetype") String fileType,
+            @AuthenticationPrincipal AppUserDetails user) {
+        if (multipartFile.isEmpty()) {
+            System.out.println("なんもないよ");
+        }
+        System.out.println(multipartFile);
+        System.out.println(fileType);
     }
 }
