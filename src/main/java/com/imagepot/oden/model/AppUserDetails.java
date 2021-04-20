@@ -30,7 +30,7 @@ public class AppUserDetails implements UserDetails {
     // 独自フィールド
     private String email; // メールアドレス
     private String appUserName; // ユーザ名
-    private byte[] icon; // アイコン
+    private String icon; // アイコン
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -20,7 +20,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 @Configuration
-@Profile("production") // 一時的に無効
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

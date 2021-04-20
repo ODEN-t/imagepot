@@ -34,7 +34,7 @@
     <div class="c-sidebar__wrap">
       <div class="c-sidebar__userInfo">
         <figure class="c-sidebar__userInfo__image" id="icon">
-          <img th:src="@{/images/initial_icon.jpg}" alt="">
+          <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">
         </figure>
         <div class="c-sidebar__userInfo__name">
           <span sec:authentication="principal.appUserName"></span>

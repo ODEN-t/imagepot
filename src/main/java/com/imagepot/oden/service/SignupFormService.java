@@ -11,11 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class SignupFormService {
+
     @Autowired
     SignupFormMapper signupFormMapper;
 
-    // @Autowired
-    // PasswordEncoder passwordEncoder; 一時的に無効
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     // ユーザのemail重複チェック
     public boolean checkDuplicateEmail(String email) {

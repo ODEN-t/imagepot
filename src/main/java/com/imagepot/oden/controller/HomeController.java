@@ -29,10 +29,9 @@ public class HomeController {
     StorageService s3Service;
 
     @GetMapping("/home")
-    //@AuthenticationPrincipal AppUserDetails user
-    public String getHome(Model model) {
+    public String getHome(Model model, @AuthenticationPrincipal AppUserDetails user) {
         log.info("HomeController Start");
-        //log.info(user.toString());
+        // log.info(user.toString());
         // s3Service.getObjList();
         return "home";
     }

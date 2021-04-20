@@ -1,6 +1,7 @@
 package com.imagepot.oden.repository;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -56,8 +57,10 @@ public class LoginUserRepository {
         boolean unlock = (boolean) userMap.get("user_unlock");
         boolean enabled = (boolean) userMap.get("user_enabled");
 
-        // byte[] iconA = (byte[]) userMap.get("user_icon");
-        // byte[] iconB = Base64.getDecoder().decode(iconA);
+        StringBuffer icon = new StringBuffer();
+        String base64 = new String(Base64.getEncoder().encodeToString((byte[]) userMap.get("user_icon")));
+        icon.append("data:image/jpeg;base64,");
+        icon.append(base64);
 
         new AppUserDetails();
         AppUserDetails user = AppUserDetails
@@ -69,7 +72,7 @@ public class LoginUserRepository {
                 .signinMissTimes(signinMissTimes)
                 .unlock(unlock)
                 .enabled(enabled)
-                // .icon(iconB)
+                .icon(icon.toString())
                 .build();
 
         return user;
