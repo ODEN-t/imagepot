@@ -50,63 +50,20 @@
     }
     p {
       color: #7d7c83;
-    margin-top: 18px;
-    line-height: 1.2;
-    font-size: 17px;
-    text-align: center;
+      margin-top: 18px;
+      line-height: 1.2;
+      font-size: 17px;
+      text-align: center;
     }
   }
 
   &__modalForm {
     margin-top: 32px;
 
-    > .buttonCTA {
-      margin-top: 33px;
-    }
-  }
-
-  &__inputGroup {
-    position: relative;
-
-    > i {
-      font-size: 20px;
-      color: #ddd;
-      position: absolute;
-      top: 50%;
-      left: 15px;
-      transform: translateY(-50%);
-      transition: all .15s ease;
-    }
-
-    .inputText {
-      border: 2px solid #ddd;
-      border-radius: 10px;
-      width: 100%;
-      height: 45px;
-      padding: 0 15px 0 45px;
-      font-size: 15px;
-      &::placeholder {
-        color: #ddd;
-        font-weight: 600;
-      }
-      &:focus {
-        border: 1px solid #ef476f;
-      }
-      &:focus~i {
-        color: #ef476f;
-      }
-      &.is-error {
-        border: 1px solid #ef476f;
-        &~i {
-          color: #ef476f;
-        }
-      }
-    }
-
-    &:not(:nth-of-type(1)) {
+    .inputGroup:not(:nth-of-type(1)) {
       margin-top: 20px;
     }
-
+  
     .buttonCTA-show {
       position: absolute;
       top: 50%;
@@ -126,7 +83,12 @@
         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.31) inset;
       }
     }
+
+    > .buttonCTA {
+      margin-top: 33px;
+    }
   }
+
 
   &__modalFooter {
     box-shadow: 0 -1px rgba(0,0,0, 0.11);

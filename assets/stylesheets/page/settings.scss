@@ -1,0 +1,89 @@
+.p-settings {
+  background-color: #fff;
+  padding-top: 55px;
+  width: 100%;
+
+  h1 {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.2;
+    padding: 0 22px;
+  }
+
+  &__profile {
+    margin-top: 25px;
+    padding: 0 22px;
+
+    h2 {
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+  }
+
+  &__settingArea {
+    display: flex;
+    margin-top: 35px;
+
+    > dt {
+      margin-left: 35px;
+    }
+
+    > dd {
+      margin-left: 20px;
+    }
+
+    .icon {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+      > img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+
+  &__inputGroup {
+    position: relative;
+
+    i {
+      font-size: 20px;
+      color: #ddd;
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      transition: all .15s ease;
+    }
+
+    .inputText {
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      width: 100%;
+      height: 45px;
+      padding: 0 15px 0 45px;
+      font-size: 15px;
+      &::placeholder {
+        color: #ddd;
+        font-weight: 600;
+      }
+      &:focus {
+        border: 1px solid #ef476f;
+      }
+      &:focus~i {
+        color: #ef476f;
+      }
+      &.is-error {
+        border: 1px solid #ef476f;
+        &~i {
+          color: #ef476f;
+        }
+      }
+    }
+  }
+}

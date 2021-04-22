@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common::meta_header('settings', ~{::link}, ~{::script})">
+  <link rel="stylesheet" th:href="@{/css/page/settings.min.css}">
+  <script th:src="@{/dist/settings/index.js}"></script>
+</head>
+
+<body>
+  <div class="c-globalContainer">
+    <div th:replace="common::sidebar">
+    </div>
+    <div class="c-contents">
+      <div class="p-settings">
+        <h1>Edit Information</h1>
+        <section class="p-settings__profile">
+          <h2>Your Profile</h2>
+          <dl class="p-settings__settingArea">
+            <dt>Your Icon</dt>
+            <dd>
+              <figure class="icon" id="icon">
+                <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">
+              </figure>
+            </dd>
+          </dl>
+          <form action="">
+            <dl class="p-settings__settingArea">
+              <dt><label for="name">Name</label></dt>
+              <dd class="inputGroup">
+                <i class="icon-user"></i>
+                <input class="inputText" type="text" id="name">
+              </dd>
+            </dl>
+            <dl class="p-settings__settingArea">
+              <dt><label for="email">Email</label></dt>
+              <dd class="inputGroup">
+                <i class="icon-envelop"></i>
+                <input class="inputText" type="text" id="email">
+              </dd>
+            </dl>
+          </form>
+        </section>
+
+        <section class="p-settings__password">
+          <h2>Change Password</h2>
+          <form action="">
+            <dl>
+              <div class="inputGroup">
+                <dt><label for="currentPassword">Current Password</label></dt>
+                <dd>
+                  <i class="icon-lock"></i>
+                  <input type="text" id="currentPassword">
+                </dd>
+              </div>
+              <div class="inputGroup">
+                <dt><label for="newPassword">New Password</label></dt>
+                <dd>
+                  <i class="icon-lock"></i>
+                  <input type="text" id="newPassword">
+                </dd>
+              </div>
+              <div>
+                <dt><label for="confirmNewPassword">Confirm New Password</label></dt>
+                <dd>
+                  <i class="icon-lock"></i>
+                  <input type="text" id="confirmNewPassword">
+                </dd>
+              </div>
+            </dl>
+          </form>
+        </section>
+
+      </div>
+      <footer th:replace="common::footer">
+      </footer>
+    </div>
+  </div>
+</body>
+
+</html>

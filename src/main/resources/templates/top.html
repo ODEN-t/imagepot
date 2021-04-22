@@ -27,11 +27,11 @@
           <h2>Hello!</h2>
           <p>Sign into your account here.</p>
           <form class="p-top__modalForm" method="POST" th:action="@{/signin}">
-            <div class="p-top__inputGroup">
+            <div class="inputGroup">
               <input class="inputText" type="text" placeholder="Email" name="signinEmail">
               <i class="icon-envelop"></i>
             </div>
-            <div class="p-top__inputGroup">
+            <div class="inputGroup">
               <input class="inputText" type="password" placeholder="Password" name="signinPassword">
               <span class="buttonCTA buttonCTA-show" id="showButtonPassword">Show</span>
               <i class="icon-lock"></i>
@@ -57,23 +57,23 @@
           <h2>Join Imagepot</h2>
           <p>Use image storage for free.</p>
           <form class="p-top__modalForm" method="POST" th:object="${signupForm}" th:action="@{/signup}">
-            <div class="p-top__inputGroup">
+            <div class="inputGroup">
               <input class="inputText" th:classappend="${#fields.hasErrors('name')}?'is-error'" type="text"
                 placeholder="Name" th:field="*{name}" maxlength="10">
               <i class="icon-user"></i>
             </div>
-            <div class="p-top__inputGroup">
+            <div class="inputGroup">
               <input class="inputText" th:classappend="${#fields.hasErrors('signupEmail')}?'is-error'" type="text"
                 placeholder="Email" th:field="*{signupEmail}">
               <i class="icon-envelop"></i>
             </div>
-            <div class="p-top__inputGroup">
+            <div class="inputGroup">
               <input class="inputText" th:classappend="${#fields.hasErrors('signupPassword')}?'is-error'"
                 type="password" placeholder="Password" th:field="*{signupPassword}">
               <span class="buttonCTA buttonCTA-show" id="showButtonPassword">Show</span>
               <i class="icon-lock"></i>
             </div>
-            <div class="p-top__inputGroup">
+            <div class="inputGroup">
               <input class="inputText" th:classappend="${#fields.hasErrors('confirmPassword')}?'is-error'"
                 type="password" placeholder="Confirm Password" th:field=*{confirmPassword}>
               <span class="buttonCTA buttonCTA-show" id="showButtonConfirm">Show</span>

@@ -53,15 +53,8 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @PostMapping("/home/icon")
-    public void post(
-            @RequestParam("upload_file") MultipartFile multipartFile,
-            @RequestParam("filetype") String fileType,
-            @AuthenticationPrincipal AppUserDetails user) {
-        if (multipartFile.isEmpty()) {
-            System.out.println("なんもないよ");
-        }
-        System.out.println(multipartFile);
-        System.out.println(fileType);
+    @GetMapping("/settings")
+    public String getSettings(Model model, @AuthenticationPrincipal AppUserDetails user) {
+        return "settings";
     }
 }
