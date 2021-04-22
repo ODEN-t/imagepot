@@ -24,66 +24,72 @@ const iconSettingModal = new jBox('Modal', {
     createOnInit: true,
 });
 
-// 縦、横、長い方に合わせて比率を保って画像をリサイズ
-const getSize = (width, height, MAX_SIZE) => {
-    let size = {};
-    if (width > height) {
-        size.width = MAX_SIZE;
-        size.height = MAX_SIZE * (height / width);
-    } else {
-        size.width = MAX_SIZE * (width / height);
-        size.height = MAX_SIZE;
-    }
-    return size;
-}
 
-// canvasでリサイズ後画像を出力
-const renderImage = (event) => {
-    let file = null;
-    let blob = null;
-    const MAX_SIZE = 200;
+const iconChange = {
+    bin: null,
+    renderImage(event) {
+        const MAX_IMAGE_SIZE = 100;
+        const LIMIT_MB = 5; // 5MB
+        const LIMIT = LIMIT_MB * 1024 * 1024; // B to MB
+        const file = event.target.files[0];
 
-    file = event.target.files[0];
-    if (!(file.type == 'image/jpeg' || 'image/png')) return;
+        if (!(file.type == 'image/jpeg' || 'image/png'))
+            return window.alert('Mime type is not image/jpeg or image/png');
 
-    let image = new Image();
-    let reader = new FileReader();
-    reader.onload = (e) => {
-        image.onload = () => {
-            let size = getSize(image.width, image.height, MAX_SIZE);
-            let width = size.width, height = size.height;
-            let canvas = document.getElementById('canvas');
-            canvas.width = width;
-            canvas.height = height;
-            let ctx = canvas.getContext('2d');
+        if (file.size > LIMIT)
+            return window.alert('File size is too large. The maximum supported file size are' + LIMIT_MB.toString + 'MB.');
 
-            // 描画をクリア
-            ctx.clearRect(0, 0, width, height);
+        let image = new Image();
+        let reader = new FileReader();
+        reader.onload = (e) => {
+            image.onload = () => {
+                let width = MAX_IMAGE_SIZE, height = MAX_IMAGE_SIZE, canvas = document.getElementById('canvas');
+                if (image.width > image.height)
+                    height = MAX_IMAGE_SIZE * (image.height / image.width);
+                else
+                    width = MAX_IMAGE_SIZE * (image.width / image.height);
 
-            // canvasに縮小画像を描画する
-            ctx.drawImage(image,
-                0, 0, image.width, image.height,
-                0, 0, width, height
-            );
+                canvas.setAttribute('width', width);
+                canvas.setAttribute('height', height);
 
-            // canvasから画像をbase64として取得する
-            var base64 = canvas.toDataURL('image/jpeg');
+                let ctx = canvas.getContext('2d');
 
-            // base64から画像データを作成する
-            var barr, bin, i, len;
-            bin = atob(base64.split('base64,')[1]);
-            len = bin.length;
-            barr = new Uint8Array(len);
-            i = 0;
-            while (i < len) {
-                barr[i] = bin.charCodeAt(i);
-                i++;
+                // 描画をクリア
+                ctx.clearRect(0, 0, width, height);
+
+                // canvasに縮小画像を描画する
+                ctx.drawImage(image,
+                    0, 0, image.width, image.height,
+                    0, 0, width, height
+                );
+
+                // canvasから画像をbase64として取得する
+                let base64 = null;
+                file.type == 'image/jpeg' ? base64 = canvas.toDataURL('image/jpeg') : base64 = canvas.toDataURL('image/png');
+                console.log(base64);
+
+                // base64をバイナリデータに変換
+                //const bin = atob(base64.split('base64,')[1]);
+                //console.log(bin);
             }
-            blob = new Blob([barr], { type: 'image/jpeg' });
+            image.src = e.target.result;
         }
-        image.src = e.target.result;
+        reader.readAsDataURL(file);
+    },
+    asyncPostUserIcon(event) {
+        event.preventDefault();
+        console.log(this.bin);
     }
-    reader.readAsDataURL(file);
 }
-const inputImage = document.getElementById('inputImage');
-inputImage.addEventListener('change', renderImage);
+
+
+const asyncPostUserIcon = (event) => {
+    event.preventDefault();
+    const bin = document.getElementById('canvas').toDataURL();
+}
+
+
+
+
+document.getElementById('inputImage').addEventListener('change', iconChange.renderImage);
+document.getElementById('upload').addEventListener('click', iconChange.asyncPostUserIcon);

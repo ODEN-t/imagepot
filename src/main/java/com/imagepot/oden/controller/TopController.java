@@ -29,7 +29,6 @@ public class TopController {
     public String getTopPage(@ModelAttribute SignupForm signupform) {
         System.out.println("getTopPage走る");
         return "top";
-
     }
 
     // @GetMapping("/login")
