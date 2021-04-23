@@ -1,5 +1,5 @@
 .c-sidebar {
-  width: 242px;
+  width: 295px;
   height: 100vh;
   color: #fff;
   background: #ed315d;
@@ -8,16 +8,16 @@
   top: 0;
 
   &__wrap {
-    padding-top: 41px;
+    padding: 41px 0;
   }
 
   &__userInfo {
+    padding: 0 31px;
     text-align: center;
-    padding: 15px 10px;
     
-    &__image {
-      width: 100px;
-      height: 100px;
+    &__icon {
+      width: 135px;
+      height: 135px;
       border-radius: 50%;
       position: relative;
       overflow: hidden;
@@ -33,17 +33,17 @@
     }
 
     &__name {
-      margin-top: 10px;
-      font-size: 16px;
-      line-height: 1.2;
+      font-size: 18px;
+      line-height: 1.6;
       font-weight: 700;
+      margin-top: 14px;
     }
 
-    &__id {
-      font-size: 12px;
-      margin-top: 5px;
-      line-height: 1.2;
+    &__email {
+      font-size: 15px;
+      line-height: 1.6;
       font-weight: 400;
+      margin-top: 3px;
     }
   }
 
@@ -61,6 +61,7 @@
       line-height: 1;
       cursor: pointer;
       transition: all .15s ease;
+      padding-left: 31px;
       &:hover {
         background: #ef476f;
       }
@@ -72,15 +73,14 @@
       height: 100%;
       display: flex;
       align-items: center;
-      padding-left: 25px;
       >span {
         padding-left: 1.1em;
         line-height: 1.4;
         font-weight: 600;
-        font-size: 15px;
+        font-size: 19px;
       }
       >i {
-        font-size: 16px;
+        font-size: 18px;
       }
     }
   }

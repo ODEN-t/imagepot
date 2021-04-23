@@ -68,6 +68,27 @@ usage
     background-color: #ED315D;
   }
 
+  &-show {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 8px;
+    width: auto;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 30px;
+    color: #000;
+    background-color: #fff;
+    padding: 0 12px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.11) inset;
+    transition: all 0.15s ease;
+    &:hover{
+      background-color: #fff;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.31) inset;
+    }
+  }
+
   &-fullWidth{
     width: 100%;
   }

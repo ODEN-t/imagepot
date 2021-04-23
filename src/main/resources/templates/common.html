@@ -20,27 +20,27 @@
   <section class="c-sidebar" th:fragment="sidebar">
     <div style="display: none;" class="c-sidebar__modalContent" id="iconSettingContent">
       <div class="c-sidebar__modalBody">
-        <figure class="c-sidebar__userInfo__image" id="icon2">
+        <figure class="c-sidebar__userInfo__icon" id="icon2">
           <img th:src="@{/images/initial_icon.jpg}" alt="あいこん２">
         </figure>
         <form enctype="multipart/form-data" method="POST" id="iconModalForm">
           <input type="file" accept=".jpg, .jpeg, .png" id="inputImage">
           <button type="submit" id="upload">アップロード</button>
         </form>
-        <figure class="c-sidebar__userInfo__image">
+        <figure class="c-sidebar__userInfo__icon">
           <canvas id="canvas" width="0" height="0"></canvas>
         </figure>
       </div>
     </div>
     <div class="c-sidebar__wrap">
       <div class="c-sidebar__userInfo">
-        <figure class="c-sidebar__userInfo__image" id="icon">
+        <figure class="c-sidebar__userInfo__icon" id="icon">
           <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">
         </figure>
         <div class="c-sidebar__userInfo__name">
           <span sec:authentication="principal.appUserName"></span>
         </div>
-        <div class="c-sidebar__userInfo__id">
+        <div class="c-sidebar__userInfo__email">
           <span sec:authentication="principal.email"></span>
         </div>
       </div>

@@ -10,6 +10,6 @@
 /*!********************************************************!*\
   !*** ./src/main/resources/static/js/settings/index.js ***!
   \********************************************************/
-eval("console.log('from settings');\n\n//# sourceURL=webpack://imagepot/./src/main/resources/static/js/settings/index.js?");
+eval("console.log('from settings');\r\n\r\n// type=password <=> type=text の切り替え\r\nconst inputTypeToggle = (elementClass) => {\r\n    const nodeList = document.querySelectorAll(elementClass);\r\n    for (const node of nodeList) {\r\n        node.addEventListener('click', () => {\r\n            const target = node.previousElementSibling;\r\n            target.type == 'password' ? target.type = 'text' : target.type = 'password';\r\n        })\r\n    }\r\n}\r\ninputTypeToggle('.buttonCTA-show');\n\n//# sourceURL=webpack://imagepot/./src/main/resources/static/js/settings/index.js?");
 /******/ })()
 ;
