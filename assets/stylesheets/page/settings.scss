@@ -55,17 +55,24 @@
       position: relative;
     }
 
-    .icon {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      position: relative;
-      overflow: hidden;
-      > img {
-        width: 100%;
-        height: 100%;
+    &__icon {
+      > figure {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        position: relative;
+        overflow: hidden;
+        > img {
+          width: 100%;
+          height: 100%;
+        }
       }
-      +.buttonCTA {
+
+      input[type="file"] {
+        display: none;
+      }
+
+      .buttonCTA {
         position: absolute;
         bottom: 0;
         left: calc(200px + 5%);
@@ -80,5 +87,24 @@
 
   form > &__settingArea {
     margin-top: 30px;
+  }
+}
+
+.jBox-container {
+  .cropModal {
+    width: 100%;
+    .cropWrap {
+      width: 100%;
+    }
+    .cropBody {
+      width: 100%;
+      overflow: auto;
+      > img {
+        width: 100%;
+      }
+    }
+    .cropFooter {
+      width: 100%;
+    }
   }
 }

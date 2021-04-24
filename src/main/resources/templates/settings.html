@@ -19,11 +19,21 @@
             <div class="p-settings__editBlock__content">
               <dl class="p-settings__settingArea">
                 <dt>Your Icon</dt>
-                <dd>
-                  <figure class="icon" id="icon">
+                <dd class="p-settings__settingArea__icon">
+                  <figure id="icon">
                     <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">
                   </figure>
-                  <button class="buttonCTA">Change Icon</button>
+                  <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
+                  <label class="buttonCTA" for="fileInput">Change Icon</label>
+                  <div class="cropModal" id="js-cropModal">
+                    <div class="cropWrap">
+                      <form action="">
+                        <div class="cropBody">
+                          <img class="cropImage" id="preview" src="" alt="">
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </dd>
               </dl>
               <form action="">
