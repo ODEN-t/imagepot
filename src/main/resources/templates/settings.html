@@ -27,10 +27,12 @@
                   <label class="buttonCTA" for="fileInput">Change Icon</label>
                   <div class="cropModal" id="js-cropModal">
                     <div class="cropWrap">
-                      <form action="">
-                        <div class="cropBody">
-                          <img class="cropImage" id="js-cropImage" src="" alt="">
-                        </div>
+                      <div class="cropBody">
+                        <img class="cropImage" id="js-cropImage" src="" alt="">
+                      </div>
+                      <form th:action="@{/settings/upload/newicon}" method="POST" id="js-cropForm" name="newIcon">
+                        <button type="submit" class="buttonCTA buttonCTA-fullWidth" id="js-newIconSubmit">Set new
+                          icon</button>
                       </form>
                     </div>
                   </div>

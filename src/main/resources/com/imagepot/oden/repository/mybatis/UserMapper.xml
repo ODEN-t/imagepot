@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace:Mapperインターフェースを指定 -->
-<mapper namespace="com.imagepot.oden.repository.mybatis.UserMapper">
+<mapper namespace="com.imagepot.xyztk.repository.mybatis.UserMapper">
     <!-- id:マップ名 type:紐付けるbean名 -->
-    <resultMap id="user" type="com.imagepot.oden.model.User">
+    <resultMap id="user" type="com.imagepot.xyztk.model.User">
         <!-- id:PK column:DB  property:field -->
         <id column="user_id" property="id" />
         <result column="user_name" property="name" />
@@ -39,7 +39,7 @@
     <delete id="deleteOneUser" parameterType="integer">
         DELETE FROM mywork.pot_user WHERE user_id = #{id}
     </delete>
-    <update id="updateIcon" parameterType="com.imagepot.oden.model.User">
+    <update id="updateIcon" parameterType="com.imagepot.xyztk.model.User">
         UPDATE mywork.pot_user
         SET
             user_icon = #{icon}

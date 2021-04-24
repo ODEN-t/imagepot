@@ -6,6 +6,7 @@ import jBox from 'jbox';
 
 console.log('from settings');
 
+// cropper の設定値
 const crop = {
     crop: null,
     init(image) {
@@ -29,6 +30,29 @@ const crop = {
             this.cropper.setCropBoxData({
                 width: width, height: height
             });
+            document.getElementById('js-newIconSubmit').addEventListener('click', () => {
+                const cropBoxData = this.cropper.getCropBoxData();
+                const cropedCanvas = this.cropper.getCroppedCanvas({
+                    width: cropBoxData.width,
+                    height: cropBoxData.height
+                });
+                cropedCanvas.toBlob((blob) => {
+                    const formData = new FormData();
+
+                    $.ajax('/settings/upload/newicon', {
+                        method: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success() {
+                            console.log('upload success');
+                        },
+                        error() {
+                            console.log('upload error');
+                        }
+                    })
+                });
+            })
         })
     },
     destroy() {
@@ -36,7 +60,7 @@ const crop = {
     }
 }
 
-// IconSetting Modal の設定値
+// jBox の設定値
 const cropModal = new jBox('Modal', {
     id: "cropModal",
     width: 450,
@@ -45,7 +69,7 @@ const cropModal = new jBox('Modal', {
     fixed: true,
     title: 'Crop your new icon',
     content: $('#js-cropModal'),
-    footer: '<button type="submit" class="buttonCTA buttonCTA-fullWidth">Set new icon</button>',
+    footer: $('#js-cropForm'),
     overlayClass: 'add-jboxOverRay',
     delayOpen: 150,
     closeOnClick: false,
