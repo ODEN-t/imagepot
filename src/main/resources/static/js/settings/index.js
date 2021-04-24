@@ -6,13 +6,43 @@ import jBox from 'jbox';
 
 console.log('from settings');
 
+const crop = {
+    crop: null,
+    init(image) {
+        this.crop = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 1,
+            background: false,
+            guides: false,
+            modal: true,
+            highlight: false,
+            movable: false,
+            rotatable: false,
+            scalable: false,
+            zoomable: false,
+            cropBoxResizable: false,
+        });
+        // 画像 & cropperロード後発火、cropエリア固定
+        image.addEventListener('ready', function () {
+            let width = document.querySelector('.cropper-container').clientWidth;
+            let height = document.querySelector('.cropper-container').clientWidth;
+            this.cropper.setCropBoxData({
+                width: width, height: height
+            });
+        })
+    },
+    destroy() {
+        this.crop.destroy();
+    }
+}
+
 // IconSetting Modal の設定値
 const cropModal = new jBox('Modal', {
-    id: "test",
+    id: "cropModal",
     width: 450,
     maxHeight: 500,
     responsiveHeight: true,
-    fixed: false,
+    fixed: true,
     title: 'Crop your new icon',
     content: $('#js-cropModal'),
     footer: '<button type="submit" class="buttonCTA buttonCTA-fullWidth">Set new icon</button>',
@@ -23,15 +53,20 @@ const cropModal = new jBox('Modal', {
     createOnInit: true,
     reposition: true,
     repositionOnOpen: true,
-    position: { x: 'center', y: 'center' },
+    onOpen: function () {
+        let image = document.getElementById('js-cropImage');
+        crop.init(image);
+    },
+    onClose: function () {
+        crop.destroy();
+    }
 });
+
 
 document.getElementById('fileInput').addEventListener('change', (e) => {
     const file = e.target.files[0];
     const LIMIT_MB = 1; // 1MB
     const LIMIT = LIMIT_MB * 1024 * 1024; // B to MB
-
-    console.log(file.type);
 
     if (!(file.type == 'image/jpeg' || file.type == 'image/png'))
         return window.alert('Mime type is not image/jpeg or image/png');
@@ -41,7 +76,7 @@ document.getElementById('fileInput').addEventListener('change', (e) => {
 
     let fileReader = new FileReader();
     fileReader.onload = () => {
-        document.getElementById('preview').src = fileReader.result;
+        document.getElementById('js-cropImage').src = fileReader.result;
         cropModal.open();
     }
     fileReader.readAsDataURL(file);
