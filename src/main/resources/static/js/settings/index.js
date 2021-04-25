@@ -36,9 +36,10 @@ const crop = {
                     width: cropBoxData.width,
                     height: cropBoxData.height
                 });
-                cropedCanvas.toBlob((blob) => {
+                cropedCanvas.toBlob((b) => {
                     const formData = new FormData();
-
+                    formData.append('croppedImage', b);
+                    console.log(formData);
                     $.ajax('/settings/upload/newicon', {
                         method: 'POST',
                         data: formData,
@@ -69,7 +70,7 @@ const cropModal = new jBox('Modal', {
     fixed: true,
     title: 'Crop your new icon',
     content: $('#js-cropModal'),
-    footer: $('#js-cropForm'),
+    footer: $('#js-newIconSubmit'),
     overlayClass: 'add-jboxOverRay',
     delayOpen: 150,
     closeOnClick: false,

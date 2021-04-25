@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class AppUserDetails implements UserDetails {
 
     // Springで必要なフィールド
-    private String userId; // ユーザID
+    private Integer userId; // ユーザID
     private String password; // パスワード
     private Date passUpdateDate; // パスワード更新日付
     private int signinMissTimes; // サインイン失敗回数

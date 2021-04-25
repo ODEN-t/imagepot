@@ -59,7 +59,7 @@ public class LoginUserRepository {
 
         StringBuffer icon = new StringBuffer();
         String base64 = new String(Base64.getEncoder().encodeToString((byte[]) userMap.get("user_icon")));
-        icon.append("data:image/jpeg;base64,");
+        icon.append("data:image/png;base64,");
         icon.append(base64);
 
         new AppUserDetails();
