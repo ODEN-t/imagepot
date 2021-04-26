@@ -37,6 +37,10 @@ public class AppUserDetails implements UserDetails {
         return role;
     }
 
+    public Integer getUserId() {
+        return this.userId;
+    }
+
     @Override
     public String getPassword() {
         return this.password;

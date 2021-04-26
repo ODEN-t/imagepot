@@ -26,6 +26,10 @@ public class LoginUserRepository {
     private static final String SELECT_USER_ROLE_SQL = "SELECT" + " user_role" + " FROM mywork.pot_user"
             + " WHERE user_email = ?";
 
+    // private static final String UPDATE_USER_ICON = "UPDATE" + " mywork.pot_user"
+    // + " SET user_icon = ?"
+    // + " WHERE user_id = ?";
+
     public UserDetails selectOne(String email) {
         Map<String, Object> userMap = jdbc.queryForMap(SELECT_USER_SQL, email);
         List<GrantedAuthority> grantedAuthorityList = getRoleList(email);
@@ -49,6 +53,7 @@ public class LoginUserRepository {
 
     private AppUserDetails buildUserDetails(Map<String, Object> userMap, List<GrantedAuthority> grantedAuthorityList) {
 
+        Integer id = (Integer) userMap.get("user_id");
         String appUserName = (String) userMap.get("user_name");
         String email = (String) userMap.get("user_email");
         String password = (String) userMap.get("user_password");
@@ -65,6 +70,7 @@ public class LoginUserRepository {
         new AppUserDetails();
         AppUserDetails user = AppUserDetails
                 .builder()
+                .userId(id)
                 .appUserName(appUserName)
                 .email(email)
                 .password(password)
