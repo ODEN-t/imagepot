@@ -27,7 +27,4 @@ public class ValidationGroups {
 
     public interface Group9 {
     };
-
-    public interface Group10 {
-    };
 }

@@ -53,50 +53,58 @@ public class User {
 
     @Column(
             name = "icon",
-            columnDefinition = "BYTEA"
+            columnDefinition = "BYTEA",
+            insertable = false
     )
     private byte[] icon;
 
     @Column(
             name = "role",
             nullable = false,
-            columnDefinition = "VARCHAR"
+            columnDefinition = "VARCHAR",
+            insertable = false
     )
     private String role;
 
     @Column(
             name = "password_updated_at",
-            columnDefinition = "TIMESTAMP"
+            columnDefinition = "TIMESTAMP",
+            insertable = false
     )
     private Timestamp passwordUpdatedAt;
 
     @Column(
             name = "signin_miss_times",
-            columnDefinition = "INTEGER"
+            columnDefinition = "INTEGER",
+            insertable = false
     )
     private Integer signinMissTimes;
 
     @Column(
             name = "unlock",
-            columnDefinition = "BOOLEAN"
+            columnDefinition = "BOOLEAN",
+            insertable = false
     )
     private boolean unlock;
 
     @Column(
             name = "enabled",
-            columnDefinition = "BOOLEAN"
+            columnDefinition = "BOOLEAN",
+            insertable = false
     )
     private boolean enabled;
 
     @Column(
             name = "created_at",
-            columnDefinition = "TIMESTAMP"
+            columnDefinition = "TIMESTAMP",
+            insertable = false
     )
     private Timestamp createdAt;
 
     @Column(
             name = "updated_at",
-            columnDefinition = "TIMESTAMP"
+            columnDefinition = "TIMESTAMP",
+            insertable = false
     )
     private Timestamp updatedAt;
 }

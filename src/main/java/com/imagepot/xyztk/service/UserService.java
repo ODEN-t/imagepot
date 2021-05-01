@@ -28,8 +28,16 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public boolean checkEmail(String email) {
-        return userRepository.findByEmail(email).isPresent();
+    public Optional<User> checkDuplicateUser(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    public void addNewUser(User user) {
+        Optional<User> userOptional = userRepository.findUserByEmail(user.getEmail());
+        if(userOptional.isPresent()) {
+            throw new IllegalStateException("email taken");
+        }
+        userRepository.save(user);
     }
 
 }
