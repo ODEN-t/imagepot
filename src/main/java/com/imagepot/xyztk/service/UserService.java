@@ -35,7 +35,7 @@ public class UserService {
     public void addNewUser(User user) {
         Optional<User> userOptional = userRepository.findUserByEmail(user.getEmail());
         if(userOptional.isPresent()) {
-            throw new IllegalStateException("email taken");
+            throw new IllegalStateException("Email has already been taken.");
         }
         userRepository.save(user);
     }

@@ -4,6 +4,7 @@ import $ from 'jquery/dist/jquery.min';
 
 // Login Modal の設定値
 const loginModal = new jBox('Modal', {
+    id: 'login',
     width: 405,
     height: 443,
     attach: '#login',
@@ -17,6 +18,7 @@ const loginModal = new jBox('Modal', {
 
 // Signup Modal の設定値
 const signupModal = new jBox('Modal', {
+    id: 'signup',
     width: 405,
     height: 573,
     attach: '#signup',
@@ -28,8 +30,9 @@ const signupModal = new jBox('Modal', {
 });
 
 // Message modal の設定値
-const messageModal = new jBox('Modal', {
-    content: $('.p-top__message'),
+const errorMessageModal = new jBox('Modal', {
+    id: 'error',
+    content: $('.p-top__message-error'),
     addClass: 'add-jboxErrorMessage',
     overlay: false,
     closeOnClick: false,
@@ -38,6 +41,26 @@ const messageModal = new jBox('Modal', {
         y: 310
     },
     autoClose: 3000,
+    fade: 250,
+    animation: {
+        open: 'slide:bottom',
+        close: 'slide:bottom'
+    }
+});
+
+
+// Message modal の設定値
+const successMessageModal = new jBox('Modal', {
+    id: 'success',
+    content: $('.p-top__message-success'),
+    addClass: 'add-jboxSuccessMessage',
+    overlay: false,
+    closeOnClick: false,
+    closeButton: false,
+    offset: {
+        y: 310
+    },
+    autoClose: false,
     fade: 250,
     animation: {
         open: 'slide:bottom',
@@ -73,14 +96,27 @@ inputTypeToggle('.buttonCTA-show');
 
 // errorメッセージ表示時、エラー発生モーダルをオープン
 // loginのエラーメッセージが消えないためsignupモーダルが開かない要修正
-const showErrorMessage = (elementClass) => {
+const showMessage = (elementClass) => {
     const messageElem = document.querySelectorAll(elementClass);
-    if (messageElem.length === 1) {
-        const modalType = messageElem[0].dataset.error;
-        loginModal.close();
-        signupModal.close();
-        modalType === 'login' ? loginModal.open() : signupModal.open();
-        messageModal.open();
+    if(messageElem.length > 0) {
+        const modalType = messageElem[0].dataset.process;
+        const messageType = messageElem[0].dataset.message;
+
+        console.log('modalType:' + modalType, ' messageType:' + messageType);
+
+        switch (messageType) {
+            case 'success':
+                console.log('success modal open')
+                successMessageModal.open();
+                break;
+            case 'error':
+                console.log('error modal open')
+                loginModal.close();
+                signupModal.close();
+                modalType === 'login' ? loginModal.open() : signupModal.open();
+                errorMessageModal.open();
+                break;
+        }
     }
 }
-showErrorMessage('.p-top__message');
+showMessage('.p-top__message');

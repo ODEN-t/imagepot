@@ -1,3 +1,5 @@
+@import "../common/_variables";
+
 .p-top {
   background-image: url("/images/top-image_1920.png");
   background-size: cover;
@@ -89,14 +91,21 @@
     font-size: 15px;
     line-height: 1.2;
     &-error {
-      color: #9E5869;
+      color: $color-error-text;
+    }
+    &-success {
+      color: $color-success-text;
     }
   }
-  
 }
 
-.add-jboxErrorMessage .jBox-container {
-  background-color: #FBD0DA;
+.add-jboxErrorMessage .jBox-container,  .add-jboxSuccessMessage .jBox-container{
   border-radius: 10px;
   box-shadow: none !important;
+}
+.add-jboxErrorMessage .jBox-container {
+  background-color: $color-error-bg;
+}
+.add-jboxSuccessMessage .jBox-container {
+  background-color: $color-success-bg;
 }

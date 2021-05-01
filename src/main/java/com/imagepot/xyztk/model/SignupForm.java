@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class SignupForm {
     @NotBlank(groups = Group1.class)
-    @Length(min = 2, max = 10, groups = Group2.class)
+    @Length(min = 2, max = 20, groups = Group2.class)
     private String name;
 
     public void setName(final String name) {

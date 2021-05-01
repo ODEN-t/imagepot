@@ -26,7 +26,7 @@
         <div class="p-top__modalBody">
           <h2>Hello!</h2>
           <p>Login to your account here.</p>
-          <form class="p-top__modalForm" method="POST" th:action="@{/top/login}">
+          <form class="p-top__modalForm" method="POST" th:action="@{/login}">
             <div class="inputGroup">
               <input class="inputText" type="text" placeholder="Email">
               <i class="icon-envelop"></i>
@@ -37,12 +37,10 @@
               <i class="icon-lock"></i>
             </div>
             <button type="submit" class="buttonCTA buttonCTA-fullWidth">Login</button>
-<!--            <div th:if="${registSuccess}" class="p-top__message p-top__message-error">User Registration Successful!-->
-<!--              Please Login.</div>-->
 
 <!--            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"-->
 <!--              th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="p-top__message p-top__message-error"-->
-<!--              data-error="login">ログインエラーメッセージ</div>-->
+<!--              data-process="login">ログインエラーメッセージ</div>-->
           </form>
         </div>
         <div class="p-top__modalFooter">
@@ -55,10 +53,10 @@
         <div class="p-top__modalBody">
           <h2>Join Imagepot</h2>
           <p>Use image storage for free.</p>
-          <form class="p-top__modalForm" method="POST" th:action="@{/top/signup}" th:object="${signupForm}">
+          <form class="p-top__modalForm" method="POST" th:action="@{/signup}" th:object="${signupForm}">
             <div class="inputGroup">
               <input class="inputText" th:classappend="${#fields.hasErrors('name')}?'is-error'" type="text"
-                placeholder="Name" th:field="*{name}" maxlength="10">
+                placeholder="Name" th:field="*{name}" maxlength="20">
               <i class="icon-user"></i>
             </div>
             <div class="inputGroup">
@@ -79,9 +77,14 @@
               <i class="icon-lock"></i>
             </div>
             <button type="submit" class="buttonCTA buttonCTA-fullWidth">Create account</button>
-            <div th:if="${#fields.hasErrors('${signupForm.*}')}" data-error="signup"
-              class="p-top__message p-top__message-error">
+            <div th:if="${#fields.hasErrors('${signupForm.*}')}" data-process="signup" data-message="error" class="p-top__message p-top__message-error">
               <span th:errors="${signupForm.*}"></span>
+            </div>
+            <div th:if="${registerError}" data-message="error" class="p-top__message p-top__message-error">
+              <span th:text="${message}"></span>
+            </div>
+            <div th:if="${registerSuccess}" data-message="success" class="p-top__message p-top__message-success">
+              <span th:text="${message}"></span>
             </div>
           </form>
         </div>
