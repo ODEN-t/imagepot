@@ -1,6 +1,6 @@
 package com.imagepot.xyztk.controller;
 
-import com.imagepot.xyztk.model.RegistForm;
+import com.imagepot.xyztk.model.SignupForm;
 import com.imagepot.xyztk.model.ValidationAll;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -29,7 +29,7 @@ public class UserController {
 
     @PostMapping(value = "signup")
     public String registUser(
-            @ModelAttribute @Validated(ValidationAll.class) RegistForm registForm,
+            @ModelAttribute @Validated(ValidationAll.class) SignupForm signupForm,
             BindingResult resultSignup,
             RedirectAttributes atts) {
         if (resultSignup.hasErrors()) {

@@ -2,17 +2,18 @@ import jBox from 'jbox';
 import 'jbox/dist/jBox.all.css';
 import $ from 'jquery/dist/jquery.min';
 
-// Signin Modal の設定値
-const signinModal = new jBox('Modal', {
+// Login Modal の設定値
+const loginModal = new jBox('Modal', {
     width: 405,
     height: 443,
-    attach: '#signin',
-    content: $('#signinModal'),
+    attach: '#login',
+    content: $('#loginModal'),
     overlayClass: 'add-jboxOverRay',
     closeOnClick: false,
     closeButton: 'box',
     createOnInit: true,
 });
+
 
 // Signup Modal の設定値
 const signupModal = new jBox('Modal', {
@@ -49,12 +50,12 @@ const messageModal = new jBox('Modal', {
 const modalSwitch = (...buttons) => {
     for (const button of buttons) {
         document.getElementById(button).addEventListener('click', () => {
-            signinModal.toggle();
+            loginModal.toggle();
             signupModal.toggle();
         })
     }
 }
-modalSwitch('signupSub', 'signinSub');
+modalSwitch('signupSub', 'loginSub');
 
 
 // type=password <=> type=text の切り替え
@@ -63,7 +64,7 @@ const inputTypeToggle = (elementClass) => {
     for (const node of nodeList) {
         node.addEventListener('click', () => {
             const target = node.previousElementSibling;
-            target.type == 'password' ? target.type = 'text' : target.type = 'password';
+            target.type === 'password' ? target.type = 'text' : target.type = 'password';
         })
     }
 }
@@ -71,14 +72,14 @@ inputTypeToggle('.buttonCTA-show');
 
 
 // errorメッセージ表示時、エラー発生モーダルをオープン
-// signinのエラーメッセージが消えないためsignupモーダルが開かない要修正
+// loginのエラーメッセージが消えないためsignupモーダルが開かない要修正
 const showErrorMessage = (elementClass) => {
     const messageElem = document.querySelectorAll(elementClass);
     if (messageElem.length === 1) {
         const modalType = messageElem[0].dataset.error;
-        signinModal.close();
+        loginModal.close();
         signupModal.close();
-        modalType == 'signin' ? signinModal.open() : signupModal.open();
+        modalType === 'login' ? loginModal.open() : signupModal.open();
         messageModal.open();
     }
 }

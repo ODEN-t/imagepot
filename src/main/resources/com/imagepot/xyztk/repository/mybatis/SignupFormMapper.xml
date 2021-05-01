@@ -5,7 +5,7 @@
 <!-- namespace:Mapperインターフェースを指定 -->
 <mapper namespace="com.imagepot.xyztk.repository.mybatis.SignupFormMapper">
     <!-- id:マップ名 type:紐付けるbean名 -->
-    <resultMap id="signupForm" type="com.imagepot.xyztk.model.RegistForm">
+    <resultMap id="signupForm" type="com.imagepot.xyztk.model.SignupForm">
         <!-- id:PK column:DB  property:field -->
         <result column="user_name" property="name" />
         <result column="user_email" property="signupEmail" />

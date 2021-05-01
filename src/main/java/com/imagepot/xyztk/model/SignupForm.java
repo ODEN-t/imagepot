@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.Length;
 import lombok.Data;
 
 @Data
-public class RegistForm {
+public class SignupForm {
     @NotBlank(groups = Group1.class)
     @Length(min = 2, max = 10, groups = Group2.class)
     private String name;
@@ -31,12 +31,12 @@ public class RegistForm {
     @NotBlank(groups = Group7.class)
     @Length(min = 8, max = 10, groups = Group8.class)
     @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = Group9.class)
-    private String signupPassword;
+    private String password;
 
     private String confirmPassword;
 
     @AssertTrue(message = "Password and Confirm Password does not match.", groups = Group10.class)
     public boolean isValid() {
-        return signupPassword.equals(confirmPassword);
+        return password.equals(confirmPassword);
     }
 }
