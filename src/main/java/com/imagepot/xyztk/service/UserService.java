@@ -1,10 +1,10 @@
 package com.imagepot.xyztk.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.imagepot.xyztk.model.User;
-import com.imagepot.xyztk.repository.mybatis.UserMapper;
-
+import com.imagepot.xyztk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,26 +12,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class UserService {
+
+    private final UserRepository userRepository;
+
     @Autowired
-    UserMapper userMapper;
-
-    // 特定のユーザ情報を全て取得
-    public User selectOneUser(Integer id) {
-        return userMapper.selectOneUser(id);
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    // 全ユーザの情報を取得
-    public List<User> selectAllUser() {
-        return userMapper.selectAllUser();
+    public Optional<User> getUser(long id) {
+        return userRepository.findById(id);
     }
 
-    // 特定のユーザを削除
-    public boolean deleteOneUser(Integer id) {
-        return userMapper.deleteOneUser(id);
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 
-    // 特定のユーザのアイコンを変更
-    public boolean updateIcon(User user) {
-        return userMapper.updateIcon(user);
+    public boolean checkEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
+
 }

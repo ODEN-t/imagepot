@@ -1,44 +1,44 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
 
-<head th:replace="common::meta_header('Admin', ~{::link}, ~{::script})">
-  <link rel="stylesheet" th:href="@{/css/page/admin.min.css}">
-  <script th:src="@{/dist/home/index.js}"></script>
-</head>
+<!--<head th:replace="common::meta_header('Admin', ~{::link}, ~{::script})">-->
+<!--  <link rel="stylesheet" th:href="@{/css/page/admin.min.css}">-->
+<!--  <script th:src="@{/dist/home/index.js}"></script>-->
+<!--</head>-->
 
-<body>
-  <div class="c-globalContainer">
-    <div th:replace="common::sidebar">
-    </div>
-    <div class="c-contents">
-      <div class="p-admin">
-        <section class="p-admin__contents" th:fragment="admin__contents">
-          <h1>User List</h1>
-          <table class="p-admin__userList">
-            <tr class="p-admin__userList__head">
-              <th>ID</th>
-              <th>Email</th>
-              <th>Name</th>
-              <th>Role</th>
-              <th>Created At</th>
-              <th>Logging In</th>
-            </tr>
-            <tr th:each="user:${userList}" class="p-admin__userList__data">
-              <td th:text="${user.id}"></td>
-              <td th:text="${user.email}"></td>
-              <td th:text="${user.name}"></td>
-              <td th:text="${user.role}"></td>
-              <td th:text="${#dates.format(user.createdAt, 'YYYY/MM/dd')}"></td>
-              <td th:text="${user.loggingIn}"></td>
-            </tr>
-          </table>
-          <div class="p-admin__total" th:text="'Total：' + ${count}"></div>
-        </section>
-      </div>
-      <footer th:replace="common::footer">
-      </footer>
-    </div>
-  </div>
-</body>
+<!--<body>-->
+<!--  <div class="c-globalContainer">-->
+<!--    <div th:replace="common::sidebar">-->
+<!--    </div>-->
+<!--    <div class="c-contents">-->
+<!--      <div class="p-admin">-->
+<!--        <section class="p-admin__contents" th:fragment="admin__contents">-->
+<!--          <h1>User List</h1>-->
+<!--          <table class="p-admin__userList">-->
+<!--            <tr class="p-admin__userList__head">-->
+<!--              <th>ID</th>-->
+<!--              <th>Email</th>-->
+<!--              <th>Name</th>-->
+<!--              <th>Role</th>-->
+<!--              <th>Created At</th>-->
+<!--              <th>Logging In</th>-->
+<!--            </tr>-->
+<!--            <tr th:each="user:${userList}" class="p-admin__userList__data">-->
+<!--              <td th:text="${user.id}"></td>-->
+<!--              <td th:text="${user.email}"></td>-->
+<!--              <td th:text="${user.name}"></td>-->
+<!--              <td th:text="${user.role}"></td>-->
+<!--              <td th:text="${#dates.format(user.createdAt, 'YYYY/MM/dd')}"></td>-->
+<!--              <td th:text="${user.loggingIn}"></td>-->
+<!--            </tr>-->
+<!--          </table>-->
+<!--          <div class="p-admin__total" th:text="'Total：' + ${count}"></div>-->
+<!--        </section>-->
+<!--      </div>-->
+<!--      <footer th:replace="common::footer">-->
+<!--      </footer>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</body>-->
 
-</html>
+<!--</html>-->

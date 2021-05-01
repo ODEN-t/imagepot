@@ -1,92 +1,92 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
 
-<head th:fragment="meta_header(title, links, scripts)">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title th:text="${title==null}? 'Image Pot' : ${title}+' | Image Pot'">各ページタイトル | imagepot</title>
-  <link rel="stylesheet" th:href="@{/css/common/index.min.css}" type="text/css">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&family=Open+Sans:wght@300;400;600;700;800&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" th:href="@{/icomoon/style.css}" type="text/css">
-  <script th:src="@{/dist/common/index.js}" defer></script>
-  <th:block th:replace="${links} ?: _" />
-  <th:block th:replace="${scripts} ?: _" />
-</head>
+<!--<head th:fragment="meta_header(title, links, scripts)">-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title th:text="${title==null}? 'Image Pot' : ${title}+' | Image Pot'">各ページタイトル | imagepot</title>-->
+<!--  <link rel="stylesheet" th:href="@{/css/common/index.min.css}" type="text/css">-->
+<!--  <link rel="preconnect" href="https://fonts.gstatic.com">-->
+<!--  <link-->
+<!--    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&family=Open+Sans:wght@300;400;600;700;800&display=swap"-->
+<!--    rel="stylesheet">-->
+<!--  <link rel="stylesheet" th:href="@{/icomoon/style.css}" type="text/css">-->
+<!--  <script th:src="@{/dist/common/index.js}" defer></script>-->
+<!--  <th:block th:replace="${links} ?: _" />-->
+<!--  <th:block th:replace="${scripts} ?: _" />-->
+<!--</head>-->
 
-<body>
-  <section class="c-sidebar" th:fragment="sidebar">
-    <div style="display: none;" class="c-sidebar__modalContent" id="iconSettingContent">
-      <div class="c-sidebar__modalBody">
-        <figure class="c-sidebar__userInfo__icon" id="icon2">
-          <img th:src="@{/images/initial_icon.jpg}" alt="あいこん２">
-        </figure>
-        <form enctype="multipart/form-data" method="POST" id="iconModalForm">
-          <input type="file" accept=".jpg, .jpeg, .png" id="inputImage">
-          <button type="submit" id="upload">アップロード</button>
-        </form>
-        <figure class="c-sidebar__userInfo__icon">
-          <canvas id="canvas" width="0" height="0"></canvas>
-        </figure>
-      </div>
-    </div>
-    <div class="c-sidebar__wrap">
-      <div class="c-sidebar__userInfo">
-        <figure class="c-sidebar__userInfo__icon" id="icon">
-          <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">
-        </figure>
-        <div class="c-sidebar__userInfo__name">
-          <span sec:authentication="principal.appUserName"></span>
-        </div>
-        <div class="c-sidebar__userInfo__email">
-          <span sec:authentication="principal.email"></span>
-        </div>
-      </div>
-      <nav class="c-sidebar__menu">
-        <ol class="c-sidebar__menu__list">
-          <li class="c-sidebar__menu__item">
-            <a class="c-sidebar__menu__itemLink" href="">
-              <i class="icon-home3"></i>
-              <span>Home</span>
-            </a>
-          </li>
-          <li class="c-sidebar__menu__item">
-            <a class="c-sidebar__menu__itemLink" href="">
-              <i class="icon-bin2"></i>
-              <span>Deleted</span>
-            </a>
-          </li>
-          <li class="c-sidebar__menu__item">
-            <a class="c-sidebar__menu__itemLink" th:href="@{'/settings'}">
-              <i class="icon-cog"></i>
-              <span>Settings</span>
-            </a>
-          </li>
-          <li class="c-sidebar__menu__item" sec:authorize="hasRole('ADMIN')">
-            <a class="c-sidebar__menu__itemLink" th:href="@{'/admin'}">
-              <i class="icon-cogs"></i>
-              <span>Manage</span>
-            </a>
-          </li>
-          <li class="c-sidebar__menu__item">
-            <a th:href="@{'/signout'}" class="c-sidebar__menu__itemLink" id="signout"
-              data-confirm="Are you sure you want to sign out?">
-              <i class="icon-exit"></i>
-              <span>Sign out</span>
-            </a>
-          </li>
-        </ol>
-      </nav>
-    </div>
-  </section>
-  <footer class="c-footer" th:fragment="footer">
-    <div class="c-footer__wrap">
-      <p>Image Pot</p>
-      <small>Copyright &copy; 2021 xyztk. All Rights Reserved.</small>
-    </div>
-  </footer>
-</body>
+<!--<body>-->
+<!--  <section class="c-sidebar" th:fragment="sidebar">-->
+<!--    <div style="display: none;" class="c-sidebar__modalContent" id="iconSettingContent">-->
+<!--      <div class="c-sidebar__modalBody">-->
+<!--        <figure class="c-sidebar__userInfo__icon" id="icon2">-->
+<!--          <img th:src="@{/images/initial_icon.jpg}" alt="あいこん２">-->
+<!--        </figure>-->
+<!--        <form enctype="multipart/form-data" method="POST" id="iconModalForm">-->
+<!--          <input type="file" accept=".jpg, .jpeg, .png" id="inputImage">-->
+<!--          <button type="submit" id="upload">アップロード</button>-->
+<!--        </form>-->
+<!--        <figure class="c-sidebar__userInfo__icon">-->
+<!--          <canvas id="canvas" width="0" height="0"></canvas>-->
+<!--        </figure>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="c-sidebar__wrap">-->
+<!--      <div class="c-sidebar__userInfo">-->
+<!--        <figure class="c-sidebar__userInfo__icon" id="icon">-->
+<!--          <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">-->
+<!--        </figure>-->
+<!--        <div class="c-sidebar__userInfo__name">-->
+<!--          <span sec:authentication="principal.appUserName"></span>-->
+<!--        </div>-->
+<!--        <div class="c-sidebar__userInfo__email">-->
+<!--          <span sec:authentication="principal.email"></span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <nav class="c-sidebar__menu">-->
+<!--        <ol class="c-sidebar__menu__list">-->
+<!--          <li class="c-sidebar__menu__item">-->
+<!--            <a class="c-sidebar__menu__itemLink" href="">-->
+<!--              <i class="icon-home3"></i>-->
+<!--              <span>Home</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li class="c-sidebar__menu__item">-->
+<!--            <a class="c-sidebar__menu__itemLink" href="">-->
+<!--              <i class="icon-bin2"></i>-->
+<!--              <span>Deleted</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li class="c-sidebar__menu__item">-->
+<!--            <a class="c-sidebar__menu__itemLink" th:href="@{'/settings'}">-->
+<!--              <i class="icon-cog"></i>-->
+<!--              <span>Settings</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li class="c-sidebar__menu__item" sec:authorize="hasRole('ADMIN')">-->
+<!--            <a class="c-sidebar__menu__itemLink" th:href="@{'/admin'}">-->
+<!--              <i class="icon-cogs"></i>-->
+<!--              <span>Manage</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li class="c-sidebar__menu__item">-->
+<!--            <a th:href="@{'/signout'}" class="c-sidebar__menu__itemLink" id="signout"-->
+<!--              data-confirm="Are you sure you want to sign out?">-->
+<!--              <i class="icon-exit"></i>-->
+<!--              <span>Sign out</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ol>-->
+<!--      </nav>-->
+<!--    </div>-->
+<!--  </section>-->
+<!--  <footer class="c-footer" th:fragment="footer">-->
+<!--    <div class="c-footer__wrap">-->
+<!--      <p>Image Pot</p>-->
+<!--      <small>Copyright &copy; 2021 xyztk. All Rights Reserved.</small>-->
+<!--    </div>-->
+<!--  </footer>-->
+<!--</body>-->
 
-</html>
+<!--</html>-->

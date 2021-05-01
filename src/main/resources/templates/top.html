@@ -1,101 +1,101 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
 
-<head th:replace="common::meta_header(null, ~{::link}, ~{::script})">
-  <link rel="stylesheet" th:href="@{/css/page/top.min.css}">
-  <script th:src="@{/dist/top/index.js}" defer></script>
-</head>
+<!--<head th:replace="common::meta_header(null, ~{::link}, ~{::script})">-->
+<!--  <link rel="stylesheet" th:href="@{/css/page/top.min.css}">-->
+<!--  <script th:src="@{/dist/top/index.js}" defer></script>-->
+<!--</head>-->
 
-<body>
-  <section class="p-top">
-    <div class="p-top__wrap">
-      <div class="p-top__hero">
-        <h1>The simple and fast<br>storage service<br>for images!</h1>
-        <p>Store secret images that you don't want to see.</p>
-        <div class="buttonWrap">
-          <button id="signin" class="buttonCTA buttonCTA-adjustWith">
-            Sign in
-          </button>
-          <button id="signup" class="buttonCTA buttonCTA-adjustWith">
-            Sign up
-          </button>
-        </div>
-      </div>
-      <!-- SignIn Form -->
-      <div style="display: none;" id="signinModal" class="p-top__modalContent">
-        <div class="p-top__modalBody">
-          <h2>Hello!</h2>
-          <p>Sign into your account here.</p>
-          <form class="p-top__modalForm" method="POST" th:action="@{/signin}">
-            <div class="inputGroup">
-              <input class="inputText" type="text" placeholder="Email" name="signinEmail">
-              <i class="icon-envelop"></i>
-            </div>
-            <div class="inputGroup">
-              <input class="inputText" type="password" placeholder="Password" name="signinPassword">
-              <span class="buttonCTA buttonCTA-show" id="showButtonPassword">Show</span>
-              <i class="icon-lock"></i>
-            </div>
-            <button type="submit" class="buttonCTA buttonCTA-fullWidth" name="signinAccount">Sign
-              in</button>
-            <div th:if="${registSuccess}" class="p-top__message p-top__message-error">User Registration Successful!
-              Please Login.</div>
+<!--<body>-->
+<!--  <section class="p-top">-->
+<!--    <div class="p-top__wrap">-->
+<!--      <div class="p-top__hero">-->
+<!--        <h1>The simple and fast<br>storage service<br>for images!</h1>-->
+<!--        <p>Store secret images that you don't want to see.</p>-->
+<!--        <div class="buttonWrap">-->
+<!--          <button id="signin" class="buttonCTA buttonCTA-adjustWith">-->
+<!--            Sign in-->
+<!--          </button>-->
+<!--          <button id="signup" class="buttonCTA buttonCTA-adjustWith">-->
+<!--            Sign up-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; SignIn Form &ndash;&gt;-->
+<!--      <div style="display: none;" id="signinModal" class="p-top__modalContent">-->
+<!--        <div class="p-top__modalBody">-->
+<!--          <h2>Hello!</h2>-->
+<!--          <p>Sign into your account here.</p>-->
+<!--          <form class="p-top__modalForm" method="POST" th:action="@{/signin}">-->
+<!--            <div class="inputGroup">-->
+<!--              <input class="inputText" type="text" placeholder="Email" name="signinEmail">-->
+<!--              <i class="icon-envelop"></i>-->
+<!--            </div>-->
+<!--            <div class="inputGroup">-->
+<!--              <input class="inputText" type="password" placeholder="Password" name="signinPassword">-->
+<!--              <span class="buttonCTA buttonCTA-show" id="showButtonPassword">Show</span>-->
+<!--              <i class="icon-lock"></i>-->
+<!--            </div>-->
+<!--            <button type="submit" class="buttonCTA buttonCTA-fullWidth" name="signinAccount">Sign-->
+<!--              in</button>-->
+<!--            <div th:if="${registSuccess}" class="p-top__message p-top__message-error">User Registration Successful!-->
+<!--              Please Login.</div>-->
 
-            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
-              th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="p-top__message p-top__message-error"
-              data-error="signin">ログインエラーメッセージ</div>
-          </form>
-        </div>
-        <div class="p-top__modalFooter">
-          Don't have an account?? <span id="signupSub">Sign up</span>
-        </div>
-      </div>
+<!--            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"-->
+<!--              th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="p-top__message p-top__message-error"-->
+<!--              data-error="signin">ログインエラーメッセージ</div>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--        <div class="p-top__modalFooter">-->
+<!--          Don't have an account?? <span id="signupSub">Sign up</span>-->
+<!--        </div>-->
+<!--      </div>-->
 
-      <!-- SignUp Form -->
-      <div style="display: none;" class="p-top__modalContent" id="signupModal">
-        <div class="p-top__modalBody">
-          <h2>Join Imagepot</h2>
-          <p>Use image storage for free.</p>
-          <form class="p-top__modalForm" method="POST" th:object="${signupForm}" th:action="@{/signup}">
-            <div class="inputGroup">
-              <input class="inputText" th:classappend="${#fields.hasErrors('name')}?'is-error'" type="text"
-                placeholder="Name" th:field="*{name}" maxlength="10">
-              <i class="icon-user"></i>
-            </div>
-            <div class="inputGroup">
-              <input class="inputText" th:classappend="${#fields.hasErrors('signupEmail')}?'is-error'" type="text"
-                placeholder="Email" th:field="*{signupEmail}">
-              <i class="icon-envelop"></i>
-            </div>
-            <div class="inputGroup">
-              <input class="inputText" th:classappend="${#fields.hasErrors('signupPassword')}?'is-error'"
-                type="password" placeholder="Password" th:field="*{signupPassword}">
-              <span class="buttonCTA buttonCTA-show" id="showButtonPassword">Show</span>
-              <i class="icon-lock"></i>
-            </div>
-            <div class="inputGroup">
-              <input class="inputText" th:classappend="${#fields.hasErrors('confirmPassword')}?'is-error'"
-                type="password" placeholder="Confirm Password" th:field=*{confirmPassword}>
-              <span class="buttonCTA buttonCTA-show" id="showButtonConfirm">Show</span>
-              <i class="icon-lock"></i>
-            </div>
-            <button type="submit" class="buttonCTA buttonCTA-fullWidth" name="signupAccount">
-              Create account
-            </button>
-            <div th:if="${#fields.hasErrors('${signupForm.*}')}" data-error="signup"
-              class="p-top__message p-top__message-error">
-              <span th:errors="${signupForm.*}"></span>
-            </div>
-          </form>
-        </div>
-        <div class="p-top__modalFooter">
-          Already registered? <span id="signinSub">Sign in</span>
-        </div>
-      </div>
+<!--      &lt;!&ndash; SignUp Form &ndash;&gt;-->
+<!--      <div style="display: none;" class="p-top__modalContent" id="signupModal">-->
+<!--        <div class="p-top__modalBody">-->
+<!--          <h2>Join Imagepot</h2>-->
+<!--          <p>Use image storage for free.</p>-->
+<!--          <form class="p-top__modalForm" method="POST" th:object="${signupForm}" th:action="@{/signup}">-->
+<!--            <div class="inputGroup">-->
+<!--              <input class="inputText" th:classappend="${#fields.hasErrors('name')}?'is-error'" type="text"-->
+<!--                placeholder="Name" th:field="*{name}" maxlength="10">-->
+<!--              <i class="icon-user"></i>-->
+<!--            </div>-->
+<!--            <div class="inputGroup">-->
+<!--              <input class="inputText" th:classappend="${#fields.hasErrors('signupEmail')}?'is-error'" type="text"-->
+<!--                placeholder="Email" th:field="*{signupEmail}">-->
+<!--              <i class="icon-envelop"></i>-->
+<!--            </div>-->
+<!--            <div class="inputGroup">-->
+<!--              <input class="inputText" th:classappend="${#fields.hasErrors('signupPassword')}?'is-error'"-->
+<!--                type="password" placeholder="Password" th:field="*{signupPassword}">-->
+<!--              <span class="buttonCTA buttonCTA-show" id="showButtonPassword">Show</span>-->
+<!--              <i class="icon-lock"></i>-->
+<!--            </div>-->
+<!--            <div class="inputGroup">-->
+<!--              <input class="inputText" th:classappend="${#fields.hasErrors('confirmPassword')}?'is-error'"-->
+<!--                type="password" placeholder="Confirm Password" th:field=*{confirmPassword}>-->
+<!--              <span class="buttonCTA buttonCTA-show" id="showButtonConfirm">Show</span>-->
+<!--              <i class="icon-lock"></i>-->
+<!--            </div>-->
+<!--            <button type="submit" class="buttonCTA buttonCTA-fullWidth" name="signupAccount">-->
+<!--              Create account-->
+<!--            </button>-->
+<!--            <div th:if="${#fields.hasErrors('${signupForm.*}')}" data-error="signup"-->
+<!--              class="p-top__message p-top__message-error">-->
+<!--              <span th:errors="${signupForm.*}"></span>-->
+<!--            </div>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--        <div class="p-top__modalFooter">-->
+<!--          Already registered? <span id="signinSub">Sign in</span>-->
+<!--        </div>-->
+<!--      </div>-->
 
-    </div>
-  </section>
-</body>
+<!--    </div>-->
+<!--  </section>-->
+<!--</body>-->
 
 
-</html>
+<!--</html>-->
