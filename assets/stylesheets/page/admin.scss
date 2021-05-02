@@ -11,6 +11,7 @@
     padding: 0 22px;
 
     > h1 {
+      color: $color-primary-darkBlue;
       font-size: 32px;
       font-weight: 700;
     }
@@ -30,7 +31,7 @@
       color: #fff;
 
       > th {
-        padding: 3px;
+        padding: 3px 8px;
         border: solid 1px #DCDCDC		;
       }
     }
@@ -47,7 +48,7 @@
       }
 
       > td {
-        padding: 3px;
+        padding: 3px 8px;
         border: solid 1px #DCDCDC		;
       }
     }
@@ -58,5 +59,37 @@
     font-size: 16px;
     line-height: 1.4;
     font-weight: 600;
+  }
+
+  &__userDetails {
+
+    > h2 {
+      color: $color-primary-blue;
+      font-size: 32px;
+      font-weight: 600;
+    }
+
+    &__table {
+      width: 100%;
+      margin-top: 20px;
+
+      th, td {
+        font-size: 16px;
+        font-weight: 400;
+        border: solid 1px #DCDCDC;
+        padding: 11px 12px;
+      }
+
+      th {
+        width: 30%;
+        color: #fff;
+        background-color: $color-primary-blue;
+      }
+    }
+
+    .buttonWrap {
+      margin-top: 20px;
+      text-align: right;
+    }
   }
 }

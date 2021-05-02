@@ -44,10 +44,13 @@
           </table>
           <div class="p-admin__total" th:text="'Total：' + ${count}"></div>
         </section>
-        <section style="display: none" class="userDetail" id="js-userDetailModal">
-          <h2>User Detail</h2>
-          <table id="js-userDetailTable">
+        <section style="display: none" class="p-admin__userDetails" id="js-userDetailsModal">
+          <h2>User Details</h2>
+          <table id="js-userDetailsTable" class="p-admin__userDetails__table">
           </table>
+          <div class="buttonWrap">
+            <button class="buttonCTA">DELETE</button>
+          </div>
         </section>
       </div>
     </div>

@@ -4,17 +4,17 @@ import jBox from 'jbox';
 
 
 const userDetailModal = new jBox('Modal', {
-    id: 'userDetail',
-    width: 810,
-    height: 780,
+    id: 'userDetails',
+    width: 675,
+    height: 606,
     attach: '.p-admin__userList__data',
-    content: $('#js-userDetailModal'),
+    content: $('#js-userDetailsModal'),
     overlayClass: 'add-jboxOverRay',
     closeOnClick: false,
     closeButton: 'box',
     createOnInit: true,
     onClose: function () {
-        const parent = document.getElementById('js-userDetailTable');
+        const parent = document.getElementById('js-userDetailsTable');
         while (parent.firstChild) {
             parent.removeChild(parent.firstChild);
         }
@@ -53,7 +53,7 @@ const buildUserData = (e) => {
         td.innerText = data[prop];
         tr.appendChild(th);
         tr.appendChild(td);
-        document.getElementById('js-userDetailTable').appendChild(tr);
+        document.getElementById('js-userDetailsTable').appendChild(tr);
     }
 }
 
