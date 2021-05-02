@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+
 @Slf4j
+@Controller
+@RequestMapping("/home")
 public class HomeController {
 
     private final UserService userService;
@@ -27,10 +30,8 @@ public class HomeController {
         this.s3Service = s3Service;
     }
 
-    @GetMapping("/home")
+    @GetMapping
     public String getHome() {
-        log.info("HomeController Start");
-        // log.info(user.toString());
         s3Service.getObjList();
         return "home";
     }
@@ -46,9 +47,13 @@ public class HomeController {
         return "admin";
     }
 
-    @PostMapping("/signout")
-    public String getSignout() {
-        System.out.println("Sign Out....");
+    @GetMapping("/settings")
+    public String getSettings() { //Model model, @AuthenticationPrincipal AppUserDetails user
+        return "settings";
+    }
+
+    @GetMapping("/logout")
+    public String getLogout() {
         return "redirect:/";
     }
 }

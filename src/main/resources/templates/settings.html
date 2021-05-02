@@ -1,107 +1,107 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<!--<head th:replace="common::meta_header('Settings', ~{::link}, ~{::script})">-->
-<!--  <link rel="stylesheet" th:href="@{/css/page/settings.min.css}">-->
-<!--  <script th:src="@{/dist/settings/index.js}" defer></script>-->
-<!--</head>-->
+<head th:replace="common::meta_header('Settings', ~{::link}, ~{::script})">
+  <link rel="stylesheet" th:href="@{/css/page/settings.min.css}">
+  <script th:src="@{/dist/settings/index.js}" defer></script>
+</head>
 
-<!--<body>-->
-<!--  <div class="c-globalContainer">-->
-<!--    <div th:replace="common::sidebar">-->
-<!--    </div>-->
-<!--    <div class="c-contents">-->
-<!--      <div class="p-settings">-->
-<!--        <h1>Edit Information</h1>-->
-<!--        <section class="p-settings__editBlock">-->
-<!--          <div class="p-settings__editBlock__wrap">-->
-<!--            <h2>Your Profile</h2>-->
-<!--            <div class="p-settings__editBlock__content">-->
-<!--              <dl class="p-settings__settingArea">-->
-<!--                <dt>Your Icon</dt>-->
-<!--                <dd class="p-settings__settingArea__icon">-->
+<body>
+  <div class="c-globalContainer">
+    <div th:replace="common::sidebar">
+    </div>
+    <div class="c-contents">
+      <div class="p-settings">
+        <h1>Edit Information</h1>
+        <section class="p-settings__editBlock">
+          <div class="p-settings__editBlock__wrap">
+            <h2>Your Profile</h2>
+            <div class="p-settings__editBlock__content">
+              <dl class="p-settings__settingArea">
+                <dt>Your Icon</dt>
+                <dd class="p-settings__settingArea__icon">
 <!--                  <figure id="icon">-->
 <!--                    <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">-->
 <!--                  </figure>-->
-<!--                  <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">-->
-<!--                  <label class="buttonCTA" for="fileInput">Change Icon</label>-->
-<!--                  <div class="cropModal" id="js-cropModal">-->
-<!--                    <div class="cropWrap">-->
-<!--                      <div class="cropBody">-->
-<!--                        <img class="cropImage" id="js-cropImage" src="" alt="">-->
-<!--                      </div>-->
+                  <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
+                  <label class="buttonCTA" for="fileInput">Change Icon</label>
+                  <div class="cropModal" id="js-cropModal">
+                    <div class="cropWrap">
+                      <div class="cropBody">
+                        <img class="cropImage" id="js-cropImage" src="" alt="">
+                      </div>
 
-<!--                      &lt;!&ndash;<form th:action="@{/settings/upload/newicon}" method="POST" enctype="multipart/form-data"-->
-<!--                        id="js-cropForm" name="newIcon">&ndash;&gt;-->
-<!--                      <button class="buttonCTA buttonCTA-fullWidth" id="js-newIconSubmit">Set new-->
-<!--                        icon</button>-->
-<!--                      &lt;!&ndash;</form>&ndash;&gt;-->
+                      <!--<form th:action="@{/settings/upload/newicon}" method="POST" enctype="multipart/form-data"
+                        id="js-cropForm" name="newIcon">-->
+                      <button class="buttonCTA buttonCTA-fullWidth" id="js-newIconSubmit">Set new
+                        icon</button>
+                      <!--</form>-->
 
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </dd>-->
-<!--              </dl>-->
-<!--              <form action="">-->
-<!--                <dl class="p-settings__settingArea">-->
-<!--                  <dt><label for="name">Name</label></dt>-->
-<!--                  <dd class="inputGroup">-->
-<!--                    <input class="inputText" type="text" id="name">-->
-<!--                    <i class="icon-user"></i>-->
-<!--                  </dd>-->
-<!--                </dl>-->
-<!--                <dl class="p-settings__settingArea">-->
-<!--                  <dt><label for="email">Email</label></dt>-->
-<!--                  <dd class="inputGroup">-->
-<!--                    <input class="inputText" type="text" id="email">-->
-<!--                    <i class="icon-envelop"></i>-->
-<!--                  </dd>-->
-<!--                </dl>-->
-<!--                <div class="p-settings__settingArea p-settings__settingArea-buttonBox">-->
-<!--                  <button class="buttonCTA">Update</button>-->
-<!--                </div>-->
-<!--              </form>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </section>-->
-<!--        <section class="p-settings__editBlock">-->
-<!--          <div class="p-settings__editBlock__wrap">-->
-<!--            <h2>Change Password</h2>-->
-<!--            <div class="p-settings__editBlock__content">-->
-<!--              <form action="">-->
-<!--                <dl class="p-settings__settingArea">-->
-<!--                  <dt><label for="currentPassword">Current Password</label></dt>-->
-<!--                  <dd class="inputGroup">-->
-<!--                    <input class="inputText" type="password" id="currentPassword">-->
-<!--                    <span class="buttonCTA buttonCTA-show">Show</span>-->
-<!--                    <i class="icon-lock"></i>-->
-<!--                  </dd>-->
-<!--                </dl>-->
-<!--                <dl class="p-settings__settingArea">-->
-<!--                  <dt><label for="newPassword">New Password</label></dt>-->
-<!--                  <dd class="inputGroup">-->
-<!--                    <input class="inputText" type="password" id="newPassword">-->
-<!--                    <span class="buttonCTA buttonCTA-show">Show</span>-->
-<!--                    <i class="icon-lock"></i>-->
-<!--                  </dd>-->
-<!--                </dl>-->
-<!--                <dl class="p-settings__settingArea">-->
-<!--                  <dt><label for="confirmNewPassword">Confirm New Password</label></dt>-->
-<!--                  <dd class="inputGroup">-->
-<!--                    <input class="inputText" type="password" id="confirmNewPassword">-->
-<!--                    <span class="buttonCTA buttonCTA-show">Show</span>-->
-<!--                    <i class="icon-lock"></i>-->
-<!--                  </dd>-->
-<!--                </dl>-->
-<!--                <div class="p-settings__settingArea p-settings__settingArea-buttonBox">-->
-<!--                  <button class="buttonCTA">Update</button>-->
-<!--                </div>-->
-<!--              </form>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </section>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</body>-->
+                    </div>
+                  </div>
+                </dd>
+              </dl>
+              <form action="">
+                <dl class="p-settings__settingArea">
+                  <dt><label for="name">Name</label></dt>
+                  <dd class="inputGroup">
+                    <input class="inputText" type="text" id="name">
+                    <i class="icon-user"></i>
+                  </dd>
+                </dl>
+                <dl class="p-settings__settingArea">
+                  <dt><label for="email">Email</label></dt>
+                  <dd class="inputGroup">
+                    <input class="inputText" type="text" id="email">
+                    <i class="icon-envelop"></i>
+                  </dd>
+                </dl>
+                <div class="p-settings__settingArea p-settings__settingArea-buttonBox">
+                  <button class="buttonCTA">Update</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+        <section class="p-settings__editBlock">
+          <div class="p-settings__editBlock__wrap">
+            <h2>Change Password</h2>
+            <div class="p-settings__editBlock__content">
+              <form action="">
+                <dl class="p-settings__settingArea">
+                  <dt><label for="currentPassword">Current Password</label></dt>
+                  <dd class="inputGroup">
+                    <input class="inputText" type="password" id="currentPassword">
+                    <span class="buttonCTA buttonCTA-show">Show</span>
+                    <i class="icon-lock"></i>
+                  </dd>
+                </dl>
+                <dl class="p-settings__settingArea">
+                  <dt><label for="newPassword">New Password</label></dt>
+                  <dd class="inputGroup">
+                    <input class="inputText" type="password" id="newPassword">
+                    <span class="buttonCTA buttonCTA-show">Show</span>
+                    <i class="icon-lock"></i>
+                  </dd>
+                </dl>
+                <dl class="p-settings__settingArea">
+                  <dt><label for="confirmNewPassword">Confirm New Password</label></dt>
+                  <dd class="inputGroup">
+                    <input class="inputText" type="password" id="confirmNewPassword">
+                    <span class="buttonCTA buttonCTA-show">Show</span>
+                    <i class="icon-lock"></i>
+                  </dd>
+                </dl>
+                <div class="p-settings__settingArea p-settings__settingArea-buttonBox">
+                  <button class="buttonCTA">Update</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
 
-<!--</html>-->
+</html>

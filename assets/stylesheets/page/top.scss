@@ -79,10 +79,10 @@
     line-height: 1.4;
     text-align: center;
     > span {
-      color: #ef476f;
+      color: $color-primary-pink;
       cursor: pointer;
       &:hover {
-        border-bottom: solid 1px #ef476f;
+        border-bottom: solid 1px $color-primary-pink;
       }
     }
   }

@@ -1,8 +1,10 @@
+@import "variables";
+
 .c-sidebar {
   width: 295px;
   height: 100vh;
   color: #fff;
-  background: #ed315d;
+  background: $color-primary-pink;
   flex-shrink: 0;
   position: sticky;
   top: 0;
@@ -63,7 +65,7 @@
       transition: all .15s ease;
       padding-left: 31px;
       &:hover {
-        background: #ef476f;
+        background: $color-primary-pink-state;
       }
     }
 

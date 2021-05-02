@@ -36,7 +36,7 @@ public class StorageService {
         List<S3ObjectSummary> objList = objListing.getObjectSummaries();
 
         for (S3ObjectSummary obj : objList) {
-            System.out.println(s3Cliant.getUrl(bucketName, obj.getKey()));
+            // System.out.println(s3Cliant.getUrl(bucketName, obj.getKey())); image url
             // System.out.println("Key [" + obj.getKey() + "] / Size [" + obj.getSize() + "
             // B] / Last Modified ["
             // + obj.getLastModified() + "]");

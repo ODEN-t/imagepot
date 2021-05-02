@@ -1,3 +1,5 @@
+@import "../common/variables";
+
 .p-home {
   background-color: #fff;
   width: 100%;
@@ -27,7 +29,7 @@
         border: solid 1px #CCCCCC;
         font-size: 14px;
         font-weight: 400;
-        color: #073B4C;
+        color: $color-primary-darkBlue;
         margin-left: 0.4em;
         border-radius: 3px;
         z-index: 2;
@@ -47,7 +49,7 @@
     }
   }
 
-  &__mansonry {
+  &__masonry {
     max-width: 1320px;
     margin: 28px auto 0;
     column-count: 3;

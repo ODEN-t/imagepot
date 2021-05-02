@@ -24,17 +24,16 @@ public class SignupForm {
     @NotBlank(groups = Group3.class)
     @Email(groups = Group4.class)
     @Length(max = 255, groups = Group5.class)
-    //@Unused(groups = Group6.class)
     private String email;
 
-    @NotBlank(groups = Group5.class)
-    @Length(min = 8, max = 10, groups = Group6.class)
-    @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = Group7.class)
+    @NotBlank(groups = Group6.class)
+    @Length(min = 8, max = 10, groups = Group7.class)
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = Group8.class)
     private String password;
 
     private String confirmPassword;
 
-    @AssertTrue(message = "Password and Confirm Password does not match.", groups = Group8.class)
+    @AssertTrue(message = "Password and Confirm Password does not match.", groups = Group9.class)
     public boolean isValid() {
         return password.equals(confirmPassword);
     }
