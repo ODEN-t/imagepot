@@ -28,16 +28,20 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> checkDuplicateUser(String email) {
-        return userRepository.findUserByEmail(email);
-    }
-
     public void addNewUser(User user) {
         Optional<User> userOptional = userRepository.findUserByEmail(user.getEmail());
         if(userOptional.isPresent()) {
             throw new IllegalStateException("Email has already been taken.");
         }
         userRepository.save(user);
+    }
+
+    public void deleteUser(Long userId) {
+        boolean exists = userRepository.existsById(userId);
+        if(!exists) {
+            throw new IllegalStateException("User with ID " + userId + "does not exists");
+        }
+        userRepository.deleteById(userId);
     }
 
 }

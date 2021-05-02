@@ -45,6 +45,7 @@ const textEdit = (text) => {
 
 const buildUserData = (e) => {
     const data = e.currentTarget.dataset;
+    document.getElementById('js-deleteForm').action = '/admin/delete/' + data.id;
     for(const prop in data) {
         let tr = document.createElement('tr');
         let th = document.createElement('th');

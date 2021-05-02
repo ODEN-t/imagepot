@@ -7,11 +7,14 @@ import com.imagepot.xyztk.model.ValidationAll;
 import com.imagepot.xyztk.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Locale;
 
 @Slf4j
 @Controller
@@ -19,10 +22,12 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     private final UserService userService;
+    private final MessageSource messageSource;
 
     @Autowired
-    public LoginController(UserService userService) {
+    public LoginController(UserService userService, MessageSource messageSource) {
         this.userService = userService;
+        this.messageSource = messageSource;
     }
 
     @GetMapping
@@ -56,14 +61,14 @@ public class LoginController {
             user.setPassword(signupForm.getPassword());
             userService.addNewUser(user);
         } catch (IllegalStateException e) {
-            log.error("Throw Error when adding new user in LoginController. Message is: " + e.getMessage());
+            log.error(messageSource.getMessage("error.signup",null, Locale.ENGLISH) + e.getMessage());
             model.addAttribute("registerError", true);
             model.addAttribute("message", e.getMessage());
             return "top";
         }
 
         model.addAttribute("registerSuccess", true);
-        model.addAttribute("message", "Registration Successful! Please Login.");
+        model.addAttribute("message", messageSource.getMessage("success.signup",null, Locale.ENGLISH));
         return "top";
     }
 }

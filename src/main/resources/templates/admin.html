@@ -49,7 +49,9 @@
           <table id="js-userDetailsTable" class="p-admin__userDetails__table">
           </table>
           <div class="buttonWrap">
-            <button class="buttonCTA">DELETE</button>
+            <form id="js-deleteForm" th:method="delete">
+              <button class="buttonCTA">DELETE</button>
+            </form>
           </div>
         </section>
       </div>

@@ -21,12 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/home")
 public class HomeController {
 
-    private final UserService userService;
     private final StorageService s3Service;
 
     @Autowired
-    public HomeController(UserService userService, StorageService s3Service) {
-        this.userService = userService;
+    public HomeController(StorageService s3Service) {
         this.s3Service = s3Service;
     }
 
@@ -34,17 +32,6 @@ public class HomeController {
     public String getHome() {
         s3Service.getObjList();
         return "home";
-    }
-
-    @GetMapping("/admin")
-    public String getAdmin(Model model) {
-
-        List<User> userList = userService.getUsers();
-        model.addAttribute("userList", userList);
-
-        int count = userList.size();
-        model.addAttribute("count", count);
-        return "admin";
     }
 
     @GetMapping("/settings")
