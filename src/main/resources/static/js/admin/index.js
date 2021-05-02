@@ -2,6 +2,7 @@ import $ from 'jquery/dist/jquery.min';
 import 'jbox/dist/jBox.all.css';
 import jBox from 'jbox';
 
+
 const userDetailModal = new jBox('Modal', {
     id: 'userDetail',
     width: 810,
