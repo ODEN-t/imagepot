@@ -1,5 +1,5 @@
-import jBox from 'jbox';
 import 'jbox/dist/jBox.all.css';
+import jBox from 'jbox';
 import $ from 'jquery/dist/jquery.min';
 
 // Login Modal の設定値

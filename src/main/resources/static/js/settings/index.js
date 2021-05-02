@@ -1,8 +1,7 @@
-import 'cropperjs/dist/cropper.css';
 import 'jbox/dist/jBox.all.css';
-import $ from 'jquery/dist/jquery.min';
-import Cropper from 'cropperjs';
 import jBox from 'jbox';
+import 'cropperjs/dist/cropper.css';
+import Cropper from 'cropperjs';
 
 console.log('from settings');
 

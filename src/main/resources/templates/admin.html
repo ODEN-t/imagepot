@@ -3,7 +3,7 @@
 
 <head th:replace="common::meta_header('Admin', ~{::link}, ~{::script})">
   <link rel="stylesheet" th:href="@{/css/page/admin.min.css}">
-  <script th:src="@{/dist/home/index.js}"></script>
+  <script th:src="@{/dist/admin/index.js}" defer></script>
 </head>
 
 <body>
@@ -17,20 +17,37 @@
           <table class="p-admin__userList">
             <tr class="p-admin__userList__head">
               <th>ID</th>
-              <th>Email</th>
               <th>Name</th>
+              <th>Email</th>
               <th>Role</th>
               <th>Created At</th>
             </tr>
-            <tr th:each="user:${userList}" class="p-admin__userList__data">
+            <tr th:each="user:${userList}"
+                class="p-admin__userList__data"
+                th:data-id="${user.id}"
+                th:data-name="${user.name}"
+                th:data-email="${user.email}"
+                th:data-password="${user.password}"
+                th:data-role="${user.role}"
+                th:data-passwordUpdatedAt="${user.passwordUpdatedAt}"
+                th:data-signinMissTimes="${user.signinMissTimes}"
+                th:data-unlock="${user.unlock}"
+                th:data-enabled="${user.enabled}"
+                th:data-updatedAt="${user.updatedAt}"
+                th:data-createdAt="${user.createdAt}">
               <td th:text="${user.id}"></td>
-              <td th:text="${user.email}"></td>
               <td th:text="${user.name}"></td>
+              <td th:text="${user.email}"></td>
               <td th:text="${user.role}"></td>
               <td th:text="${#dates.format(user.createdAt, 'YYYY/MM/dd')}"></td>
             </tr>
           </table>
           <div class="p-admin__total" th:text="'Total：' + ${count}"></div>
+        </section>
+        <section style="display: none" class="userDetail" id="js-userDetailModal">
+          <h2>User Detail</h2>
+          <table id="js-userDetailTable">
+          </table>
         </section>
       </div>
     </div>
