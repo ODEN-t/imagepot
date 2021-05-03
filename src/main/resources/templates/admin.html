@@ -54,6 +54,12 @@
             </form>
           </div>
         </section>
+        <div th:if="${deleteError}" data-message="error" class="c-message c-message-error">
+          <span th:text="${message}"></span>
+        </div>
+        <div th:if="${deleteSuccess}" data-message="success" class="c-message c-message-success">
+          <span th:text="${message}"></span>
+        </div>
       </div>
     </div>
   </div>

@@ -86,26 +86,4 @@
       }
     }
   }
-
-  &__message {
-    font-size: 15px;
-    line-height: 1.2;
-    &-error {
-      color: $color-error-text;
-    }
-    &-success {
-      color: $color-success-text;
-    }
-  }
-}
-
-.add-jboxErrorMessage .jBox-container,  .add-jboxSuccessMessage .jBox-container{
-  border-radius: 10px;
-  box-shadow: none !important;
-}
-.add-jboxErrorMessage .jBox-container {
-  background-color: $color-error-bg;
-}
-.add-jboxSuccessMessage .jBox-container {
-  background-color: $color-success-bg;
 }

@@ -45,7 +45,6 @@ usage
   }
 }
 
-
 /*
 usage
 <button type="submit" class="buttonCTA">Signin</button>
@@ -110,11 +109,16 @@ usage
   }
 }
 
+/*
+  common style for jBox
+ */
 .add-jboxOverRay {
   background-color: rgba(0,0,0,.6) !important;
 }
 
-  
+/*
+  common style for Popup
+*/
 .add-popupCustomStyle {
   .jBox-title {
     font-size: 20px;
@@ -139,4 +143,29 @@ usage
       box-shadow: none;
     }
   }
+}
+
+/*
+  common style for Modal Message
+*/
+.c-message {
+  font-size: 17px;
+  line-height: 1.2;
+  font-weight: 600;
+  &-error {
+    color: $color-error-text;
+  }
+  &-success {
+    color: $color-success-text;
+  }
+}
+.add-jboxErrorMessage .jBox-container,  .add-jboxSuccessMessage .jBox-container{
+  border-radius: 10px;
+  box-shadow: none !important;
+}
+.add-jboxErrorMessage .jBox-container {
+  background-color: $color-error-bg;
+}
+.add-jboxSuccessMessage .jBox-container {
+  background-color: $color-success-bg;
 }

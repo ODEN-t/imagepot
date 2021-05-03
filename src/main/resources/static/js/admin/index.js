@@ -1,6 +1,7 @@
-import $ from 'jquery/dist/jquery.min';
 import 'jbox/dist/jBox.all.css';
 import jBox from 'jbox';
+import $ from 'jquery/dist/jquery.min';
+import * as module from '../module/index';
 
 
 const userDetailModal = new jBox('Modal', {
@@ -62,3 +63,6 @@ const buildUserData = (e) => {
 document.querySelectorAll('.p-admin__userList__data').forEach((f) =>{
     f.addEventListener('click', buildUserData)
 })
+
+// show result message from backend with modal
+module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error');

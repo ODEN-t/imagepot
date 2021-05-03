@@ -1,8 +1,8 @@
 import 'jbox/dist/jBox.all.css';
 import jBox from 'jbox';
 import $ from 'jquery/dist/jquery.min';
+import * as module from '../module/index';
 
-// Login Modal の設定値
 const loginModal = new jBox('Modal', {
     id: 'login',
     width: 405,
@@ -16,7 +16,6 @@ const loginModal = new jBox('Modal', {
 });
 
 
-// Signup Modal の設定値
 const signupModal = new jBox('Modal', {
     id: 'signup',
     width: 405,
@@ -29,47 +28,8 @@ const signupModal = new jBox('Modal', {
     createOnInit: true,
 });
 
-// Message modal の設定値
-const errorMessageModal = new jBox('Modal', {
-    id: 'error',
-    content: $('.p-top__message-error'),
-    addClass: 'add-jboxErrorMessage',
-    overlay: false,
-    closeOnClick: false,
-    closeButton: false,
-    offset: {
-        y: 310
-    },
-    autoClose: 3000,
-    fade: 250,
-    animation: {
-        open: 'slide:bottom',
-        close: 'slide:bottom'
-    }
-});
 
-
-// Message modal の設定値
-const successMessageModal = new jBox('Modal', {
-    id: 'success',
-    content: $('.p-top__message-success'),
-    addClass: 'add-jboxSuccessMessage',
-    overlay: false,
-    closeOnClick: false,
-    closeButton: false,
-    offset: {
-        y: 310
-    },
-    autoClose: false,
-    fade: 250,
-    animation: {
-        open: 'slide:bottom',
-        close: 'slide:bottom'
-    }
-});
-
-
-// 表示中のモーダルを閉じ他のモーダルを開く
+// switch modal loginModal and signupModal
 const modalSwitch = (...buttons) => {
     for (const button of buttons) {
         document.getElementById(button).addEventListener('click', () => {
@@ -81,42 +41,22 @@ const modalSwitch = (...buttons) => {
 modalSwitch('signupSub', 'loginSub');
 
 
-// type=password <=> type=text の切り替え
-const inputTypeToggle = (elementClass) => {
-    const nodeList = document.querySelectorAll(elementClass);
-    for (const node of nodeList) {
-        node.addEventListener('click', () => {
-            const target = node.previousElementSibling;
-            target.type === 'password' ? target.type = 'text' : target.type = 'password';
-        })
+// toggle input type between text and password
+module.inputTypeToggle('.buttonCTA-show');
+
+
+// show result message from backend with modal
+const element = module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error', true);
+if(typeof element !== 'undefined') {
+    const result = element.dataset.message;
+    const process = element.dataset.process;
+
+    if(result === 'error') {
+        process === 'login' ? loginModal.open() : signupModal.open();
     }
+
+    if(result === 'success' && process === 'signup')
+        loginModal.open();
 }
-inputTypeToggle('.buttonCTA-show');
 
 
-// errorメッセージ表示時、エラー発生モーダルをオープン
-// loginのエラーメッセージが消えないためsignupモーダルが開かない要修正
-const showMessage = (elementClass) => {
-    const messageElem = document.querySelectorAll(elementClass);
-    if(messageElem.length > 0) {
-        const modalType = messageElem[0].dataset.process;
-        const messageType = messageElem[0].dataset.message;
-
-        console.log('modalType:' + modalType, ' messageType:' + messageType);
-
-        switch (messageType) {
-            case 'success':
-                console.log('success modal open')
-                successMessageModal.open();
-                break;
-            case 'error':
-                console.log('error modal open')
-                loginModal.close();
-                signupModal.close();
-                modalType === 'login' ? loginModal.open() : signupModal.open();
-                errorMessageModal.open();
-                break;
-        }
-    }
-}
-showMessage('.p-top__message');
