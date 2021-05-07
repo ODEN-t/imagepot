@@ -37,8 +37,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // Validates credentials
         try {
-            UsernameAndPasswordAuthenticationRequest authenticationRequest = new ObjectMapper()
-                    .readValue(request.getInputStream(), UsernameAndPasswordAuthenticationRequest.class);
+//            UsernameAndPasswordAuthenticationRequest authenticationRequest = new ObjectMapper()
+//                    .readValue(request.getInputStream(), UsernameAndPasswordAuthenticationRequest.class);
+            UsernameAndPasswordAuthenticationRequest authenticationRequest = new UsernameAndPasswordAuthenticationRequest();
+            authenticationRequest.setEmail(request.getParameter("email"));
+            authenticationRequest.setPassword(request.getParameter("password"));
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     authenticationRequest.getEmail(),
@@ -49,7 +52,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             Authentication authenticate = authenticationManager.authenticate(authentication);
             return authenticate;
             //return getAuthenticationManager().authenticate(authentication);
-        } catch (IOException e) {
+        } catch (NullPointerException e) {
             throw new RuntimeException(e);
         }
     }
@@ -65,5 +68,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .compact();
 
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
+        chain.doFilter(request, response);
     }
 }

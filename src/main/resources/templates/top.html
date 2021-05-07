@@ -26,7 +26,7 @@
         <div class="p-top__modalBody">
           <h2>Hello!</h2>
           <p>Login to your account here.</p>
-          <form class="p-top__modalForm" method="POST" th:action="@{/login}">
+          <form class="p-top__modalForm" th:method="POST" th:action="@{/login}">
             <div class="inputGroup">
               <input class="inputText" type="text" placeholder="Email" name="email">
               <i class="icon-envelop"></i>

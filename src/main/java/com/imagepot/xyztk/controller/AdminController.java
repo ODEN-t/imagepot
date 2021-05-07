@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Slf4j
 @Controller
-
+@RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
