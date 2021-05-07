@@ -28,11 +28,11 @@
           <p>Login to your account here.</p>
           <form class="p-top__modalForm" method="POST" th:action="@{/login}">
             <div class="inputGroup">
-              <input class="inputText" type="text" placeholder="Email">
+              <input class="inputText" type="text" placeholder="Email" name="email">
               <i class="icon-envelop"></i>
             </div>
             <div class="inputGroup">
-              <input class="inputText" type="password" placeholder="Password">
+              <input class="inputText" type="password" placeholder="Password" name="password">
               <span class="buttonCTA buttonCTA-show">Show</span>
               <i class="icon-lock"></i>
             </div>

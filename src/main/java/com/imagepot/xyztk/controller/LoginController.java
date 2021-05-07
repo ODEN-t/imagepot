@@ -4,10 +4,14 @@ package com.imagepot.xyztk.controller;
 import com.imagepot.xyztk.model.SignupForm;
 import com.imagepot.xyztk.model.User;
 import com.imagepot.xyztk.model.ValidationAll;
+import com.imagepot.xyztk.security.AuthenticationRequestForm;
+import com.imagepot.xyztk.security.PasswordConfig;
 import com.imagepot.xyztk.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,11 +27,13 @@ public class LoginController {
 
     private final UserService userService;
     private final MessageSource messageSource;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public LoginController(UserService userService, MessageSource messageSource) {
+    public LoginController(UserService userService, MessageSource messageSource, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.messageSource = messageSource;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -39,8 +45,8 @@ public class LoginController {
 
     // auth with spring security
     @PostMapping("/login")
-    public String postLogin() {
-        return "home";
+    public String postLogin(@RequestBody AuthenticationRequestForm authenticationRequestForm) {
+        return "redirect:/home";
     }
 
     // validation with entity RegisterForm
@@ -58,7 +64,7 @@ public class LoginController {
             User user = new User();
             user.setName(signupForm.getName());
             user.setEmail(signupForm.getEmail());
-            user.setPassword(signupForm.getPassword());
+            user.setPassword(passwordEncoder.encode(signupForm.getPassword()));
             userService.addNewUser(user);
         } catch (IllegalStateException e) {
             log.error(messageSource.getMessage("error.signup",null, Locale.ENGLISH) + e.getMessage());

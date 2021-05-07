@@ -20,8 +20,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> getUser(long id) {
-        return userRepository.findById(id);
+    public Optional<User> getUserByEmail(String email) throws IllegalStateException {
+        return Optional.ofNullable(userRepository
+                .selectUserByEmail(email)
+                .orElseThrow(() ->
+                        new IllegalStateException(String.format("Email %s not found.", email))));
     }
 
     public List<User> getUsers() {
@@ -29,7 +32,7 @@ public class UserService {
     }
 
     public void addNewUser(User user) {
-        Optional<User> userOptional = userRepository.findUserByEmail(user.getEmail());
+        Optional<User> userOptional = userRepository.selectUserByEmail(user.getEmail());
         if(userOptional.isPresent()) {
             throw new IllegalStateException("Email has already been taken.");
         }
