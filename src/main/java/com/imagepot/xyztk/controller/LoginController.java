@@ -43,6 +43,8 @@ public class LoginController {
         return "top";
     }
 
+    
+
     // auth with spring security
     // /loginでhomeが表示される。サーブレットエラーもでる
     @PostMapping("/login")
