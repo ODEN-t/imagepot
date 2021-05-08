@@ -4,12 +4,11 @@ package com.imagepot.xyztk.controller;
 import com.imagepot.xyztk.model.SignupForm;
 import com.imagepot.xyztk.model.User;
 import com.imagepot.xyztk.model.ValidationAll;
-import com.imagepot.xyztk.security.AuthenticationRequestForm;
-import com.imagepot.xyztk.security.PasswordConfig;
 import com.imagepot.xyztk.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +16,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
 @Slf4j
@@ -43,16 +44,11 @@ public class LoginController {
     }
 
     // auth with spring security
-    @PostMapping("login")
-    public String postLogin() {
+    // /loginでhomeが表示される。サーブレットエラーもでる
+    @PostMapping("/login")
+    public String login() {
         return "home";
     }
-//
-//    // auth with spring security
-//    @GetMapping("login")
-//    public String getLogin() {
-//        return "home";
-//    }
 
     // validation with entity RegisterForm
     @PostMapping ("/signup")

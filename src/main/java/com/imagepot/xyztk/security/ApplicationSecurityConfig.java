@@ -37,10 +37,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .authenticated();
 //                .and()
 //                .formLogin()
-//                    .loginProcessingUrl("/login").permitAll()
+//                    .loginPage("/")
+//                    .loginProcessingUrl("/home").permitAll()
 //                        .usernameParameter("email")
 //                        .passwordParameter("password")
-//                    .defaultSuccessUrl("/home");
+//                    .defaultSuccessUrl("/home")
 //                .failureUrl("/login?error").permitAll();
     }
 

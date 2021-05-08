@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             Authentication authenticate = authenticationManager.authenticate(authentication);
             return authenticate;
-            //return getAuthenticationManager().authenticate(authentication);
+
         } catch (NullPointerException e) {
             throw new RuntimeException(e);
         }
