@@ -1,13 +1,12 @@
 package com.imagepot.xyztk.model;
 
+import com.google.common.base.Strings;
+import com.google.common.primitives.Bytes;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Base64;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -32,9 +31,13 @@ public class LoginUser implements UserDetails {
         this.name = user.getName();
         this.email = user.getEmail();
         this.password = user.getPassword();
-        this.icon = encodeByteToBase64(user.getIcon());
+        if(Optional.ofNullable(user.getIcon()).isPresent()) {
+            this.icon = encodeByteToBase64(user.getIcon());
+        } else {
+            this.icon = null;
+        }
         this.authorities = convertGrantedAuthorities(user.getRole());
-        this.loginMissTimes = user.getSigninMissTimes();
+        this.loginMissTimes = user.getLoginMissTimes();
         this.unlocked = user.isUnlock();
         this.enabled = user.isEnabled();
     }
@@ -115,7 +118,7 @@ public class LoginUser implements UserDetails {
     /**
      * 画像のbyte配列をbase64形式に変換する
      * @param image 画像のbyte配列
-     * @return base64変換後のString
+     * @return Optional<String> base64変換後のString
      */
     static String encodeByteToBase64(byte[] image) {
         StringBuilder iconEncoded = new StringBuilder();

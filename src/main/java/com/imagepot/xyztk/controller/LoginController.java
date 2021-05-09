@@ -49,7 +49,7 @@ public class LoginController {
     }
 
 
-    // validation with entity RegisterForm
+    // SignupForm でバリデーション
     @PostMapping ("/signup")
     public String registerNewUser(
             @ModelAttribute @Validated({ValidationAll.class}) SignupForm signupForm,

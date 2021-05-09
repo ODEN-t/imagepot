@@ -63,13 +63,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // auth.jdbcAuthentication().dataSource(dataSource)
-        // .usersByUsernameQuery(
-        // "SELECT user_email as username, user_password, true FROM mywork.pot_user
-        // WHERE user_email = ?") // serviceで実装したい
-        // .authoritiesByUsernameQuery(
-        // "SELECT user_email, user_role FROM mywork.pot_user WHERE user_email = ?")
-        // .passwordEncoder(passwordEncoder()); // 復号
         auth.userDetailsService(loginUserService)
                 .passwordEncoder(passwordEncoder);
     }

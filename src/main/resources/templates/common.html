@@ -38,11 +38,10 @@
           <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">
         </figure>
         <div class="c-sidebar__userInfo__name">
-<!--          <span sec:authentication="principal.name"></span>-->
           <span th:text="${#authentication.principal.name}"></span>
         </div>
         <div class="c-sidebar__userInfo__email">
-<!--          <span sec:authentication="principal.email"></span>-->
+          <span th:text="${#authentication.principal.email}"></span>
         </div>
       </div>
       <nav class="c-sidebar__menu">

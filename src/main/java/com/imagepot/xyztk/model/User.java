@@ -74,11 +74,11 @@ public class User {
     private Timestamp passwordUpdatedAt;
 
     @Column(
-            name = "signin_miss_times",
+            name = "login_miss_times",
             columnDefinition = "INTEGER",
             insertable = false
     )
-    private Integer signinMissTimes;
+    private Integer loginMissTimes;
 
     @Column(
             name = "unlock",
