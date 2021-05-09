@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="common::meta_header(null, ~{::link}, ~{::script})">
   <link rel="stylesheet" th:href="@{/css/page/top.min.css}">
@@ -38,9 +38,9 @@
             </div>
             <button type="submit" class="buttonCTA buttonCTA-fullWidth">Login</button>
 
-<!--            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"-->
-<!--              th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="p-top__message p-top__message-error"-->
-<!--              data-process="login">ログインエラーメッセージ</div>-->
+            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+              th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="c-message c-message-error"
+              data-process="login">ログインエラーメッセージ</div>
           </form>
         </div>
         <div class="p-top__modalFooter">

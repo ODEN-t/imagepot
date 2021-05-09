@@ -1,6 +1,7 @@
 package com.imagepot.xyztk.service;
 
 import com.imagepot.xyztk.model.LoginUser;
+import com.imagepot.xyztk.model.User;
 import com.imagepot.xyztk.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

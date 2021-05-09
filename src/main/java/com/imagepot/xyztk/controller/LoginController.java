@@ -45,21 +45,9 @@ public class LoginController {
 
     @PostMapping("login")
     public String postSignIn(Model model) {
-        return "redirect:/home";
+        return "home";
     }
 
-
-    // auth with spring security
-    // /loginでhomeが表示される。サーブレットエラーもでる
-//    @PostMapping("/login")
-//    public String login() {
-//        return "home";
-//    }
-
-//    @GetMapping("/login")
-//    public String login() {
-//        return "home";
-//    }
 
     // validation with entity RegisterForm
     @PostMapping ("/signup")

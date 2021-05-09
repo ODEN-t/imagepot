@@ -35,10 +35,11 @@
     <div class="c-sidebar__wrap">
       <div class="c-sidebar__userInfo">
         <figure class="c-sidebar__userInfo__icon" id="icon">
-<!--          <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">-->
+          <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">
         </figure>
         <div class="c-sidebar__userInfo__name">
-<!--          <span sec:authentication="principal.appUserName"></span>-->
+<!--          <span sec:authentication="principal.name"></span>-->
+          <span th:text="${#authentication.principal.name}"></span>
         </div>
         <div class="c-sidebar__userInfo__email">
 <!--          <span sec:authentication="principal.email"></span>-->
@@ -64,12 +65,12 @@
               <span>Settings</span>
             </a>
           </li>
-<!--          <li class="c-sidebar__menu__item" sec:authorize="hasRole('ADMIN')">-->
-<!--            <a class="c-sidebar__menu__itemLink" th:href="@{'/admin'}">-->
-<!--              <i class="icon-cogs"></i>-->
-<!--              <span>Manage</span>-->
-<!--            </a>-->
-<!--          </li>-->
+          <li class="c-sidebar__menu__item" sec:authorize="hasRole('ADMIN')">
+            <a class="c-sidebar__menu__itemLink" th:href="@{'/admin'}">
+              <i class="icon-cogs"></i>
+              <span>Manage</span>
+            </a>
+          </li>
           <li class="c-sidebar__menu__item">
             <a th:href="@{'/logout'}" class="c-sidebar__menu__itemLink" id="logout" data-confirm="Are you sure you want to logout?">
               <i class="icon-exit"></i>
