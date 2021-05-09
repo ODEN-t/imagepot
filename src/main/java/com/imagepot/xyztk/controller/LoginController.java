@@ -43,14 +43,13 @@ public class LoginController {
         return "top";
     }
 
-    // auth with spring security
-    // /loginでhomeが表示される。サーブレットエラーもでる
-    @PostMapping("/login")
-    public String login() {
+    @PostMapping("login")
+    public String postSignIn(Model model) {
         return "home";
     }
 
-    // validation with entity RegisterForm
+
+    // SignupForm でバリデーション
     @PostMapping ("/signup")
     public String registerNewUser(
             @ModelAttribute @Validated({ValidationAll.class}) SignupForm signupForm,

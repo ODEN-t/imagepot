@@ -20,9 +20,9 @@
               <dl class="p-settings__settingArea">
                 <dt>Your Icon</dt>
                 <dd class="p-settings__settingArea__icon">
-<!--                  <figure id="icon">-->
-<!--                    <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">-->
-<!--                  </figure>-->
+                  <figure id="icon">
+                    <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">
+                  </figure>
                   <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
                   <label class="buttonCTA" for="fileInput">Change Icon</label>
                   <div class="cropModal" id="js-cropModal">
@@ -30,13 +30,11 @@
                       <div class="cropBody">
                         <img class="cropImage" id="js-cropImage" src="" alt="">
                       </div>
-
-                      <!--<form th:action="@{/settings/upload/newicon}" method="POST" enctype="multipart/form-data"
-                        id="js-cropForm" name="newIcon">-->
+                      <form th:action="@{/settings/upload/newicon}" method="POST" enctype="multipart/form-data"
+                        id="js-cropForm" name="newIcon">
                       <button class="buttonCTA buttonCTA-fullWidth" id="js-newIconSubmit">Set new
                         icon</button>
-                      <!--</form>-->
-
+                      </form>
                     </div>
                   </div>
                 </dd>
