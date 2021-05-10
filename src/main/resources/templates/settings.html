@@ -20,20 +20,31 @@
               <dl class="p-settings__settingArea">
                 <dt>Your Icon</dt>
                 <dd class="p-settings__settingArea__icon">
-                  <figure id="icon">
-                    <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">
-                  </figure>
-                  <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
-                  <label class="buttonCTA" for="fileInput">Change Icon</label>
+                  <div th:switch="${#authentication.principal.icon}">
+                    <figure class="c-sidebar__userInfo__icon" th:case="null">
+                      <img th:src="@{/images/initial_icon.jpg}" alt="">
+                    </figure>
+                    <figure class="c-sidebar__userInfo__icon" th:case="*">
+                      <img th:src="${#authentication.principal.icon}" alt="">
+                    </figure>
+                  </div>
+                  <div class="buttonWrap">
+                    <div>
+                      <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
+                      <label class="buttonCTA" for="fileInput">Change Icon</label>
+                    </div>
+                    <div class="reload">
+                      <button class="buttonCTA" id="js-reload">Reload</button>
+                    </div>
+                  </div>
+
                   <div class="cropModal" id="js-cropModal">
                     <div class="cropWrap">
                       <div class="cropBody">
                         <img class="cropImage" id="js-cropImage" src="" alt="">
                       </div>
-                      <form th:action="@{/settings/upload/newicon}" method="POST" enctype="multipart/form-data"
-                        id="js-cropForm" name="newIcon">
-                      <button class="buttonCTA buttonCTA-fullWidth" id="js-newIconSubmit">Set new
-                        icon</button>
+                      <form enctype="multipart/form-data" id="js-newIconForm">
+                        <button class="buttonCTA buttonCTA-fullWidth" id="js-newIconSubmit">Set new icon</button>
                       </form>
                     </div>
                   </div>
@@ -97,6 +108,14 @@
             </div>
           </div>
         </section>
+        <span th:text="${}"></span>
+        <div th:if="${updateIconSuccess}" data-message="error" class="c-message c-message-error">
+          <span>updateIconSuccess</span>
+        </div>
+        <div>test</div>
+        <div th:text="${string}" data-message="success" class="c-message c-message-success">
+          <span></span>
+        </div>
       </div>
     </div>
   </div>

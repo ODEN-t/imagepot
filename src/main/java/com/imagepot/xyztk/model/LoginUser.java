@@ -1,12 +1,14 @@
 package com.imagepot.xyztk.model;
 
-import com.google.common.base.Strings;
-import com.google.common.primitives.Bytes;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import java.util.Base64;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -87,7 +89,7 @@ public class LoginUser implements UserDetails {
     @Override
     public String toString() {
         return "LoginUser{" +
-                ", id=" + id +
+                "  id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
@@ -118,7 +120,7 @@ public class LoginUser implements UserDetails {
     /**
      * 画像のbyte配列をbase64形式に変換する
      * @param image 画像のbyte配列
-     * @return Optional<String> base64変換後のString
+     * @return String base64変換後の文字列データ
      */
     static String encodeByteToBase64(byte[] image) {
         StringBuilder iconEncoded = new StringBuilder();

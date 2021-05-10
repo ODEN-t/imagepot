@@ -29,9 +29,4 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/settings")
-    public String getSettings(@AuthenticationPrincipal LoginUser loginUser) {
-        return "settings";
-    }
-
 }

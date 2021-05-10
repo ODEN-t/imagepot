@@ -33,9 +33,12 @@
       </div>
     </div>
     <div class="c-sidebar__wrap">
-      <div class="c-sidebar__userInfo">
-        <figure class="c-sidebar__userInfo__icon" id="icon">
-          <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">
+      <div class="c-sidebar__userInfo" th:switch="${#authentication.principal.icon}">
+        <figure class="c-sidebar__userInfo__icon" th:case="null">
+          <img th:src="@{/images/initial_icon.jpg}" alt="">
+        </figure>
+        <figure class="c-sidebar__userInfo__icon" th:case="*">
+          <img th:src="${#authentication.principal.icon}" alt="">
         </figure>
         <div class="c-sidebar__userInfo__name">
           <span th:text="${#authentication.principal.name}"></span>
@@ -47,7 +50,7 @@
       <nav class="c-sidebar__menu">
         <ol class="c-sidebar__menu__list">
           <li class="c-sidebar__menu__item">
-            <a class="c-sidebar__menu__itemLink" href="">
+            <a class="c-sidebar__menu__itemLink" th:href="@{'/home'}">
               <i class="icon-home3"></i>
               <span>Home</span>
             </a>
@@ -59,7 +62,7 @@
             </a>
           </li>
           <li class="c-sidebar__menu__item">
-            <a class="c-sidebar__menu__itemLink" th:href="@{'/home/settings'}">
+            <a class="c-sidebar__menu__itemLink" th:href="@{'/settings'}">
               <i class="icon-cog"></i>
               <span>Settings</span>
             </a>

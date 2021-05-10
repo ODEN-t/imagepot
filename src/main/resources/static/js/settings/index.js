@@ -1,9 +1,12 @@
+import $ from 'jquery/dist/jquery.min';
 import 'jbox/dist/jBox.all.css';
 import jBox from 'jbox';
 import 'cropperjs/dist/cropper.css';
 import Cropper from 'cropperjs';
+import * as module from '../module/index';
 
-console.log('from settings');
+console.log("from setting.js")
+
 
 // cropper の設定値
 const crop = {
@@ -46,6 +49,7 @@ const crop = {
                         contentType: false,
                         success() {
                             console.log('upload success');
+                            cropModal.close();
                         },
                         error() {
                             console.log('upload error');
@@ -59,6 +63,7 @@ const crop = {
         this.crop.destroy();
     }
 }
+
 
 // jBox の設定値
 const cropModal = new jBox('Modal', {
@@ -119,3 +124,11 @@ const inputTypeToggle = (elementClass) => {
     }
 }
 inputTypeToggle('.buttonCTA-show');
+
+document.getElementById('js-reload').addEventListener('click', () => {
+    console.log('reload')
+    location.reload();
+})
+
+// show result message from backend with modal
+// module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error');

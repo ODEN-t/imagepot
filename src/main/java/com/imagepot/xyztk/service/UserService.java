@@ -27,6 +27,10 @@ public class UserService {
                         new IllegalStateException(String.format("Email %s not found.", email))));
     }
 
+    public int updateIcon(long userId, byte[] icon) {
+        return userRepository.updateUserIcon(userId, icon);
+    }
+
     public List<User> getUsers() {
         return userRepository.findAll();
     }
