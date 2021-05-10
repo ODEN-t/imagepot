@@ -3,9 +3,6 @@ import 'jbox/dist/jBox.all.css';
 import jBox from 'jbox';
 import 'cropperjs/dist/cropper.css';
 import Cropper from 'cropperjs';
-import * as module from '../module/index';
-
-console.log("from setting.js")
 
 
 // cropper の設定値
@@ -42,17 +39,25 @@ const crop = {
                     const formData = new FormData();
                     formData.append('croppedImage', b);
                     console.log(formData);
-                    $.ajax('/settings/upload/newicon', {
+                    $.ajax('/settings/update/icon', {
                         method: 'POST',
                         data: formData,
                         processData: false,
                         contentType: false,
-                        success() {
-                            console.log('upload success');
-                            cropModal.close();
+                        success(response) {
+                            if(response === 'success') {
+                                location.reload();
+                            }
                         },
-                        error() {
-                            console.log('upload error');
+                        error(response) {
+                            switch (response) {
+                                case 'typeError':
+                                    alert('File type is not supported.');
+                                    break;
+                                case 'sizeError' :
+                                    alert('File size is too large.');
+                                    break;
+                            }
                         }
                     })
                 });
@@ -124,11 +129,3 @@ const inputTypeToggle = (elementClass) => {
     }
 }
 inputTypeToggle('.buttonCTA-show');
-
-document.getElementById('js-reload').addEventListener('click', () => {
-    console.log('reload')
-    location.reload();
-})
-
-// show result message from backend with modal
-// module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error');

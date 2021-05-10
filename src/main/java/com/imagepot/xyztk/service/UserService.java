@@ -31,6 +31,10 @@ public class UserService {
         return userRepository.updateUserIcon(userId, icon);
     }
 
+    public int resetIcon(long userId) {
+        return userRepository.resetUserIcon(userId);
+    }
+
     public List<User> getUsers() {
         return userRepository.findAll();
     }

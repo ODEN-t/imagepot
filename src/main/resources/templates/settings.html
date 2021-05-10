@@ -33,9 +33,9 @@
                       <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
                       <label class="buttonCTA" for="fileInput">Change Icon</label>
                     </div>
-                    <div class="reload">
-                      <button class="buttonCTA" id="js-reload">Reload</button>
-                    </div>
+                    <form class="reload" method="post" th:action="@{/settings/reset/icon}" id="resetIcon" data-confirm="Are you sure you want to reset your icon?">
+                      <button type="submit" class="buttonCTA">Reset</button>
+                    </form>
                   </div>
 
                   <div class="cropModal" id="js-cropModal">
@@ -108,14 +108,6 @@
             </div>
           </div>
         </section>
-        <span th:text="${}"></span>
-        <div th:if="${updateIconSuccess}" data-message="error" class="c-message c-message-error">
-          <span>updateIconSuccess</span>
-        </div>
-        <div>test</div>
-        <div th:text="${string}" data-message="success" class="c-message c-message-success">
-          <span></span>
-        </div>
       </div>
     </div>
   </div>

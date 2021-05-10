@@ -8,16 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 @Controller
 @Slf4j
@@ -26,36 +20,31 @@ public class SettingsController {
 
     private final UserService userService;
     private final UtilComponent utilComponent;
-    private final MessageSource messageSource;
 
     @Autowired
     public SettingsController(UserService userService, UtilComponent utilComponent, MessageSource messageSource) {
         this.userService = userService;
         this.utilComponent = utilComponent;
-        this.messageSource = messageSource;
     }
 
     @GetMapping
-    public String getSettings(@AuthenticationPrincipal LoginUser loginUser,
-                              Model model) {
-        // get result message from deleteUser();
-//        Optional.ofNullable(model.getAttribute("updateIconError"))
-//                .ifPresent(model::addAttribute);
-//        Optional.ofNullable(model.getAttribute("updateIconSuccess"))
-//                .ifPresent(model::addAttribute);
-        Optional.ofNullable(model.getAttribute(""))
-                .ifPresent(model::addAttribute);
-
-
-
-        System.out.println(model);
+    public String getSettings() {
         return "settings";
     }
 
-    @PostMapping(value = "/upload/newicon")
+    @PostMapping("/reset/icon")
+    public String resetIcon(@AuthenticationPrincipal LoginUser loginUser) {
+        long userId = loginUser.id;
+        int num = userService.resetIcon(userId);
+        log.info("Reset icon executed, UserID: " + loginUser.id + ". " + num + " column was updated.");
+        utilComponent.updateSecurityContext(loginUser.email);
+        return "redirect:/settings";
+    }
+
+    @PostMapping("/update/icon")
+    @ResponseBody
     public String setNewIcon(
             @RequestParam MultipartFile croppedImage,
-            RedirectAttributes redirectAttributes,
             @AuthenticationPrincipal LoginUser loginUser) {
         try {
             String fileType = croppedImage.getContentType();
@@ -65,33 +54,26 @@ public class SettingsController {
 
             // ファイル形式チェック
             if (!(fileType.equals("image/jpeg") || fileType.equals("image/png"))) {
-                redirectAttributes.addFlashAttribute("updateIconError", true);
-                redirectAttributes.addFlashAttribute("message", messageSource.getMessage("error.updateIcon", null, Locale.ENGLISH));
-                return "redirect:/settings";
+                return "typeError";
             }
 
             // ファイルサイズチェック
             if (fileSize > LIMIT) {
-                redirectAttributes.addFlashAttribute("updateIconError", true);
-                redirectAttributes.addFlashAttribute("message", messageSource.getMessage("error.updateIcon", null, Locale.ENGLISH));
-                return "redirect:/settings";
+                return "sizeError";
             }
 
             long userId = loginUser.id;
             byte[] newIcon = croppedImage.getBytes();
             String email = loginUser.email;
 
-            userService.updateIcon(userId, newIcon);
+            int num = userService.updateIcon(userId, newIcon);
+            log.info("New icon was uploaded, UserID: " + loginUser.id + ". " + num + " column was updated.");
             utilComponent.updateSecurityContext(email);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //redirectAttributes.getFlashAttributes().clear();
-        redirectAttributes.addFlashAttribute("updateIconSuccess", true);
-        redirectAttributes.addFlashAttribute("", "");
-
-        return "redirect:/settings";
+        return "success";
     }
 }
