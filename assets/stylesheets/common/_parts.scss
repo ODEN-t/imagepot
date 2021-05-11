@@ -1,3 +1,4 @@
+@import "variables";
 /*
 usage
 <div class="inputGroup">
@@ -30,27 +31,26 @@ usage
       font-weight: 600;
     }
     &:focus {
-      border: 1px solid #ef476f;
+      border: 1px solid $color-primary-pink;
     }
     &:focus~i {
-      color: #ef476f;
+      color: $color-primary-pink;
     }
     &.is-error {
-      border: 1px solid #ef476f;
+      border: 1px solid $color-primary-pink;
       &~i {
-        color: #ef476f;
+        color: $color-primary-pink;
       }
     }
   }
 }
-
 
 /*
 usage
 <button type="submit" class="buttonCTA">Signin</button>
 */
 .buttonCTA {
-  background-color: #EF476F;
+  background-color: $color-primary-pink;
   color: #fff;
   width: fit-content;
   display: inline-flex;
@@ -65,7 +65,7 @@ usage
   cursor: pointer;
   &:hover {
     transition: all .15s ease;
-    background-color: #ED315D;
+    background-color: $color-primary-pink-state;
   }
 
   &-show {
@@ -102,18 +102,23 @@ usage
   }
 
   &-blue {
-    background: #118AB2;
+    background: $color-primary-blue;
     &:hover {
-      background: #0F7CA0;
+      background: $color-primary-blue-state;
     }
   }
 }
 
+/*
+  common style for jBox
+ */
 .add-jboxOverRay {
   background-color: rgba(0,0,0,.6) !important;
 }
 
-  
+/*
+  common style for Popup
+*/
 .add-popupCustomStyle {
   .jBox-title {
     font-size: 20px;
@@ -130,12 +135,37 @@ usage
     }
   }
   .jBox-Confirm-button-submit {
-    background: #FFD166;
+    background: $color-primary-yellow;
     &:hover, &:active {
-      background: #ffcc40;
+      background: $color-primary-yellow-state;
     }
     &:active {
       box-shadow: none;
     }
   }
+}
+
+/*
+  common style for Modal Message
+*/
+.c-message {
+  font-size: 17px;
+  line-height: 1.2;
+  font-weight: 600;
+  &-error {
+    color: $color-error-text;
+  }
+  &-success {
+    color: $color-success-text;
+  }
+}
+.add-jboxErrorMessage .jBox-container,  .add-jboxSuccessMessage .jBox-container{
+  border-radius: 10px;
+  box-shadow: none !important;
+}
+.add-jboxErrorMessage .jBox-container {
+  background-color: $color-error-bg;
+}
+.add-jboxSuccessMessage .jBox-container {
+  background-color: $color-success-bg;
 }

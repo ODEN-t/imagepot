@@ -1,3 +1,5 @@
+@import "../common/_variables";
+
 .c-contents {
   background: #F5F5F5;
 }
@@ -9,7 +11,7 @@
   padding: 41px 0 90px;
 
   h1 {
-    color: #118ab2;
+    color: $color-primary-darkBlue;
     font-size: 34px;
     font-weight: 700;
     line-height: 1.2;
@@ -55,27 +57,31 @@
       position: relative;
     }
 
+
     &__icon {
-      > figure {
+      display: flex;
+      align-items: flex-end;
+      figure {
         width: 200px;
         height: 200px;
         border-radius: 50%;
         position: relative;
         overflow: hidden;
+        margin: 0;
         > img {
           width: 100%;
           height: 100%;
         }
       }
-
-      input[type="file"] {
-        display: none;
-      }
-
-      .buttonCTA {
-        position: absolute;
-        bottom: 0;
-        left: calc(200px + 5%);
+      .buttonWrap {
+        margin-left: 40px;
+        display: flex;
+        input[type="file"] {
+          display: none;
+        }
+        .reload {
+          margin-left: 30px;
+        }
       }
     }
 

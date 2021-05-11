@@ -33,21 +33,24 @@
       </div>
     </div>
     <div class="c-sidebar__wrap">
-      <div class="c-sidebar__userInfo">
-        <figure class="c-sidebar__userInfo__icon" id="icon">
-          <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">
+      <div class="c-sidebar__userInfo" th:switch="${#authentication.principal.icon}">
+        <figure class="c-sidebar__userInfo__icon" th:case="null">
+          <img th:src="@{/images/initial_icon.jpg}" alt="">
+        </figure>
+        <figure class="c-sidebar__userInfo__icon" th:case="*">
+          <img th:src="${#authentication.principal.icon}" alt="">
         </figure>
         <div class="c-sidebar__userInfo__name">
-          <span sec:authentication="principal.appUserName"></span>
+          <span th:text="${#authentication.principal.name}"></span>
         </div>
         <div class="c-sidebar__userInfo__email">
-          <span sec:authentication="principal.email"></span>
+          <span th:text="${#authentication.principal.email}"></span>
         </div>
       </div>
       <nav class="c-sidebar__menu">
         <ol class="c-sidebar__menu__list">
           <li class="c-sidebar__menu__item">
-            <a class="c-sidebar__menu__itemLink" href="">
+            <a class="c-sidebar__menu__itemLink" th:href="@{'/home'}">
               <i class="icon-home3"></i>
               <span>Home</span>
             </a>
@@ -71,22 +74,15 @@
             </a>
           </li>
           <li class="c-sidebar__menu__item">
-            <a th:href="@{'/signout'}" class="c-sidebar__menu__itemLink" id="signout"
-              data-confirm="Are you sure you want to sign out?">
+            <a th:href="@{'/logout'}" class="c-sidebar__menu__itemLink" id="logout" data-confirm="Are you sure you want to logout?">
               <i class="icon-exit"></i>
-              <span>Sign out</span>
+              <span>Logout</span>
             </a>
           </li>
         </ol>
       </nav>
     </div>
   </section>
-  <footer class="c-footer" th:fragment="footer">
-    <div class="c-footer__wrap">
-      <p>Image Pot</p>
-      <small>Copyright &copy; 2021 xyztk. All Rights Reserved.</small>
-    </div>
-  </footer>
 </body>
 
 </html>

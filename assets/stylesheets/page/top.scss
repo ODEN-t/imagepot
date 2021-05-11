@@ -1,3 +1,5 @@
+@import "../common/_variables";
+
 .p-top {
   background-image: url("/images/top-image_1920.png");
   background-size: cover;
@@ -77,26 +79,11 @@
     line-height: 1.4;
     text-align: center;
     > span {
-      color: #ef476f;
+      color: $color-primary-pink;
       cursor: pointer;
       &:hover {
-        border-bottom: solid 1px #ef476f;
+        border-bottom: solid 1px $color-primary-pink;
       }
     }
   }
-
-  &__message {
-    font-size: 15px;
-    line-height: 1.2;
-    &-error {
-      color: #9E5869;
-    }
-  }
-  
-}
-
-.add-jboxErrorMessage .jBox-container {
-  background-color: #FBD0DA;
-  border-radius: 10px;
-  box-shadow: none !important;
 }

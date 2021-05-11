@@ -17,7 +17,6 @@ public class GlobalControllAdvice {
         model.addAttribute("error", "内部サーバエラー(DB)：GlobalControllAdvice");
         model.addAttribute("message", "Exceptionが発生しました。");
         model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
-
         return "error";
     }
 

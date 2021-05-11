@@ -1,95 +1,140 @@
 package com.imagepot.xyztk.controller;
 
-import com.imagepot.xyztk.model.AppUserDetails;
+import com.google.common.base.Strings;
+import com.imagepot.xyztk.model.LoginUser;
+import com.imagepot.xyztk.model.SignupFormAllValidations;
 import com.imagepot.xyztk.model.User;
-import com.imagepot.xyztk.repository.mybatis.UserMapper;
-
+import com.imagepot.xyztk.model.UserInfo;
+import com.imagepot.xyztk.service.UserService;
+import com.imagepot.xyztk.util.UtilComponent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.util.Optional;
 
 @Controller
 @Slf4j
+@RequestMapping("/settings")
 public class SettingsController {
 
-    @Autowired
-    UserMapper userMapper;
+    private final UserService userService;
+    private final UtilComponent utilComponent;
 
     @Autowired
-    @Qualifier("UserDetailsServiceImpl")
-    private UserDetailsService userDetailsService;
+    public SettingsController(UserService userService, UtilComponent utilComponent, MessageSource messageSource) {
+        this.userService = userService;
+        this.utilComponent = utilComponent;
+    }
 
-    @GetMapping("/settings")
-    public String getSettings(Model model, @AuthenticationPrincipal AppUserDetails user) {
+    @GetMapping
+    public String getSettings(Model model) {
+        UserInfo userInfo = new UserInfo();
+        Optional.ofNullable(model.getAttribute("hasErrors"))
+                .ifPresent(model::addAttribute);
+        Optional.ofNullable(model.getAttribute("errorMessage"))
+                .ifPresent(model::addAttribute);
+
+        System.out.println(model);
+        model.addAttribute(userInfo);
         return "settings";
     }
 
-    @PostMapping(value = "/settings/upload/newicon")
-    public String setNewIcon(
-            @RequestParam MultipartFile croppedImage, RedirectAttributes atts,
-            @AuthenticationPrincipal AppUserDetails userDetails) {
-        try {
-            String fileType = croppedImage.getContentType();
-            Long fileSize = croppedImage.getSize();
-            Long LIMIT_MB = 1L; // 1MB
-            Long LIMIT = LIMIT_MB * 1024 * 1024; // B to MB
-
-            // ファイル形式チェック
-            if (!(fileType.equals("image/jpeg") || fileType.equals("image/png"))) {
-                atts.addAttribute("hasErrors", true);
-                return "redirect:/settings";
-            }
-
-            // ファイルサイズチェック
-            if (fileSize > LIMIT) {
-                atts.addAttribute("hasErrors", true);
-                return "redirect:/settings";
-            }
-
-            Integer userId = userDetails.getUserId();
-            byte[] icon = croppedImage.getBytes();
-            String email = userDetails.getEmail();
-
-            User user = new User();
-            user.setId(userId);
-            user.setIcon(icon);
-            user.setEmail(email);
-
-            userMapper.updateIcon(user);
-            updateSecurityContext(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @PostMapping("/reset/icon")
+    public String resetIcon(@AuthenticationPrincipal LoginUser loginUser) {
+        long userId = loginUser.id;
+        int num = userService.resetIcon(userId);
+        log.info("Reset icon executed, UserID: " + loginUser.id + ". " + num + " column was updated.");
+        utilComponent.updateSecurityContext(loginUser.email);
         return "redirect:/settings";
     }
 
-    // DB更新後、ログインユーザのセキュリティ情報を更新
-    private void updateSecurityContext(User user) {
-        // ログイン中のユーザ情報を取得
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
+    @PostMapping("/update/icon")
+    @ResponseBody
+    public String setNewIcon(
+            @RequestParam MultipartFile croppedImage,
+            @AuthenticationPrincipal LoginUser loginUser) {
+        try {
+            String fileType = croppedImage.getContentType();
+            long fileSize = croppedImage.getSize();
+            long LIMIT_MB = 1L; // 1MB
+            long LIMIT = LIMIT_MB * 1024 * 1024; // B to MB
 
-        // ログインユーザのセキュリティ情報を取得
-        SecurityContext context = SecurityContextHolder.getContext();
+            if (!(fileType.equals("image/jpeg") || fileType.equals("image/png"))) {
+                return "typeError";
+            }
 
-        // ログインユーザのセキュリティ情報を再設定
-        context.setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
-                userDetails.getAuthorities()));
+            if (fileSize > LIMIT) {
+                return "sizeError";
+            }
 
-        log.info("security context updated to {}", userDetails.getUsername());
+            long userId = loginUser.id;
+            byte[] newIcon = croppedImage.getBytes();
+            String email = loginUser.email;
+
+            int num = userService.updateIcon(userId, newIcon);
+            log.info("New icon was uploaded, UserID: " + loginUser.id + ". " + num + " column was updated.");
+            utilComponent.updateSecurityContext(email);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "success";
+    }
+
+    @PostMapping("/edit/user/info")
+    public String editUserNameAndEmail(
+            @ModelAttribute @Validated({SignupFormAllValidations.class}) UserInfo userInfo,
+            BindingResult bindingResult,
+            Model model,
+            RedirectAttributes redirectAttributes,
+            @AuthenticationPrincipal LoginUser loginUser) {
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("hasErrors", true);
+
+            String errorMessages = "";
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                // ここでメッセージを取得する。
+                errorMessages += error.getDefaultMessage();
+            }
+            redirectAttributes.addFlashAttribute("errorMessage", errorMessages);
+            System.out.println("error1");
+            return "redirect:/settings";
+        } else if(Strings.isNullOrEmpty(userInfo.getName()) && Strings.isNullOrEmpty(userInfo.getEmail())) {
+            redirectAttributes.addFlashAttribute("hasErrors", true);
+            redirectAttributes.addFlashAttribute("message", "Either Name or Email is required.");
+            System.out.println("error2");
+            return "redirect:/settings";
+        }
+
+        try {
+            int result = userService.updateUserInfo(loginUser.id, userInfo.getName(), userInfo.getEmail());
+            switch (result) {
+                case 1:
+                    log.info(result + " column updated.");
+                    break;
+                case 2:
+                    log.info(result + " column updated");
+                    break;
+            }
+            model.addAttribute("message", "Updated Successfully!");
+            utilComponent.updateSecurityContext(loginUser.email);
+
+        } catch (Exception e) {
+            model.addAttribute("message", "Error occurred.");
+            e.printStackTrace();
+        }
+        return "redirect:/settings";
     }
 }

@@ -1,53 +1,32 @@
 package com.imagepot.xyztk.controller;
 
-import java.util.List;
-
-import com.imagepot.xyztk.model.AppUserDetails;
-import com.imagepot.xyztk.model.User;
+import com.imagepot.xyztk.model.LoginUser;
 import com.imagepot.xyztk.service.StorageService;
-import com.imagepot.xyztk.service.UserService;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Controller
 @Slf4j
+@Controller
+@RequestMapping("/home")
 public class HomeController {
 
-    @Autowired
-    UserService userService;
+    private final StorageService s3Service;
 
     @Autowired
-    StorageService s3Service;
+    public HomeController(StorageService s3Service) {
+        this.s3Service = s3Service;
+    }
 
-    @GetMapping("/home")
-    public String getHome(Model model, @AuthenticationPrincipal AppUserDetails user) {
-        log.info("HomeController Start");
-        // log.info(user.toString());
-        // s3Service.getObjList();
+    @GetMapping
+    public String getHome(@AuthenticationPrincipal LoginUser loginUser) {
+        s3Service.getObjList();
+        log.info(loginUser.toString());
         return "home";
     }
 
-    @GetMapping("/admin")
-    public String getAdmin(Model model) {
-
-        List<User> userList = userService.selectAllUser();
-        model.addAttribute("userList", userList);
-
-        int count = userList.size();
-        model.addAttribute("count", count);
-        return "admin";
-    }
-
-    @PostMapping("/signout")
-    public String getSignout() {
-        System.out.println("Sign Out....");
-        return "redirect:/";
-    }
 }

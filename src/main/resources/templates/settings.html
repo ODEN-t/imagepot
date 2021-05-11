@@ -20,44 +20,58 @@
               <dl class="p-settings__settingArea">
                 <dt>Your Icon</dt>
                 <dd class="p-settings__settingArea__icon">
-                  <figure id="icon">
-                    <img th:if="${#authentication.principal.icon}" th:src="${#authentication.principal.icon}" alt="">
-                  </figure>
-                  <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
-                  <label class="buttonCTA" for="fileInput">Change Icon</label>
+                  <div th:switch="${#authentication.principal.icon}">
+                    <figure class="c-sidebar__userInfo__icon" th:case="null">
+                      <img th:src="@{/images/initial_icon.jpg}" alt="">
+                    </figure>
+                    <figure class="c-sidebar__userInfo__icon" th:case="*">
+                      <img th:src="${#authentication.principal.icon}" alt="">
+                    </figure>
+                  </div>
+                  <div class="buttonWrap">
+                    <div>
+                      <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
+                      <label class="buttonCTA" for="fileInput">Change Icon</label>
+                    </div>
+                    <form class="reload" method="post" th:action="@{/settings/reset/icon}" id="resetIcon" data-confirm="Are you sure you want to reset your icon?">
+                      <button type="submit" class="buttonCTA">Reset</button>
+                    </form>
+                  </div>
                   <div class="cropModal" id="js-cropModal">
                     <div class="cropWrap">
                       <div class="cropBody">
                         <img class="cropImage" id="js-cropImage" src="" alt="">
                       </div>
-
-                      <!--<form th:action="@{/settings/upload/newicon}" method="POST" enctype="multipart/form-data"
-                        id="js-cropForm" name="newIcon">-->
-                      <button class="buttonCTA buttonCTA-fullWidth" id="js-newIconSubmit">Set new
-                        icon</button>
-                      <!--</form>-->
-
+                      <form enctype="multipart/form-data" id="js-newIconForm">
+                        <button class="buttonCTA buttonCTA-fullWidth" id="js-newIconSubmit">Set new icon</button>
+                      </form>
                     </div>
                   </div>
                 </dd>
               </dl>
-              <form action="">
+              <form method="post" th:action="@{/settings/edit/user/info}" th:object="${userInfo}">
                 <dl class="p-settings__settingArea">
                   <dt><label for="name">Name</label></dt>
                   <dd class="inputGroup">
-                    <input class="inputText" type="text" id="name">
+                    <input class="inputText" type="text" id="name" name="name" th:classappend="${#fields.hasErrors('name')}?'is-error'">
                     <i class="icon-user"></i>
                   </dd>
                 </dl>
                 <dl class="p-settings__settingArea">
                   <dt><label for="email">Email</label></dt>
                   <dd class="inputGroup">
-                    <input class="inputText" type="text" id="email">
+                    <input class="inputText" type="text" id="email" name="email" th:classappend="${#fields.hasErrors('email')}?'is-error'">
                     <i class="icon-envelop"></i>
                   </dd>
                 </dl>
                 <div class="p-settings__settingArea p-settings__settingArea-buttonBox">
-                  <button class="buttonCTA">Update</button>
+                  <button type="submit" class="buttonCTA">Update</button>
+                </div>
+                <div th:if="${hasErrors}" data-process="signup" data-message="error" class="c-message c-message-error">
+                  <span th:text="${errorMessage}"></span>
+                </div>
+                <div th:if="${errorMessage}" data-process="signup" data-message="error" class="c-message c-message-error">
+                  <span th:text="${errorMessage}"></span>
                 </div>
               </form>
             </div>

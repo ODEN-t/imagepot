@@ -3,7 +3,7 @@
 
 <head th:replace="common::meta_header('Admin', ~{::link}, ~{::script})">
   <link rel="stylesheet" th:href="@{/css/page/admin.min.css}">
-  <script th:src="@{/dist/home/index.js}"></script>
+  <script th:src="@{/dist/admin/index.js}" defer></script>
 </head>
 
 <body>
@@ -17,26 +17,50 @@
           <table class="p-admin__userList">
             <tr class="p-admin__userList__head">
               <th>ID</th>
-              <th>Email</th>
               <th>Name</th>
+              <th>Email</th>
               <th>Role</th>
               <th>Created At</th>
-              <th>Logging In</th>
             </tr>
-            <tr th:each="user:${userList}" class="p-admin__userList__data">
+            <tr th:each="user:${userList}"
+                class="p-admin__userList__data"
+                th:data-id="${user.id}"
+                th:data-name="${user.name}"
+                th:data-email="${user.email}"
+                th:data-password="${user.password}"
+                th:data-role="${user.role}"
+                th:data-passwordUpdatedAt="${user.passwordUpdatedAt}"
+                th:data-signinMissTimes="${user.getLoginMissTimes}"
+                th:data-unlock="${user.unlock}"
+                th:data-enabled="${user.enabled}"
+                th:data-updatedAt="${user.updatedAt}"
+                th:data-createdAt="${user.createdAt}">
               <td th:text="${user.id}"></td>
-              <td th:text="${user.email}"></td>
               <td th:text="${user.name}"></td>
+              <td th:text="${user.email}"></td>
               <td th:text="${user.role}"></td>
               <td th:text="${#dates.format(user.createdAt, 'YYYY/MM/dd')}"></td>
-              <td th:text="${user.loggingIn}"></td>
             </tr>
           </table>
           <div class="p-admin__total" th:text="'Total：' + ${count}"></div>
         </section>
+        <section style="display: none" class="p-admin__userDetails" id="js-userDetailsModal">
+          <h2>User Details</h2>
+          <table id="js-userDetailsTable" class="p-admin__userDetails__table">
+          </table>
+          <div class="buttonWrap">
+            <form id="js-deleteForm" th:method="delete">
+              <button class="buttonCTA">DELETE</button>
+            </form>
+          </div>
+        </section>
+        <div th:if="${deleteError}" data-message="error" class="c-message c-message-error">
+          <span th:text="${message}"></span>
+        </div>
+        <div th:if="${deleteSuccess}" data-message="success" class="c-message c-message-success">
+          <span th:text="${message}"></span>
+        </div>
       </div>
-      <footer th:replace="common::footer">
-      </footer>
     </div>
   </div>
 </body>

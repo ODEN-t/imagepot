@@ -1,10 +1,9 @@
-import 'cropperjs/dist/cropper.css';
-import 'jbox/dist/jBox.all.css';
 import $ from 'jquery/dist/jquery.min';
-import Cropper from 'cropperjs';
+import 'jbox/dist/jBox.all.css';
 import jBox from 'jbox';
+import 'cropperjs/dist/cropper.css';
+import Cropper from 'cropperjs';
 
-console.log('from settings');
 
 // cropper の設定値
 const crop = {
@@ -40,16 +39,25 @@ const crop = {
                     const formData = new FormData();
                     formData.append('croppedImage', b);
                     console.log(formData);
-                    $.ajax('/settings/upload/newicon', {
+                    $.ajax('/settings/update/icon', {
                         method: 'POST',
                         data: formData,
                         processData: false,
                         contentType: false,
-                        success() {
-                            console.log('upload success');
+                        success(response) {
+                            if(response === 'success') {
+                                location.reload();
+                            }
                         },
-                        error() {
-                            console.log('upload error');
+                        error(response) {
+                            switch (response) {
+                                case 'typeError':
+                                    alert('File type is not supported.');
+                                    break;
+                                case 'sizeError' :
+                                    alert('File size is too large.');
+                                    break;
+                            }
                         }
                     })
                 });
@@ -60,6 +68,7 @@ const crop = {
         this.crop.destroy();
     }
 }
+
 
 // jBox の設定値
 const cropModal = new jBox('Modal', {
