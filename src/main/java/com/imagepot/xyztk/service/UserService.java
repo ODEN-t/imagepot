@@ -3,6 +3,7 @@ package com.imagepot.xyztk.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.google.common.base.Strings;
 import com.imagepot.xyztk.model.User;
 import com.imagepot.xyztk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,19 @@ public class UserService {
 
     public int resetIcon(long userId) {
         return userRepository.resetUserIcon(userId);
+    }
+
+    public int updateUserInfo(long userId, String newName, String newEmail) {
+        if(Strings.isNullOrEmpty(newName) && !(Strings.isNullOrEmpty(newEmail))) {
+            return userRepository.updateUserEmail(userId, newEmail);
+        }
+        if(!(Strings.isNullOrEmpty(newName)) && Strings.isNullOrEmpty(newEmail)) {
+            return userRepository.updateUserName(userId, newName);
+        }
+
+        int num = userRepository.updateUserEmail(userId, newEmail);
+        num += userRepository.updateUserName(userId, newName);
+        return num;
     }
 
     public List<User> getUsers() {

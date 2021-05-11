@@ -1,6 +1,10 @@
 package com.imagepot.xyztk.controller;
 
+import com.google.common.base.Strings;
 import com.imagepot.xyztk.model.LoginUser;
+import com.imagepot.xyztk.model.SignupFormAllValidations;
+import com.imagepot.xyztk.model.User;
+import com.imagepot.xyztk.model.UserInfo;
 import com.imagepot.xyztk.service.UserService;
 import com.imagepot.xyztk.util.UtilComponent;
 import lombok.extern.slf4j.Slf4j;
@@ -8,10 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -28,7 +38,15 @@ public class SettingsController {
     }
 
     @GetMapping
-    public String getSettings() {
+    public String getSettings(Model model) {
+        UserInfo userInfo = new UserInfo();
+        Optional.ofNullable(model.getAttribute("hasErrors"))
+                .ifPresent(model::addAttribute);
+        Optional.ofNullable(model.getAttribute("errorMessage"))
+                .ifPresent(model::addAttribute);
+
+        System.out.println(model);
+        model.addAttribute(userInfo);
         return "settings";
     }
 
@@ -52,12 +70,10 @@ public class SettingsController {
             long LIMIT_MB = 1L; // 1MB
             long LIMIT = LIMIT_MB * 1024 * 1024; // B to MB
 
-            // ファイル形式チェック
             if (!(fileType.equals("image/jpeg") || fileType.equals("image/png"))) {
                 return "typeError";
             }
 
-            // ファイルサイズチェック
             if (fileSize > LIMIT) {
                 return "sizeError";
             }
@@ -75,5 +91,50 @@ public class SettingsController {
         }
 
         return "success";
+    }
+
+    @PostMapping("/edit/user/info")
+    public String editUserNameAndEmail(
+            @ModelAttribute @Validated({SignupFormAllValidations.class}) UserInfo userInfo,
+            BindingResult bindingResult,
+            Model model,
+            RedirectAttributes redirectAttributes,
+            @AuthenticationPrincipal LoginUser loginUser) {
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("hasErrors", true);
+
+            String errorMessages = "";
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                // ここでメッセージを取得する。
+                errorMessages += error.getDefaultMessage();
+            }
+            redirectAttributes.addFlashAttribute("errorMessage", errorMessages);
+            System.out.println("error1");
+            return "redirect:/settings";
+        } else if(Strings.isNullOrEmpty(userInfo.getName()) && Strings.isNullOrEmpty(userInfo.getEmail())) {
+            redirectAttributes.addFlashAttribute("hasErrors", true);
+            redirectAttributes.addFlashAttribute("message", "Either Name or Email is required.");
+            System.out.println("error2");
+            return "redirect:/settings";
+        }
+
+        try {
+            int result = userService.updateUserInfo(loginUser.id, userInfo.getName(), userInfo.getEmail());
+            switch (result) {
+                case 1:
+                    log.info(result + " column updated.");
+                    break;
+                case 2:
+                    log.info(result + " column updated");
+                    break;
+            }
+            model.addAttribute("message", "Updated Successfully!");
+            utilComponent.updateSecurityContext(loginUser.email);
+
+        } catch (Exception e) {
+            model.addAttribute("message", "Error occurred.");
+            e.printStackTrace();
+        }
+        return "redirect:/settings";
     }
 }

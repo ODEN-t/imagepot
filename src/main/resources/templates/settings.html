@@ -37,7 +37,6 @@
                       <button type="submit" class="buttonCTA">Reset</button>
                     </form>
                   </div>
-
                   <div class="cropModal" id="js-cropModal">
                     <div class="cropWrap">
                       <div class="cropBody">
@@ -50,23 +49,29 @@
                   </div>
                 </dd>
               </dl>
-              <form action="">
+              <form method="post" th:action="@{/settings/edit/user/info}" th:object="${userInfo}">
                 <dl class="p-settings__settingArea">
                   <dt><label for="name">Name</label></dt>
                   <dd class="inputGroup">
-                    <input class="inputText" type="text" id="name">
+                    <input class="inputText" type="text" id="name" name="name" th:classappend="${#fields.hasErrors('name')}?'is-error'">
                     <i class="icon-user"></i>
                   </dd>
                 </dl>
                 <dl class="p-settings__settingArea">
                   <dt><label for="email">Email</label></dt>
                   <dd class="inputGroup">
-                    <input class="inputText" type="text" id="email">
+                    <input class="inputText" type="text" id="email" name="email" th:classappend="${#fields.hasErrors('email')}?'is-error'">
                     <i class="icon-envelop"></i>
                   </dd>
                 </dl>
                 <div class="p-settings__settingArea p-settings__settingArea-buttonBox">
-                  <button class="buttonCTA">Update</button>
+                  <button type="submit" class="buttonCTA">Update</button>
+                </div>
+                <div th:if="${hasErrors}" data-process="signup" data-message="error" class="c-message c-message-error">
+                  <span th:text="${errorMessage}"></span>
+                </div>
+                <div th:if="${errorMessage}" data-process="signup" data-message="error" class="c-message c-message-error">
+                  <span th:text="${errorMessage}"></span>
                 </div>
               </form>
             </div>

@@ -22,4 +22,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying(clearAutomatically = true)
     @Query("UPDATE User u SET u.icon = null WHERE u.id = :userId")
     public int resetUserIcon(@Param("userId") long userId);
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE User u SET u.name = :newName WHERE u.id = :userId")
+    public int updateUserName(@Param("userId") long userId, @Param("newName") String newName);
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE User u SET u.name = :newEmail WHERE u.id = :userId")
+    public int updateUserEmail(@Param("userId") long userId, @Param("newEmail") String newName);
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE User u SET u.password = :newPassword WHERE u.id = :userId")
+    public int updateUserPassword(@Param("userId") long userId, @Param("newPassword") String newPassword);
 }

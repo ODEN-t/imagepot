@@ -5,7 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-import com.imagepot.xyztk.model.ValidationGroups.*;
+import com.imagepot.xyztk.model.SignupFormValidations.*;
 
 import org.hibernate.validator.constraints.Length;
 

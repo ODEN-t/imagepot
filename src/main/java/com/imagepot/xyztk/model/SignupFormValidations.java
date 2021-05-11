@@ -1,6 +1,6 @@
 package com.imagepot.xyztk.model;
 
-public class ValidationGroups {
+public class SignupFormValidations {
     public interface Group1 {
     };
 
