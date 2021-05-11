@@ -70,6 +70,9 @@
                 <div th:if="${hasErrors}" data-process="signup" data-message="error" class="c-message c-message-error">
                   <span th:text="${errorMessage}"></span>
                 </div>
+                <div th:if="${#fields.hasErrors('${userInfo.*}')}" data-process="signup" data-message="error" class="c-message c-message-error">
+                  <span th:errors="${userInfo.*}"></span>
+                </div>
                 <div th:if="${errorMessage}" data-process="signup" data-message="error" class="c-message c-message-error">
                   <span th:text="${errorMessage}"></span>
                 </div>

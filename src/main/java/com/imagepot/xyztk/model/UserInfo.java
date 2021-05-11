@@ -1,17 +1,22 @@
 package com.imagepot.xyztk.model;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
+import com.imagepot.xyztk.model.UserInfoValidations.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
+
 
 @Data
 public class UserInfo {
 
-    @Length(min = 2, max = 20, groups = SignupFormValidations.Group2.class)
+    @Size(max = 20, groups = Group1.class, message = "{Size.userInfo.name}")
     private String name;
+    public void setName(final String name) {
+        this.name = name.strip();
+    }
 
-    @Email(groups = SignupFormValidations.Group4.class)
-    @Length(max = 255, groups = SignupFormValidations.Group5.class)
+    @Email(groups = Group2.class, message = "{Email}")
+    @Size(max = 256, groups = Group3.class, message = "{Size.userInfo.email}")
     private String email;
 }

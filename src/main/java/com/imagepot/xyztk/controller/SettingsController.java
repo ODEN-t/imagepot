@@ -2,9 +2,8 @@ package com.imagepot.xyztk.controller;
 
 import com.google.common.base.Strings;
 import com.imagepot.xyztk.model.LoginUser;
-import com.imagepot.xyztk.model.SignupFormAllValidations;
-import com.imagepot.xyztk.model.User;
 import com.imagepot.xyztk.model.UserInfo;
+import com.imagepot.xyztk.model.UserInfoAllValidations;
 import com.imagepot.xyztk.service.UserService;
 import com.imagepot.xyztk.util.UtilComponent;
 import lombok.extern.slf4j.Slf4j;
@@ -14,13 +13,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Optional;
 
 @Controller
@@ -30,11 +30,13 @@ public class SettingsController {
 
     private final UserService userService;
     private final UtilComponent utilComponent;
+    private final MessageSource messageSource;
 
     @Autowired
     public SettingsController(UserService userService, UtilComponent utilComponent, MessageSource messageSource) {
         this.userService = userService;
         this.utilComponent = utilComponent;
+        this.messageSource = messageSource;
     }
 
     @GetMapping
@@ -45,7 +47,6 @@ public class SettingsController {
         Optional.ofNullable(model.getAttribute("errorMessage"))
                 .ifPresent(model::addAttribute);
 
-        System.out.println(model);
         model.addAttribute(userInfo);
         return "settings";
     }
@@ -95,26 +96,20 @@ public class SettingsController {
 
     @PostMapping("/edit/user/info")
     public String editUserNameAndEmail(
-            @ModelAttribute @Validated({SignupFormAllValidations.class}) UserInfo userInfo,
+            @ModelAttribute @Validated({UserInfoAllValidations.class}) UserInfo userInfo,
             BindingResult bindingResult,
             Model model,
             RedirectAttributes redirectAttributes,
             @AuthenticationPrincipal LoginUser loginUser) {
-        if(bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("hasErrors", true);
 
-            String errorMessages = "";
-            for (ObjectError error : bindingResult.getAllErrors()) {
-                // ここでメッセージを取得する。
-                errorMessages += error.getDefaultMessage();
-            }
-            redirectAttributes.addFlashAttribute("errorMessage", errorMessages);
-            System.out.println("error1");
-            return "redirect:/settings";
-        } else if(Strings.isNullOrEmpty(userInfo.getName()) && Strings.isNullOrEmpty(userInfo.getEmail())) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("hasErrors", true);
+            return "settings";
+        }
+
+        if(Strings.isNullOrEmpty(userInfo.getName()) && Strings.isNullOrEmpty(userInfo.getEmail())) {
             redirectAttributes.addFlashAttribute("hasErrors", true);
-            redirectAttributes.addFlashAttribute("message", "Either Name or Email is required.");
-            System.out.println("error2");
+            redirectAttributes.addFlashAttribute("errorMessage", messageSource.getMessage("error.editUserNameAndEmail",null, Locale.ENGLISH));
             return "redirect:/settings";
         }
 
