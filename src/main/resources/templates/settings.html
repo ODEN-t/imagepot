@@ -53,23 +53,23 @@
                 <dl class="p-settings__settingArea">
                   <dt><label for="name">Name</label></dt>
                   <dd class="inputGroup">
-                    <input class="inputText" type="text" id="name" name="name" th:classappend="${#fields.hasErrors('name')}?'is-error'">
+                    <input class="inputText" type="text" id="name" name="name" >
                     <i class="icon-user"></i>
                   </dd>
                 </dl>
                 <dl class="p-settings__settingArea">
                   <dt><label for="email">Email</label></dt>
                   <dd class="inputGroup">
-                    <input class="inputText" type="text" id="email" name="email" th:classappend="${#fields.hasErrors('email')}?'is-error'">
+                    <input class="inputText" type="text" id="email" name="email">
                     <i class="icon-envelop"></i>
                   </dd>
                 </dl>
                 <div class="p-settings__settingArea p-settings__settingArea-buttonBox">
                   <button type="submit" class="buttonCTA">Update</button>
                 </div>
-                <div th:if="${#fields.hasErrors('${userInfo.*}')}" data-message="error" class="c-message c-message-error">
-                  <span th:errors="${userInfo.*}"></span>
-                </div>
+<!--                <div th:if="${#fields.hasErrors('${userInfo.*}')}" data-message="error" class="c-message c-message-error">-->
+<!--                  <span th:errors="${userInfo.*}"></span>-->
+<!--                </div>-->
                 <div th:if="${errorMessage}" data-message="error" class="c-message c-message-error">
                   <span th:text="${errorMessage}"></span>
                 </div>
@@ -84,11 +84,11 @@
           <div class="p-settings__editBlock__wrap">
             <h2>Change Password</h2>
             <div class="p-settings__editBlock__content">
-              <form action="">
+              <form method="post" th:action="@{/settings/edit/user/password}" th:object="${userPassword}">
                 <dl class="p-settings__settingArea">
                   <dt><label for="currentPassword">Current Password</label></dt>
                   <dd class="inputGroup">
-                    <input class="inputText" type="password" id="currentPassword">
+                    <input class="inputText" type="password" id="currentPassword" name="currentPassword">
                     <span class="buttonCTA buttonCTA-show">Show</span>
                     <i class="icon-lock"></i>
                   </dd>
@@ -96,7 +96,7 @@
                 <dl class="p-settings__settingArea">
                   <dt><label for="newPassword">New Password</label></dt>
                   <dd class="inputGroup">
-                    <input class="inputText" type="password" id="newPassword">
+                    <input class="inputText" type="password" id="newPassword" name="newPassword">
                     <span class="buttonCTA buttonCTA-show">Show</span>
                     <i class="icon-lock"></i>
                   </dd>
@@ -104,13 +104,16 @@
                 <dl class="p-settings__settingArea">
                   <dt><label for="confirmNewPassword">Confirm New Password</label></dt>
                   <dd class="inputGroup">
-                    <input class="inputText" type="password" id="confirmNewPassword">
+                    <input class="inputText" type="password" id="confirmNewPassword" name="confirmNewPassword">
                     <span class="buttonCTA buttonCTA-show">Show</span>
                     <i class="icon-lock"></i>
                   </dd>
                 </dl>
                 <div class="p-settings__settingArea p-settings__settingArea-buttonBox">
-                  <button class="buttonCTA">Update</button>
+                  <button type="submit" class="buttonCTA">Update</button>
+                </div>
+                <div th:if="${#fields.hasErrors('${userPassword.*}')}" data-message="error" class="c-message c-message-error">
+                  <span th:errors="${userPassword.*}"></span>
                 </div>
               </form>
             </div>

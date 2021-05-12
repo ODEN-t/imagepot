@@ -1,10 +1,7 @@
 package com.imagepot.xyztk.controller;
 
 import com.google.common.base.Strings;
-import com.imagepot.xyztk.model.LoginUser;
-import com.imagepot.xyztk.model.User;
-import com.imagepot.xyztk.model.UserInfo;
-import com.imagepot.xyztk.model.UserInfoAllValidations;
+import com.imagepot.xyztk.model.*;
 import com.imagepot.xyztk.service.UserService;
 import com.imagepot.xyztk.util.UtilComponent;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +11,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +39,7 @@ public class SettingsController {
     @GetMapping
     public String getSettings(Model model) {
         UserInfo userInfo = new UserInfo();
+        UserPassword userPassword = new UserPassword();
 
         // 実行結果のメッセージ取得
         Optional.ofNullable(model.getAttribute("hasErrors"))
@@ -53,6 +50,7 @@ public class SettingsController {
                 .ifPresent(model::addAttribute);
 
         model.addAttribute(userInfo);
+        model.addAttribute(userPassword);
         return "settings";
     }
 
@@ -92,7 +90,7 @@ public class SettingsController {
             log.info("New icon was uploaded, UserID: " + loginUser.id + ". " + num + " column was updated.");
             utilComponent.updateSecurityContext(email);
 
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
 
@@ -150,5 +148,22 @@ public class SettingsController {
             e.printStackTrace();
         }
         return "redirect:/settings";
+    }
+
+
+    @PostMapping("/edit/user/password")
+    public String editUserPassword(
+            @ModelAttribute @Validated({UserPasswordAllValidations.class}) UserPassword userPassword,
+            BindingResult bindingResult,
+            Model model,
+            RedirectAttributes redirectAttributes,
+            @AuthenticationPrincipal LoginUser loginUser) {
+
+        // バリデーションエラー
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("hasErrors", true);
+            return "settings";
+        }
+        return "settings";
     }
 }

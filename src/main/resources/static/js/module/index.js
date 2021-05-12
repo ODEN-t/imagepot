@@ -10,7 +10,7 @@ export function showResultMessageModal(commonClass, successMessageClass, errorMe
 
     if(isTop) {
         errorMessageModal = new jBox('Modal', {
-            id: 'error',
+            id: 'errorTop',
             content: $(errorMessageClass),
             addClass: 'add-jboxErrorMessage',
             overlay: false,
@@ -28,7 +28,7 @@ export function showResultMessageModal(commonClass, successMessageClass, errorMe
         });
 
         successMessageModal = new jBox('Modal', {
-            id: 'success',
+            id: 'successTop',
             content: $(successMessageClass),
             addClass: 'add-jboxSuccessMessage',
             overlay: false,
@@ -61,7 +61,10 @@ export function showResultMessageModal(commonClass, successMessageClass, errorMe
             animation: {
                 open: 'slide:bottom',
                 close: 'slide:bottom'
-            }
+            },
+            blockScroll: false,
+            adjustTracker: true,
+            fixed: true
         });
 
         successMessageModal = new jBox('Modal', {
@@ -80,7 +83,10 @@ export function showResultMessageModal(commonClass, successMessageClass, errorMe
             animation: {
                 open: 'slide:bottom',
                 close: 'slide:bottom'
-            }
+            },
+            blockScroll: false,
+            adjustTracker: true,
+            fixed: true
         });
     }
 
