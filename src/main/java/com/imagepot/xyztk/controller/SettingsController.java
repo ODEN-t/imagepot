@@ -37,9 +37,11 @@ public class SettingsController {
     }
 
     @GetMapping
-    public String getSettings(Model model) {
-        UserInfo userInfo = new UserInfo();
-        UserPassword userPassword = new UserPassword();
+    public String getSettings(
+            @ModelAttribute ChangeUserInfoForm changeUserInfoForm,
+            @ModelAttribute ChangePasswordForm changePasswordForm,
+            Model model) {
+
 
         // 実行結果のメッセージ取得
         Optional.ofNullable(model.getAttribute("hasErrors"))
@@ -49,8 +51,6 @@ public class SettingsController {
         Optional.ofNullable(model.getAttribute("successMessage"))
                 .ifPresent(model::addAttribute);
 
-        model.addAttribute(userInfo);
-        model.addAttribute(userPassword);
         return "settings";
     }
 
@@ -99,22 +99,23 @@ public class SettingsController {
 
     @PostMapping("/edit/user/info")
     public String editUserNameAndEmail(
-            @ModelAttribute @Validated({UserInfoAllValidations.class}) UserInfo userInfo,
-            BindingResult bindingResult,
+            @ModelAttribute ChangePasswordForm changePasswordForm,
+            @ModelAttribute @Validated({ChangeUserInfoFormAllValidations.class}) ChangeUserInfoForm changeUserInfoForm,
+            BindingResult result,
             Model model,
             RedirectAttributes redirectAttributes,
             @AuthenticationPrincipal LoginUser loginUser) {
 
         // バリデーションエラー
-        if(bindingResult.hasErrors()) {
+        if (result.hasErrors()) {
             model.addAttribute("hasErrors", true);
             return "settings";
         }
 
         User user = new User();
         user.setId(loginUser.id);
-        user.setName(userInfo.getName());
-        user.setEmail(userInfo.getEmail());
+        user.setName(changeUserInfoForm.getName());
+        user.setEmail(changeUserInfoForm.getEmail());
 
         boolean isNull = Strings.isNullOrEmpty(user.getName()) && Strings.isNullOrEmpty(user.getEmail());
 
@@ -153,14 +154,15 @@ public class SettingsController {
 
     @PostMapping("/edit/user/password")
     public String editUserPassword(
-            @ModelAttribute @Validated({UserPasswordAllValidations.class}) UserPassword userPassword,
-            BindingResult bindingResult,
+            @ModelAttribute @Validated({ChangePasswordFormAllValidations.class}) ChangePasswordForm changePasswordForm,
+            BindingResult result,
+            @ModelAttribute ChangeUserInfoForm changeUserInfoForm,
             Model model,
             RedirectAttributes redirectAttributes,
             @AuthenticationPrincipal LoginUser loginUser) {
 
         // バリデーションエラー
-        if (bindingResult.hasErrors()) {
+        if (result.hasErrors()) {
             model.addAttribute("hasErrors", true);
             return "settings";
         }

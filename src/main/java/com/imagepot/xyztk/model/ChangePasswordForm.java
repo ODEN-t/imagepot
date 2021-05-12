@@ -7,11 +7,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import com.imagepot.xyztk.model.UserPasswordValidations.*;
+import com.imagepot.xyztk.model.ChangePasswordFormValidations.*;
 
 
 @Data
-public class UserPassword {
+public class ChangePasswordForm {
 
     @NotBlank(groups = Group1.class)
     private String currentPassword;

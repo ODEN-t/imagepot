@@ -2,13 +2,13 @@ package com.imagepot.xyztk.model;
 
 import lombok.Data;
 
-import com.imagepot.xyztk.model.UserInfoValidations.*;
+import com.imagepot.xyztk.model.ChangeUserInfoFormValidations.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 
 @Data
-public class UserInfo {
+public class ChangeUserInfoForm {
 
     @Size(max = 20, groups = Group1.class, message = "{Size.userInfo.name}")
     private String name;

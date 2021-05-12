@@ -1,6 +1,6 @@
 package com.imagepot.xyztk.model;
 
-public class UserPasswordValidations {
+public class ChangeUserInfoFormValidations {
     public interface Group1 {
     };
 
@@ -8,11 +8,5 @@ public class UserPasswordValidations {
     };
 
     public interface Group3 {
-    };
-
-    public interface Group4 {
-    };
-
-    public interface Group5 {
     };
 }

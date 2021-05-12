@@ -49,7 +49,9 @@
                   </div>
                 </dd>
               </dl>
-              <form method="post" th:action="@{/settings/edit/user/info}" th:object="${userInfo}">
+
+              <!-- Name and Email -->
+              <form method="post" th:action="@{/settings/edit/user/info}" th:object="${changeUserInfoForm}">
                 <dl class="p-settings__settingArea">
                   <dt><label for="name">Name</label></dt>
                   <dd class="inputGroup">
@@ -67,9 +69,9 @@
                 <div class="p-settings__settingArea p-settings__settingArea-buttonBox">
                   <button type="submit" class="buttonCTA">Update</button>
                 </div>
-<!--                <div th:if="${#fields.hasErrors('${userInfo.*}')}" data-message="error" class="c-message c-message-error">-->
-<!--                  <span th:errors="${userInfo.*}"></span>-->
-<!--                </div>-->
+                <div th:if="${#fields.hasErrors('${changeUserInfoForm.*}')}" data-message="error" class="c-message c-message-error">
+                  <span th:errors="${changeUserInfoForm.*}"></span>
+                </div>
                 <div th:if="${errorMessage}" data-message="error" class="c-message c-message-error">
                   <span th:text="${errorMessage}"></span>
                 </div>
@@ -80,11 +82,13 @@
             </div>
           </div>
         </section>
+
+        <!-- password -->
         <section class="p-settings__editBlock">
           <div class="p-settings__editBlock__wrap">
             <h2>Change Password</h2>
             <div class="p-settings__editBlock__content">
-              <form method="post" th:action="@{/settings/edit/user/password}" th:object="${userPassword}">
+              <form method="post" th:action="@{/settings/edit/user/password}" th:object="${changePasswordForm}">
                 <dl class="p-settings__settingArea">
                   <dt><label for="currentPassword">Current Password</label></dt>
                   <dd class="inputGroup">
@@ -112,8 +116,8 @@
                 <div class="p-settings__settingArea p-settings__settingArea-buttonBox">
                   <button type="submit" class="buttonCTA">Update</button>
                 </div>
-                <div th:if="${#fields.hasErrors('${userPassword.*}')}" data-message="error" class="c-message c-message-error">
-                  <span th:errors="${userPassword.*}"></span>
+                <div th:if="${#fields.hasErrors('${changePasswordForm.*}')}" data-message="error" class="c-message c-message-error">
+                  <span  th:errors="${changePasswordForm.*}"></span>
                 </div>
               </form>
             </div>
