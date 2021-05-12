@@ -3,6 +3,7 @@ import 'jbox/dist/jBox.all.css';
 import jBox from 'jbox';
 import 'cropperjs/dist/cropper.css';
 import Cropper from 'cropperjs';
+import * as module from '../module/index';
 
 
 // cropper の設定値
@@ -24,10 +25,10 @@ const crop = {
         });
         // 画像 & cropperロード後発火、cropエリア固定
         image.addEventListener('ready', function () {
-            let width = document.querySelector('.cropper-container').clientWidth;
-            let height = document.querySelector('.cropper-container').clientWidth;
+            let w = document.querySelector('.cropper-container').clientWidth;
+            let h = document.querySelector('.cropper-container').clientWidth;
             this.cropper.setCropBoxData({
-                width: width, height: height
+                width: w, height: h
             });
             document.getElementById('js-newIconSubmit').addEventListener('click', () => {
                 const cropBoxData = this.cropper.getCropBoxData();
@@ -45,6 +46,7 @@ const crop = {
                         processData: false,
                         contentType: false,
                         success(response) {
+                            // バックエンドの処理が成功したらリロード
                             if(response === 'success') {
                                 location.reload();
                             }
@@ -102,7 +104,7 @@ document.getElementById('fileInput').addEventListener('change', (e) => {
     const LIMIT_MB = 1; // 1MB
     const LIMIT = LIMIT_MB * 1024 * 1024; // B to MB
 
-    if (!(file.type == 'image/jpeg' || file.type == 'image/png'))
+    if (!(file.type === 'image/jpeg' || file.type === 'image/png'))
         return window.alert('Mime type is not image/jpeg or image/png');
 
     if (file.size > LIMIT)
@@ -119,13 +121,7 @@ document.getElementById('fileInput').addEventListener('change', (e) => {
 
 
 // type=password <=> type=text の切り替え
-const inputTypeToggle = (elementClass) => {
-    const nodeList = document.querySelectorAll(elementClass);
-    for (const node of nodeList) {
-        node.addEventListener('click', () => {
-            const target = node.previousElementSibling;
-            target.type == 'password' ? target.type = 'text' : target.type = 'password';
-        })
-    }
-}
-inputTypeToggle('.buttonCTA-show');
+module.inputTypeToggle('.buttonCTA-show');
+
+// show result message from backend with modal
+module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error');

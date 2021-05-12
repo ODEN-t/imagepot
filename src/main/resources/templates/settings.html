@@ -67,14 +67,14 @@
                 <div class="p-settings__settingArea p-settings__settingArea-buttonBox">
                   <button type="submit" class="buttonCTA">Update</button>
                 </div>
-                <div th:if="${hasErrors}" data-process="signup" data-message="error" class="c-message c-message-error">
-                  <span th:text="${errorMessage}"></span>
-                </div>
-                <div th:if="${#fields.hasErrors('${userInfo.*}')}" data-process="signup" data-message="error" class="c-message c-message-error">
+                <div th:if="${#fields.hasErrors('${userInfo.*}')}" data-message="error" class="c-message c-message-error">
                   <span th:errors="${userInfo.*}"></span>
                 </div>
-                <div th:if="${errorMessage}" data-process="signup" data-message="error" class="c-message c-message-error">
+                <div th:if="${errorMessage}" data-message="error" class="c-message c-message-error">
                   <span th:text="${errorMessage}"></span>
+                </div>
+                <div th:if="${successMessage}" data-message="success" class="c-message c-message-success">
+                  <span th:text="${successMessage}"></span>
                 </div>
               </form>
             </div>

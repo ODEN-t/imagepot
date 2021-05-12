@@ -21,13 +21,18 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> getUserByEmail(String email) throws IllegalStateException {
-        return Optional.ofNullable(userRepository
-                .selectUserByEmail(email)
-                .orElseThrow(() ->
-                        new IllegalStateException(String.format("Email %s not found.", email))));
+
+    // SELECT
+    public Optional<User> getUserByEmail(User user) throws IllegalStateException {
+        return userRepository.selectUserByEmail(user.getEmail());
     }
 
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+
+    // UPDATE
     public int updateIcon(long userId, byte[] icon) {
         return userRepository.updateUserIcon(userId, icon);
     }
@@ -36,23 +41,21 @@ public class UserService {
         return userRepository.resetUserIcon(userId);
     }
 
-    public int updateUserInfo(long userId, String newName, String newEmail) {
-        if(Strings.isNullOrEmpty(newName) && !(Strings.isNullOrEmpty(newEmail))) {
-            return userRepository.updateUserEmail(userId, newEmail);
-        }
-        if(!(Strings.isNullOrEmpty(newName)) && Strings.isNullOrEmpty(newEmail)) {
-            return userRepository.updateUserName(userId, newName);
-        }
-
-        int num = userRepository.updateUserEmail(userId, newEmail);
-        num += userRepository.updateUserName(userId, newName);
-        return num;
+    public int updateName(User user) {
+        return userRepository.updateUserName(user.getId(), user.getName());
     }
 
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public int updateEmail(User user) {
+        Optional<User> result = userRepository.selectUserByEmail(user.getEmail());
+        if(result.isPresent()) {
+            throw new IllegalStateException("Email has already been taken.");
+        }
+        return userRepository.updateUserEmail(user.getId(), user.getEmail());
     }
 
+
+
+    // INSERT
     public void addNewUser(User user) {
         Optional<User> userOptional = userRepository.selectUserByEmail(user.getEmail());
         if(userOptional.isPresent()) {
@@ -61,6 +64,8 @@ public class UserService {
         userRepository.save(user);
     }
 
+
+    // DELETE
     public void deleteUser(Long userId) {
         boolean exists = userRepository.existsById(userId);
         if(!exists) {

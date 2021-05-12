@@ -2,6 +2,7 @@ package com.imagepot.xyztk.controller;
 
 import com.google.common.base.Strings;
 import com.imagepot.xyztk.model.LoginUser;
+import com.imagepot.xyztk.model.User;
 import com.imagepot.xyztk.model.UserInfo;
 import com.imagepot.xyztk.model.UserInfoAllValidations;
 import com.imagepot.xyztk.service.UserService;
@@ -42,9 +43,13 @@ public class SettingsController {
     @GetMapping
     public String getSettings(Model model) {
         UserInfo userInfo = new UserInfo();
+
+        // 実行結果のメッセージ取得
         Optional.ofNullable(model.getAttribute("hasErrors"))
                 .ifPresent(model::addAttribute);
         Optional.ofNullable(model.getAttribute("errorMessage"))
+                .ifPresent(model::addAttribute);
+        Optional.ofNullable(model.getAttribute("successMessage"))
                 .ifPresent(model::addAttribute);
 
         model.addAttribute(userInfo);
@@ -102,32 +107,46 @@ public class SettingsController {
             RedirectAttributes redirectAttributes,
             @AuthenticationPrincipal LoginUser loginUser) {
 
+        // バリデーションエラー
         if(bindingResult.hasErrors()) {
             model.addAttribute("hasErrors", true);
             return "settings";
         }
 
-        if(Strings.isNullOrEmpty(userInfo.getName()) && Strings.isNullOrEmpty(userInfo.getEmail())) {
-            redirectAttributes.addFlashAttribute("hasErrors", true);
+        User user = new User();
+        user.setId(loginUser.id);
+        user.setName(userInfo.getName());
+        user.setEmail(userInfo.getEmail());
+
+        boolean isNull = Strings.isNullOrEmpty(user.getName()) && Strings.isNullOrEmpty(user.getEmail());
+
+        // どちらも未入力の場合
+        if(isNull) {
             redirectAttributes.addFlashAttribute("errorMessage", messageSource.getMessage("error.editUserNameAndEmail",null, Locale.ENGLISH));
             return "redirect:/settings";
         }
 
         try {
-            int result = userService.updateUserInfo(loginUser.id, userInfo.getName(), userInfo.getEmail());
-            switch (result) {
-                case 1:
-                    log.info(result + " column updated.");
-                    break;
-                case 2:
-                    log.info(result + " column updated");
-                    break;
-            }
-            model.addAttribute("message", "Updated Successfully!");
-            utilComponent.updateSecurityContext(loginUser.email);
+            boolean isNewEmail = true;
 
-        } catch (Exception e) {
-            model.addAttribute("message", "Error occurred.");
+            if(Strings.isNullOrEmpty(user.getName())) {
+                 userService.updateEmail(user);
+            } else if(Strings.isNullOrEmpty(user.getEmail())) {
+                userService.updateName(user);
+                isNewEmail = false;
+            } else {
+                userService.updateEmail(user);
+                userService.updateName(user);
+            }
+            redirectAttributes.addFlashAttribute("successMessage", "Updated Successfully!");
+
+            if(isNewEmail)
+                utilComponent.updateSecurityContext(user.getEmail());
+            else
+                utilComponent.updateSecurityContext(loginUser.email);
+
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             e.printStackTrace();
         }
         return "redirect:/settings";
