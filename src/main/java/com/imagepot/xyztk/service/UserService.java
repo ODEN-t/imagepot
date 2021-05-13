@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.google.common.base.Strings;
+import com.imagepot.xyztk.model.UpdateUserPasswordForm;
 import com.imagepot.xyztk.model.User;
 import com.imagepot.xyztk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,10 @@ public class UserService {
             throw new IllegalStateException("Email has already been taken.");
         }
         return userRepository.updateUserEmail(user.getId(), user.getEmail());
+    }
+
+    public int updatePassword(User user, String newPasswordEncoded) {
+        return userRepository.updateUserPassword(user.getId(), newPasswordEncoded);
     }
 
 

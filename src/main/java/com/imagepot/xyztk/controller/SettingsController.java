@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,18 +29,20 @@ public class SettingsController {
     private final UserService userService;
     private final UtilComponent utilComponent;
     private final MessageSource messageSource;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SettingsController(UserService userService, UtilComponent utilComponent, MessageSource messageSource) {
+    public SettingsController(UserService userService, UtilComponent utilComponent, MessageSource messageSource, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.utilComponent = utilComponent;
         this.messageSource = messageSource;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
     public String getSettings(
-            @ModelAttribute ChangeUserInfoForm changeUserInfoForm,
-            @ModelAttribute ChangePasswordForm changePasswordForm,
+            @ModelAttribute UpdateUserInfoForm updateUserInfoForm,
+            @ModelAttribute UpdateUserPasswordForm updateUserPasswordForm,
             Model model) {
 
 
@@ -98,15 +101,15 @@ public class SettingsController {
     }
 
     @PostMapping("/update/user/info")
-    public String editUserNameAndEmail(
-            @ModelAttribute ChangePasswordForm changePasswordForm,
-            @ModelAttribute @Validated({ChangeUserInfoFormAllValidations.class}) ChangeUserInfoForm changeUserInfoForm,
+    public String updateUserInfo(
+            @ModelAttribute UpdateUserPasswordForm updateUserPasswordForm,
+            @ModelAttribute @Validated({UpdateUserInfoFormAllValidations.class}) UpdateUserInfoForm updateUserInfoForm,
             BindingResult result,
             Model model,
             RedirectAttributes redirectAttributes,
             @AuthenticationPrincipal LoginUser loginUser) {
 
-        // バリデーションエラー
+        // バリデーションエラー(redirectの場合エラーメッセージ表示できない)
         if (result.hasErrors()) {
             model.addAttribute("hasErrors", true);
             return "settings";
@@ -114,14 +117,14 @@ public class SettingsController {
 
         User user = new User();
         user.setId(loginUser.id);
-        user.setName(changeUserInfoForm.getName());
-        user.setEmail(changeUserInfoForm.getEmail());
+        user.setName(updateUserInfoForm.getName());
+        user.setEmail(updateUserInfoForm.getEmail());
 
         boolean isNull = Strings.isNullOrEmpty(user.getName()) && Strings.isNullOrEmpty(user.getEmail());
 
         // どちらも未入力の場合
         if(isNull) {
-            redirectAttributes.addFlashAttribute("errorMessage", messageSource.getMessage("error.editUserNameAndEmail",null, Locale.ENGLISH));
+            redirectAttributes.addFlashAttribute("errorMessage", messageSource.getMessage("error.updateUserInfo",null, Locale.ENGLISH));
             return "redirect:/settings";
         }
 
@@ -137,7 +140,7 @@ public class SettingsController {
                 userService.updateEmail(user);
                 userService.updateName(user);
             }
-            redirectAttributes.addFlashAttribute("successMessage", "Updated Successfully!");
+            redirectAttributes.addFlashAttribute("successMessage", messageSource.getMessage("success.updateUserInfo",null, Locale.ENGLISH));
 
             if(isNewEmail)
                 utilComponent.updateSecurityContext(user.getEmail());
@@ -153,19 +156,46 @@ public class SettingsController {
 
 
     @PostMapping("/update/user/password")
-    public String editUserPassword(
-            @ModelAttribute @Validated({ChangePasswordFormAllValidations.class}) ChangePasswordForm changePasswordForm,
+    public String updateUserPassword(
+            @ModelAttribute @Validated({UpdateUserPasswordFormAllValidations.class}) UpdateUserPasswordForm updateUserPasswordForm,
             BindingResult result,
-            @ModelAttribute ChangeUserInfoForm changeUserInfoForm,
+            @ModelAttribute UpdateUserInfoForm updateUserInfoForm,
             Model model,
             RedirectAttributes redirectAttributes,
             @AuthenticationPrincipal LoginUser loginUser) {
 
-        // バリデーションエラー
+        // バリデーションエラー(redirectの場合エラーメッセージ表示できない)
         if (result.hasErrors()) {
             model.addAttribute("hasErrors", true);
             return "settings";
         }
-        return "settings";
+
+
+        // 現パスワードが間違っている or 現新パスワードが一致する場合はエラー
+        boolean isPasswordMatched = passwordEncoder.matches(updateUserPasswordForm.getCurrentPassword(), loginUser.getPassword());
+        boolean isSame = passwordEncoder.matches(updateUserPasswordForm.getNewPassword(), loginUser.getPassword());
+
+        if(!(isPasswordMatched)) {
+            redirectAttributes.addFlashAttribute("errorMessage", messageSource.getMessage("error.updateUserPassword.notMatch",null, Locale.ENGLISH));
+            return "redirect:/settings";
+        }
+
+        if(isSame) {
+            redirectAttributes.addFlashAttribute("errorMessage", messageSource.getMessage("error.updateUserPassword.isSame",null, Locale.ENGLISH));
+            return "redirect:/settings";
+        }
+
+        try{
+            User user = new User();
+            user.setId(loginUser.id);
+            userService.updatePassword(user, passwordEncoder.encode(updateUserPasswordForm.getNewPassword()));
+
+            redirectAttributes.addFlashAttribute("successMessage", messageSource.getMessage("success.updateUserPassword",null, Locale.ENGLISH));
+
+            utilComponent.updateSecurityContext(loginUser.email);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/settings";
     }
 }

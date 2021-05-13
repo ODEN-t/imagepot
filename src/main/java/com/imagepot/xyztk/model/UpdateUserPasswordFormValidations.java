@@ -1,6 +1,6 @@
 package com.imagepot.xyztk.model;
 
-public class ChangePasswordFormValidations {
+public class UpdateUserPasswordFormValidations {
     public interface Group1 {
     };
 
