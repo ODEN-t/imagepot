@@ -3,6 +3,8 @@ package com.imagepot.xyztk.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.amazonaws.services.s3.AmazonS3;
@@ -13,6 +15,7 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.util.IOUtils;
 
+import com.imagepot.xyztk.model.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,19 +31,27 @@ public class StorageService {
     private String bucketName;
 
     // クライアント経由でs3を操作
-    @Autowired
-    private AmazonS3 s3Cliant;
+    private final AmazonS3 s3Cliant;
 
-    public void getObjList() {
+    @Autowired
+    public StorageService(AmazonS3 s3Cliant) {
+        this.s3Cliant = s3Cliant;
+    }
+
+    public Image getObjList() {
         ObjectListing objListing = s3Cliant.listObjects(bucketName);
         List<S3ObjectSummary> objList = objListing.getObjectSummaries();
+        Image images = new Image();
+        List<URL> imageUrlList = new ArrayList<>();
 
         for (S3ObjectSummary obj : objList) {
-            // System.out.println(s3Cliant.getUrl(bucketName, obj.getKey())); image url
-            // System.out.println("Key [" + obj.getKey() + "] / Size [" + obj.getSize() + "
-            // B] / Last Modified ["
-            // + obj.getLastModified() + "]");
+//             System.out.println(obj.getBucketName() + " / " + obj.getETag() + " / " + obj.getStorageClass()+ " / " + obj.getOwner());
+//             System.out.println(obj.toString());
+             imageUrlList.add(s3Cliant.getUrl(bucketName, obj.getKey()));//image url
+//             System.out.println("Key [" + obj.getKey() + "] / Size [" + obj.getSize() + " B] / Last Modified [" + obj.getLastModified() + "]");
         }
+        images.setUrlList(imageUrlList);
+        return images;
     }
 
     public String uploadFile(MultipartFile file) {

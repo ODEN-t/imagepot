@@ -19,7 +19,7 @@
         "gulp-postcss": "^9.0.0",
         "gulp-rename": "^2.0.0",
         "gulp-sass": "^4.1.0",
-        "postcss": "^8.2.4",
+        "postcss": "^8.2.15",
         "style-loader": "^2.0.0",
         "webpack": "^5.15.0",
         "webpack-cli": "^4.3.1"
@@ -31,8 +31,11 @@
         "Android 4.1"
     ],
     "dependencies": {
+        "aws-sdk": "^2.906.0",
+        "config": "^3.3.6",
         "cropperjs": "^1.5.11",
         "jbox": "^1.2.1",
-        "jquery": "^3.5.1"
+        "jquery": "^3.5.1",
+        "util": "^0.12.3"
     }
 }

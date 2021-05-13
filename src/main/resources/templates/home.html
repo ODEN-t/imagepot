@@ -3,7 +3,7 @@
 
 <head th:replace="common::meta_header('Home', ~{::link}, ~{::script})">
   <link rel="stylesheet" th:href="@{/css/page/home.min.css}">
-  <script th:src="@{/dist/home/index.js}"></script>
+  <script th:src="@{/dist/home/index.js}" defer></script>
 </head>
 
 <body>
@@ -29,7 +29,7 @@
                 </path>
               </svg>
             </div>
-            <button class="buttonCTA buttonCTA-round buttonCTA-blue">
+            <button class="buttonCTA buttonCTA-round buttonCTA-blue" id="upload">
               <i class="icon-upload2"></i>
               Upload
             </button>
@@ -57,5 +57,13 @@
     </div>
   </div>
 </body>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+
+  let imageList = /*[[${imageList}]]*/ 'default';
+  console.log(imageList);
+
+  /*]]>*/
+</script>
 
 </html>

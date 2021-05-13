@@ -36,4 +36,9 @@ module.exports = {
         path: path.join(__dirname, './src/main/resources/static', "dist"),
         filename: "[name]",
     },
+    resolve: {
+        fallback: {
+            "util": require.resolve("util/"), // aws sdk error
+        },
+    }
 };

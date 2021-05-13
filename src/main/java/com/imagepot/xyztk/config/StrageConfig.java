@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class StroageConfig {
+public class StrageConfig {
 
     @Value("${cloud.aws.credentials.access-key}")
     private String accessKey;
