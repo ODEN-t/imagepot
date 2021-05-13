@@ -26,7 +26,7 @@ eval("var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! jQuery
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery_dist_jquery_min__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery/dist/jquery.min */ \"./node_modules/jquery/dist/jquery.min.js\");\n/* harmony import */ var jquery_dist_jquery_min__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery_dist_jquery_min__WEBPACK_IMPORTED_MODULE_0__);\n\r\n\r\n\r\nconsole.log('from home');\n\n//# sourceURL=webpack://imagepot/./src/main/resources/static/js/home/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery_dist_jquery_min__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery/dist/jquery.min */ \"./node_modules/jquery/dist/jquery.min.js\");\n/* harmony import */ var jquery_dist_jquery_min__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery_dist_jquery_min__WEBPACK_IMPORTED_MODULE_0__);\n\r\n\r\n\r\nconsole.log('from home');\r\n\r\nconst showAllImages = () => {\r\n    const domParser = new DOMParser();\r\n    for(const img of imageList) {\r\n        let template =\r\n            `<figure>\r\n                <div class=\"p-home__masonry__imgWrap\">\r\n                    <img src=\"${img}\" alt=\"\">\r\n                </div>\r\n            </figure> `;\r\n        document.getElementById('js-masonry')\r\n            .appendChild(domParser.parseFromString(template, \"text/html\").body.firstChild);\r\n    }\r\n}\r\n\r\nshowAllImages();\n\n//# sourceURL=webpack://imagepot/./src/main/resources/static/js/home/index.js?");
 
 /***/ })
 

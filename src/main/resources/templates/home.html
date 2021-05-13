@@ -3,6 +3,11 @@
 
 <head th:replace="common::meta_header('Home', ~{::link}, ~{::script})">
   <link rel="stylesheet" th:href="@{/css/page/home.min.css}">
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    const imageList = /*[[${imageList.urlList}]]*/ 'default';
+    /*]]>*/
+  </script>
   <script th:src="@{/dist/home/index.js}" defer></script>
 </head>
 
@@ -35,35 +40,11 @@
             </button>
           </div>
         </section>
-        <section class="p-home__masonry">
-          <figure>
-            <div class="p-home__masonry__imgWrap">
-              <img th:src="@{/images/testA.jpg}" alt="">
-            </div>
-          </figure>
-          <figure>
-            <div class="p-home__masonry__imgWrap">
-              <img th:src="@{/images/testB.jpg}" alt="">
-            </div>
-          </figure>
-          <figure>
-            <div class="p-home__masonry__imgWrap">
-              <img src="https://imagepot-app.s3-ap-northeast-1.amazonaws.com/album1/321_main_visual_name_1-min.jpg"
-                alt="">
-            </div>
-          </figure>
+        <section class="p-home__masonry" id="js-masonry">
         </section>
       </div>
     </div>
   </div>
 </body>
-<script th:inline="javascript">
-  /*<![CDATA[*/
-
-  let imageList = /*[[${imageList}]]*/ 'default';
-  console.log(imageList);
-
-  /*]]>*/
-</script>
 
 </html>
