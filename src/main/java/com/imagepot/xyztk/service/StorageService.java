@@ -8,14 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 
 import com.imagepot.xyztk.model.Image;
+import com.imagepot.xyztk.model.LoginUser;
+import com.imagepot.xyztk.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,8 +25,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StorageService {
 
-    @Value("${aws.s3.bucket.name}")
+    @Value("${aws.s3.bucketName}")
     private String bucketName;
+
+    @Value("${aws.s3.folderPrefix}")
+    private String folderPrefix;
 
     // クライアント経由でs3を操作
     private final AmazonS3 s3Cliant;
@@ -38,18 +39,29 @@ public class StorageService {
         this.s3Cliant = s3Cliant;
     }
 
-    public Image getObjList() {
-        ObjectListing objListing = s3Cliant.listObjects(bucketName);
-        List<S3ObjectSummary> objList = objListing.getObjectSummaries();
-        Image images = new Image();
-        List<URL> imageUrlList = new ArrayList<>();
+    public Image getObjList(LoginUser loginUser) {
+        String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
+        ListObjectsV2Request request = new ListObjectsV2Request()
+                .withBucketName(bucketName).withPrefix(pathToUserFolder);
+        ListObjectsV2Result result = s3Cliant.listObjectsV2(request);
 
-        for (S3ObjectSummary obj : objList) {
+        List<URL> imageUrlList = new ArrayList<>();
+        Image images = new Image();
+
+        for(S3ObjectSummary objList : result.getObjectSummaries()) {
+            imageUrlList.add(s3Cliant.getUrl(bucketName, objList.getKey()));//image url
+        }
+
+//        ObjectListing objListing = s3Cliant.listObjects(bucketName);
+//        List<S3ObjectSummary> objList = objListing.getObjectSummaries();
+//        Image images = new Image();
+
+//        for (S3ObjectSummary obj : objList) {
 //             System.out.println(obj.getBucketName() + " / " + obj.getETag() + " / " + obj.getStorageClass()+ " / " + obj.getOwner());
 //             System.out.println(obj.toString());
-             imageUrlList.add(s3Cliant.getUrl(bucketName, obj.getKey()));//image url
+//             imageUrlList.add(s3Cliant.getUrl(bucketName, obj.getKey()));//image url
 //             System.out.println("Key [" + obj.getKey() + "] / Size [" + obj.getSize() + " B] / Last Modified [" + obj.getLastModified() + "]");
-        }
+//        }
         images.setUrlList(imageUrlList);
         return images;
     }

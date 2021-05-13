@@ -7,8 +7,9 @@ import lombok.Data;
 
 // 独自プロパティ バケット名追加
 @Component
-@ConfigurationProperties(prefix = "aws.s3.bucket")
+@ConfigurationProperties(prefix = "aws.s3")
 @Data
 public class AWSConfig {
-    private String name;
+    private String bucketName;
+    private String folderPrefix;
 }

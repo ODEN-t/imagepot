@@ -26,7 +26,7 @@ public class HomeController {
 
     @GetMapping
     public String getHome(@AuthenticationPrincipal LoginUser loginUser, Model model) {
-        Image images = s3Service.getObjList();
+        Image images = s3Service.getObjList(loginUser);
         log.info(loginUser.toString());
         model.addAttribute("imageList", images);
         return "home";
