@@ -33,7 +33,7 @@
                       <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
                       <label class="buttonCTA" for="fileInput">Change Icon</label>
                     </div>
-                    <form class="reload" method="post" th:action="@{/settings/reset/icon}" id="resetIcon" data-confirm="Are you sure you want to reset your icon?">
+                    <form class="reload" method="post" th:action="@{/settings/reset/user/icon}" id="resetIcon" data-confirm="Are you sure you want to reset your icon?">
                       <button type="submit" class="buttonCTA">Reset</button>
                     </form>
                   </div>
@@ -51,18 +51,18 @@
               </dl>
 
               <!-- Name and Email -->
-              <form method="post" th:action="@{/settings/edit/user/info}" th:object="${changeUserInfoForm}">
+              <form method="post" th:action="@{/settings/update/user/info}" th:object="${changeUserInfoForm}">
                 <dl class="p-settings__settingArea">
                   <dt><label for="name">Name</label></dt>
                   <dd class="inputGroup">
-                    <input class="inputText" type="text" id="name" name="name" >
+                    <input class="inputText" type="text" id="name" name="name" th:field="*{name}" th:classappend="${#fields.hasErrors('name')}?'is-error'">
                     <i class="icon-user"></i>
                   </dd>
                 </dl>
                 <dl class="p-settings__settingArea">
                   <dt><label for="email">Email</label></dt>
                   <dd class="inputGroup">
-                    <input class="inputText" type="text" id="email" name="email">
+                    <input class="inputText" type="text" id="email" name="email" th:field="*{email}" th:classappend="${#fields.hasErrors('email')}?'is-error'">
                     <i class="icon-envelop"></i>
                   </dd>
                 </dl>
@@ -88,7 +88,7 @@
           <div class="p-settings__editBlock__wrap">
             <h2>Change Password</h2>
             <div class="p-settings__editBlock__content">
-              <form method="post" th:action="@{/settings/edit/user/password}" th:object="${changePasswordForm}">
+              <form method="post" th:action="@{/settings/update/user/password}" th:object="${changePasswordForm}">
                 <dl class="p-settings__settingArea">
                   <dt><label for="currentPassword">Current Password</label></dt>
                   <dd class="inputGroup">

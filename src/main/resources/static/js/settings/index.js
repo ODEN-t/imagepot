@@ -40,7 +40,7 @@ const crop = {
                     const formData = new FormData();
                     formData.append('croppedImage', b);
                     console.log(formData);
-                    $.ajax('/settings/update/icon', {
+                    $.ajax('/settings/update/user/icon', {
                         method: 'POST',
                         data: formData,
                         processData: false,
@@ -48,7 +48,8 @@ const crop = {
                         success(response) {
                             // バックエンドの処理が成功したらリロード
                             if(response === 'success') {
-                                location.reload();
+                                window.location.href = "/settings";
+                                // location.reload();
                             }
                         },
                         error(response) {

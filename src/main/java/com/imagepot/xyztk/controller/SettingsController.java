@@ -54,7 +54,7 @@ public class SettingsController {
         return "settings";
     }
 
-    @PostMapping("/reset/icon")
+    @PostMapping("/reset/user/icon")
     public String resetIcon(@AuthenticationPrincipal LoginUser loginUser) {
         long userId = loginUser.id;
         int num = userService.resetIcon(userId);
@@ -63,7 +63,7 @@ public class SettingsController {
         return "redirect:/settings";
     }
 
-    @PostMapping("/update/icon")
+    @PostMapping("/update/user/icon")
     @ResponseBody
     public String setNewIcon(
             @RequestParam MultipartFile croppedImage,
@@ -97,7 +97,7 @@ public class SettingsController {
         return "success";
     }
 
-    @PostMapping("/edit/user/info")
+    @PostMapping("/update/user/info")
     public String editUserNameAndEmail(
             @ModelAttribute ChangePasswordForm changePasswordForm,
             @ModelAttribute @Validated({ChangeUserInfoFormAllValidations.class}) ChangeUserInfoForm changeUserInfoForm,
@@ -152,7 +152,7 @@ public class SettingsController {
     }
 
 
-    @PostMapping("/edit/user/password")
+    @PostMapping("/update/user/password")
     public String editUserPassword(
             @ModelAttribute @Validated({ChangePasswordFormAllValidations.class}) ChangePasswordForm changePasswordForm,
             BindingResult result,
