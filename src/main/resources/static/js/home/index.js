@@ -20,11 +20,48 @@ const generateImageTemplateList = () => {
     }
     return templateList;
 }
-const domList = generateImageTemplateList();
-for(const img of domList) {
-    const target = document.getElementById('js-masonry');
-    target.appendChild(img);
+
+/**
+ *　引数に渡した配列を指定した数毎にHTMLElementでラップしHTML要素として追加する
+ *
+ * @param listOfElement HTMLElementを詰めた配列
+ * @param unit 何個ずつwrapしたいかを指定
+ * @return void
+ */
+const WrapNodesInUnit = (listOfElement, unit) => {
+    const contents = document.getElementById('js-masonry');
+    const domList = listOfElement;
+    const NUMBER_OF_ELEMENTS = domList.length;
+    const NUMBER_OF_ELEMENTS_IN_SECTION = unit;
+    const NUMBER_OF_SECTIONS = Math.ceil(NUMBER_OF_ELEMENTS / NUMBER_OF_ELEMENTS_IN_SECTION);
+    const domParser = new DOMParser();
+    let section = 0;
+    let eachNum = 15;
+    let elemNum = 0;
+
+    console.log("NUMBER_OF_SECTIONS -> " + NUMBER_OF_SECTIONS);
+    console.log("NUMBER_OF_ELEMENTS -> " + NUMBER_OF_ELEMENTS)
+
+    while (section <= NUMBER_OF_SECTIONS) {
+        let template =
+            `<div data-interSection="${section}"></div>`;
+        let wrapper = domParser.parseFromString(template, "text/html").body.firstChild;
+
+        while(elemNum < eachNum) {
+            if(NUMBER_OF_ELEMENTS <= elemNum) break;
+            wrapper.appendChild(domList[elemNum]);
+            elemNum++;
+        }
+
+        contents.appendChild(wrapper);
+
+        if(NUMBER_OF_ELEMENTS <= elemNum) break;
+        eachNum += NUMBER_OF_ELEMENTS_IN_SECTION;
+        section++;
+    }
 }
+
+WrapNodesInUnit(generateImageTemplateList(), 15);
 
 // const func = () => {
 //     const target = document.getElementById('js-masonry');
