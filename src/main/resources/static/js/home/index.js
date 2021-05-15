@@ -12,8 +12,8 @@ const generateImageTemplateList = () => {
         }
         let template =
             `<figure>
-                <div class="p-home__masonry__imgWrap">
-                    <img src="${img}" alt="">
+                <div class="p-home__postedList__imgWrap">
+                    <img src="${img}" alt="" loading="lazy">
                 </div>
             </figure>`;
         templateList.push(domParser.parseFromString(template, "text/html").body.firstChild);
@@ -29,7 +29,7 @@ const generateImageTemplateList = () => {
  * @return void
  */
 const WrapNodesInUnit = (listOfElement, unit) => {
-    const contents = document.getElementById('js-masonry');
+    const contents = document.getElementById('js-postedList');
     const domList = listOfElement;
     const NUMBER_OF_ELEMENTS = domList.length;
     const NUMBER_OF_ELEMENTS_IN_SECTION = unit;
@@ -44,7 +44,7 @@ const WrapNodesInUnit = (listOfElement, unit) => {
 
     while (section <= NUMBER_OF_SECTIONS) {
         let template =
-            `<div data-interSection="${section}"></div>`;
+            `<div class="p-home__postedList__section" data-interSection="${section}"></div>`;
         let wrapper = domParser.parseFromString(template, "text/html").body.firstChild;
 
         while(elemNum < eachNum) {
@@ -54,6 +54,8 @@ const WrapNodesInUnit = (listOfElement, unit) => {
         }
 
         contents.appendChild(wrapper);
+
+        if(section === 1) break;
 
         if(NUMBER_OF_ELEMENTS <= elemNum) break;
         eachNum += NUMBER_OF_ELEMENTS_IN_SECTION;

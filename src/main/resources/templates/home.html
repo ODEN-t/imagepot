@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="common::meta_header('Home', ~{::link}, ~{::script})">
-  <link rel="stylesheet" th:href="@{/css/page/home.min.css}">
   <script th:inline="javascript">
     /*<![CDATA[*/
     const imageList = /*[[${imageList.urlList}]]*/ 'default';
     /*]]>*/
   </script>
   <script th:src="@{/dist/home/index.js}" defer></script>
+  <link rel="stylesheet" th:href="@{/css/page/home.min.css}">
 </head>
 
 <body>
@@ -40,7 +40,7 @@
             </button>
           </div>
         </section>
-        <section class="p-home__masonry" id="js-masonry">
+        <section class="p-home__postedList" id="js-postedList">
         </section>
       </div>
     </div>
