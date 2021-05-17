@@ -53,25 +53,30 @@
     max-width: 1320px;
     margin: 28px auto 0;
     padding: 0 22px;
+  }
 
-    &__section {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+  &__postedItem {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    opacity: 0;
+    transition: all 0.7s ease-in-out;
+    &.is-loaded {
+      opacity: 1;
     }
 
-    &__imgWrap {
-      position: relative;
-      padding-top: 75%;
-      overflow: hidden;
-      border-radius: 3px;
-    }
-
-    figure {
+    > figure {
       position:relative;
       flex-basis: calc(100% / 3 - 10px);
       margin-bottom: 10px;
     }
+  }
+
+  &__postedImg {
+    position: relative;
+    padding-top: 75%;
+    overflow: hidden;
+    border-radius: 3px;
 
     img {
       width: 100%;
