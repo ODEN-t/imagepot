@@ -49,7 +49,8 @@ public class StorageService {
         Image images = new Image();
 
         for(S3ObjectSummary objList : result.getObjectSummaries()) {
-            imageUrlList.add(s3Cliant.getUrl(bucketName, objList.getKey()));//image url
+            if(objList.getSize() <= 0) continue;
+            imageUrlList.add(s3Cliant.getUrl(bucketName, objList.getKey())); //image url
         }
 
 //        ObjectListing objListing = s3Cliant.listObjects(bucketName);
