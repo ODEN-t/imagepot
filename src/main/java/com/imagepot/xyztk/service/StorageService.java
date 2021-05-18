@@ -53,16 +53,6 @@ public class StorageService {
             imageUrlList.add(s3Cliant.getUrl(bucketName, objList.getKey())); //image url
         }
 
-//        ObjectListing objListing = s3Cliant.listObjects(bucketName);
-//        List<S3ObjectSummary> objList = objListing.getObjectSummaries();
-//        Image images = new Image();
-
-//        for (S3ObjectSummary obj : objList) {
-//             System.out.println(obj.getBucketName() + " / " + obj.getETag() + " / " + obj.getStorageClass()+ " / " + obj.getOwner());
-//             System.out.println(obj.toString());
-//             imageUrlList.add(s3Cliant.getUrl(bucketName, obj.getKey()));//image url
-//             System.out.println("Key [" + obj.getKey() + "] / Size [" + obj.getSize() + " B] / Last Modified [" + obj.getLastModified() + "]");
-//        }
         images.setUrlList(imageUrlList);
         return images;
     }

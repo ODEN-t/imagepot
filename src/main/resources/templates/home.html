@@ -34,10 +34,32 @@
                 </path>
               </svg>
             </div>
-            <button class="buttonCTA buttonCTA-round buttonCTA-blue" id="upload">
+            <button class="buttonCTA buttonCTA-round buttonCTA-blue" id="js-upload">
               <i class="icon-upload2"></i>
               Upload
             </button>
+          </div>
+        </section>
+        <section id="js-uploadModal" class="uploadModal">
+          <div class="uploadMain">
+            <div class="uploadMain__fileArea">
+              <div class="uploadMain__textArea">
+                <i class="icon-upload2"></i>
+                <span class="mainText">Drag images to upload</span>
+                <span class="subText">or select a file</span>
+                <div class="buttonWrap">
+                  <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
+                  <label class="buttonCTA" for="fileInput">Choose Image</label>
+                </div>
+              </div>
+            </div>
+            <div class="uploadMain__statusArea">
+              <span>Images</span>
+            </div>
+          </div>
+          <div class="uploadFooter">
+            <p>Acceptable formats: jpg, png</p>
+            <p>Max file size is 10MB.</p>
           </div>
         </section>
         <section class="p-home__postedList" id="js-postedList">

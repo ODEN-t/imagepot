@@ -1,3 +1,5 @@
+import 'jbox/dist/jBox.all.css';
+import jBox from 'jbox';
 import $ from 'jquery/dist/jquery.min';
 
 /***
@@ -51,6 +53,20 @@ const WrapNodesInEachUnit = (listOfElement, unit, wrapperTemplate) => {
         wrapNumber++;
     }
 }
+
+console.log('test');
+const uploadModal = new jBox('Modal', {
+    id: 'upload',
+    width: 725,
+    height: 448,
+    attach: '#js-upload',
+    title: 'Add Images',
+    content: $('#js-uploadModal'),
+    overlayClass: 'add-jboxOverRay',
+    closeOnClick: false,
+    closeButton: 'box',
+    createOnInit: true,
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     const wrapperTemplate = `<div class="p-home__postedItem js-intersect"></div>`;

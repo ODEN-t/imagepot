@@ -21,12 +21,12 @@
       margin-right: 38px;
       > span {
         font-size: 13px;
-        color: #A5A5A5;
+        color: $color-palette-gray-6;
       }
       > select {
         cursor: pointer;
         padding: 7px 32px 7px 12px;
-        border: solid 1px #CCCCCC;
+        border: solid 1px $color-palette-gray-4;
         font-size: 14px;
         font-weight: 400;
         color: $color-primary-darkBlue;
@@ -35,7 +35,7 @@
         z-index: 2;
       }
       > svg {
-        fill: #A5A5A5;
+        fill: $color-palette-gray-6;
         position: absolute;
         right: 12px;
         width: 12px;
@@ -90,3 +90,96 @@
   }
 }
 
+.uploadModal {
+  height: 100%;
+  display: none;
+
+  .uploadMain {
+    height: 85%;
+    display: flex;
+
+    &__fileArea {
+      position: relative;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 26px 20px;
+      &:before {
+        content: "";
+        background-image: linear-gradient(to right, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px),
+        linear-gradient(to right, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px),
+        linear-gradient(to bottom, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px),
+        linear-gradient(to bottom, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px);
+        background-size: 11px 2px, 11px 2px, 2px 11px, 2px 11px;
+        background-position: left top, left bottom, left top, right top;
+        background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+      }
+    }
+
+    &__textArea {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      > i {
+        font-size: 70px;
+        color: $color-palette-gray-2;
+      }
+
+      .mainText {
+        font-size: 21px;
+        margin-top: 20px;
+      }
+      .subText {
+        position: relative;
+        font-size: 14px;
+        margin-top: 19px;
+        &:before, &:after {
+          position: absolute;
+          content: "";
+          border-top: 1px solid;
+          width: 3em;
+          top: calc(50% - 0.5px);
+        }
+        &:before {
+          left: 1.5em;
+        }
+        &:after {
+          right: 1.5em;
+        }
+      }
+      .buttonWrap {
+        margin-top: 22px;
+        input[type="file"] {
+          display: none;
+        }
+      }
+    }
+
+    &__statusArea {
+      width: 50%;
+      padding: 0 33px;
+      > span {
+        font-size: 22px;
+      }
+    }
+  }
+
+  .uploadFooter {
+    height: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    > p {
+      font-size: 15px;
+      line-height: 1.4;
+    }
+  }
+}
