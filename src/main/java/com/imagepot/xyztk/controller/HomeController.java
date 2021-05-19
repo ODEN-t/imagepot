@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 
 @Slf4j
@@ -24,12 +28,37 @@ public class HomeController {
         this.s3Service = s3Service;
     }
 
+    @ModelAttribute
+    Image setImageList(@AuthenticationPrincipal LoginUser loginUser) {
+        return s3Service.getObjList(loginUser);
+    }
+
     @GetMapping
-    public String getHome(@AuthenticationPrincipal LoginUser loginUser, Model model) {
-        Image images = s3Service.getObjList(loginUser);
+    public String getHome(
+            @AuthenticationPrincipal LoginUser loginUser,
+            Image imageList,
+            Model model) {
         log.info(loginUser.toString());
-        model.addAttribute("imageList", images);
+        model.addAttribute("imageList", imageList);
         return "home";
+    }
+
+    @PostMapping("/upload")
+    @ResponseBody
+    public String uploadImage(
+            @RequestParam ArrayList<MultipartFile> images,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        System.out.println(images.size());
+        String processId = "longProcess_" + request.getParameter("processId");
+        System.out.println(request.getSession().getAttribute(processId));
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "fdfd";
     }
 
 }

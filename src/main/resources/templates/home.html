@@ -49,27 +49,18 @@
               <span class="mainText">Drag images to upload</span>
               <span class="subText">or select images</span>
               <div class="buttonWrap">
-                <input type="file" accept=".jpg, .jpeg, .png" id="fileInput" multiple>
-                <label class="buttonCTA" for="fileInput">Choose Image</label>
+                <form enctype="multipart/form-data">
+                  <input type="file" accept=".jpg, .jpeg, .png" id="fileInput" multiple>
+                  <label class="buttonCTA" for="fileInput">Choose Image</label>
+                </form>
               </div>
             </div>
           </div>
           <div class="uploadMain__statusArea">
             <span>Images</span>
-            <ul class="fileList">
-              <li class="inputFile">
-                <i class="icon-file-picture"></i>
-                <div>
-                  <div class="fileInfo">
-                    <span class="fileName">alena-stepanova-D37-29Qf8kw-unsplash.jpg</span>
-                    <span class="fileSize">560KB</span>
-                    <span class="close">×</span>
-                  </div>
-                  <div class="progressWrap">
-                    <div class="progress"></div>
-                  </div>
-                </div>
-              </li>
+            <div id="test"></div>
+            <div id="test2"></div>
+            <ul class="fileList" id="js-fileList">
             </ul>
           </div>
         </div>
