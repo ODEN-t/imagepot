@@ -54,7 +54,6 @@ const WrapNodesInEachUnit = (listOfElement, unit, wrapperTemplate) => {
     }
 }
 
-console.log('test');
 const uploadModal = new jBox('Modal', {
     id: 'upload',
     width: 725,
@@ -67,6 +66,33 @@ const uploadModal = new jBox('Modal', {
     closeButton: 'box',
     createOnInit: true,
 });
+
+document.getElementById('fileInput').addEventListener('change', (e) => {
+    const files = e.target.files;
+    const LIMIT_MB = 10; // 10MB
+    const LIMIT = LIMIT_MB * 1024 * 1024; // B to MB
+    const MAXIMUM_NUMBER_OF_FILES = 20;
+    let fileSize = 0;
+
+    console.log(files);
+
+    // ファイル数チェック
+    if(MAXIMUM_NUMBER_OF_FILES < files.length)
+        return window.alert('Too many files selected. The maximum number of files is 20.');
+
+    // ファイル形式、容量チェック
+    for(const file of files) {
+        if (!(file.type === 'image/jpeg' || file.type === 'image/png'))
+            return window.alert('Mime type is not image/jpeg or image/png');
+        fileSize += file.size;
+        if (LIMIT < fileSize)
+            return window.alert('File size is too large. The maximum supported file size are ' + LIMIT_MB.toString() + 'MB.');
+    }
+
+
+
+})
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const wrapperTemplate = `<div class="p-home__postedItem js-intersect"></div>`;

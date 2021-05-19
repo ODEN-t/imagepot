@@ -138,7 +138,7 @@
       }
       .subText {
         position: relative;
-        font-size: 14px;
+        font-size: 16px;
         margin-top: 19px;
         &:before, &:after {
           position: absolute;
@@ -164,9 +164,92 @@
 
     &__statusArea {
       width: 50%;
-      padding: 0 33px;
+      padding: 0 13px 0 33px;
+      overflow-y: scroll;
       > span {
         font-size: 22px;
+      }
+
+      .fileList {
+        width: 100%;
+        margin-top: 5px;
+      }
+
+      .inputFile {
+        width: 100%;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 1px rgba(0,0,0, 0.11);
+        > i {
+          flex-grow: 0;
+          font-size: 32px;
+          color: #A5A5A5;
+          display: flex;
+          align-items: center;
+        }
+        > div {
+          height: 35px;
+          flex-grow: 1;
+          margin-left: 11px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+      }
+
+      .fileInfo {
+        position: relative;
+        width: 100%;
+        height: 20px;
+
+        .fileName {
+          font-size: 15px;
+          line-height: 1.2;
+          width: 50%;
+          position: absolute;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .fileSize {
+          font-size: 11px;
+          position: absolute;
+          bottom: 0;
+          right: 23%
+        }
+
+        .close {
+          position: absolute;
+          right: 0;
+          font-size: 23px;
+        }
+      }
+
+      .progressWrap {
+        position: relative;
+        overflow: hidden;
+        &:before {
+          content: "";
+          display: block;
+          background-color: $color-palette-gray-2;
+          border-radius: 2.5px; /* 線幅の半分 */
+          height: 5px;
+        }
+      }
+
+      .progress {
+        position: absolute;
+        top: 0;
+        width: 0;
+        &:before {
+          content: "";
+          display: block;
+          background-color: $color-primary-blue;
+          border-radius: 2.5px; /* 線幅の半分 */
+          height: 5px;
+        }
       }
     }
   }
