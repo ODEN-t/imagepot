@@ -3,8 +3,12 @@ package com.imagepot.xyztk.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.amazonaws.services.s3.AmazonS3;
@@ -57,12 +61,29 @@ public class StorageService {
         return images;
     }
 
-    public String uploadFile(MultipartFile file) {
-        File fileObj = convertMultiPartFileToFile(file);
-        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        s3Cliant.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
-        fileObj.delete();
-        return "File uploaded : " + fileName;
+    public String uploadFile(MultipartFile multipartFile, LoginUser loginUser) {
+        File fileObj = convertMultiPartFileToFile(multipartFile);
+        try {
+            InputStream multipartFileInStream = multipartFile.getInputStream();
+            String folderPrefix = "potuser";
+            String filePath = folderPrefix + loginUser.id + "/";
+
+            // 現在日時の取得
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+            String formatNow = formatter.format(now);
+
+            String fileName = formatNow + "_" + multipartFile.getOriginalFilename();
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(multipartFile.getSize());
+
+            s3Cliant.putObject(new PutObjectRequest(bucketName, filePath + fileName, multipartFileInStream, objectMetadata));
+            fileObj.delete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "File uploaded";
     }
 
     public byte[] downloadFile(String fileName) {

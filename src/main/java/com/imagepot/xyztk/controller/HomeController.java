@@ -47,12 +47,18 @@ public class HomeController {
     @ResponseBody
     public String uploadImage(
             @RequestParam ArrayList<MultipartFile> images,
+            @AuthenticationPrincipal LoginUser loginUser,
             HttpServletRequest request,
             HttpServletResponse response
     ) {
         System.out.println(images.size());
         String processId = "longProcess_" + request.getParameter("processId");
         System.out.println(request.getSession().getAttribute(processId));
+
+
+        for (MultipartFile image : images) {
+            s3Service.uploadFile(image, loginUser);
+        }
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
