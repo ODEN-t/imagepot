@@ -51,13 +51,12 @@
               <div class="buttonWrap">
                 <form enctype="multipart/form-data">
                   <input type="file" accept=".jpg, .jpeg, .png" id="fileInput" multiple>
-                  <label class="buttonCTA" for="fileInput">Choose Image</label>
+                  <label class="buttonCTA buttonCTA-blue" for="fileInput">Choose Image</label>
                 </form>
               </div>
             </div>
           </div>
           <div class="uploadMain__statusArea">
-            <span>Images</span>
             <div id="test"></div>
             <div id="test2"></div>
             <ul class="fileList" id="js-fileList">
@@ -65,8 +64,15 @@
           </div>
         </div>
         <div class="uploadFooter">
-          <p>Acceptable formats: jpg, png</p>
-          <p>Max file size is 10MB.</p>
+          <div class="message">
+            <p>Acceptable formats: jpg, png</p>
+            <p>Max file size is 10MB.</p>
+            <p>Max size per request is 100MB.</p>
+          </div>
+          <div class="buttonWrap">
+            <button class="buttonCTA" id="js-clear">Clear</button>
+            <button class="buttonCTA" id="js-execute">Upload</button>
+          </div>
         </div>
       </section>
       <section class="p-home__postedList" id="js-postedList">

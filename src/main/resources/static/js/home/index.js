@@ -77,42 +77,21 @@ const uploadModal = new jBox('Modal', {
     createOnInit: true,
 });
 
-document.getElementById('fileInput').addEventListener('change', (e) => {
+
+let formData = null;
+
+const inputFormData = (e) => {
     const files = e.target.files;
-    const LIMIT_MB = 100; // 100MB
-    const LIMIT = LIMIT_MB * 1024 * 1024; // B to MB
-    const MAXIMUM_NUMBER_OF_FILES = 100;
-    let fileSize = 0;
-
-    console.log(files);
-
-    // ファイル数チェック
-    if (MAXIMUM_NUMBER_OF_FILES < files.length)
-        return window.alert('Too many files selected. The maximum number of files is 10.');
-
-    // ファイル形式、容量チェック
-    for (const file of files) {
-        if (!(file.type === 'image/jpeg' || file.type === 'image/png'))
-            return window.alert('Mime type is not image/jpeg or image/png');
-        fileSize += file.size;
-        if (LIMIT < fileSize)
-            return window.alert('File size is too large. The maximum supported file size are ' + LIMIT_MB.toString() + 'MB.');
-    }
-
     const template =
         `<li class="inputFile">
-            <i class="icon-file-picture"></i>
-            <div>
-                <div class="fileInfo">
-                    <span class="fileName"></span>
-                    <span class="fileSize"></span>
-                    <span class="close">×</span>
+                <i class="icon-file-picture"></i>
+                <div>
+                    <div class="fileInfo">
+                        <span class="fileName"></span>
+                        <span class="fileSize"></span>
+                    </div>
                 </div>
-                <div class="progressWrap">
-                   <div class="progress"></div>
-                </div>
-            </div>
-        </li>`
+            </li>`
     const templateList = generateImageTemplateList(template, files.length);
 
     const fileListElement = document.getElementById('js-fileList');
@@ -122,43 +101,41 @@ document.getElementById('fileInput').addEventListener('change', (e) => {
         fileListElement.appendChild(templateList[i]);
     }
 
-    let formData = new FormData();
+    formData = new FormData();
     for (let i = 0; i < files.length; i++) {
         formData.append('images', files[i]);
     }
+}
 
+const uploader = (e) => {
+    if(!formData)
+        return false;
     uploadModal.ajax({
         type: 'POST',
         url: '/home/upload',
         data: formData,
         contentType: false,
         processData: false,
-        loadingClass: false,
-        spinner: false,
-        success: function (response) {
-            if (response === 'fdfd')
-                return true;
-        },
-        xhr: function () {
-            let xhr = new window.XMLHttpRequest();
-            // Upload progress
-            xhr.upload.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-                    console.log(evt);
-                    let percentComplete = evt.loaded / evt.total;
-                    let progVal = parseInt(evt.loaded / evt.total * 10000) / 100;
-                    document.getElementById('test').value = progVal;
-                    document.getElementById('test2').innerHTML = progVal + '%';
-                    //Do something with upload progress
-                    console.log(percentComplete);
-                }
-            }, false);
-
-            return xhr;
+        spinner: true,
+        setContent: false,
+        success: function () {
+            clearFormData();
         }
     })
+}
 
-})
+const clearFormData = () => {
+    formData = null;
+    const parent = document.getElementById('js-fileList');
+    while(parent.firstChild){
+        parent.removeChild(parent.firstChild)
+    }
+}
+
+
+document.getElementById('fileInput').addEventListener('change', inputFormData);
+document.getElementById('js-execute').addEventListener('click', uploader);
+document.getElementById('js-clear').addEventListener('click', clearFormData);
 
 
 document.addEventListener('DOMContentLoaded', () => {

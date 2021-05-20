@@ -95,7 +95,7 @@
   display: none;
 
   .uploadMain {
-    height: 85%;
+    height: 80%;
     display: flex;
 
     &__fileArea {
@@ -177,7 +177,7 @@
 
       .inputFile {
         width: 100%;
-        height: 70px;
+        height: 60px;
         display: flex;
         align-items: center;
         box-shadow: 0 1px rgba(0,0,0, 0.11);
@@ -188,13 +188,14 @@
           display: flex;
           align-items: center;
         }
+
         > div {
-          height: 35px;
+          height: 100%;
           flex-grow: 1;
-          margin-left: 11px;
+          margin-left: 18px;
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
+          justify-content: center;
         }
       }
 
@@ -206,7 +207,7 @@
         .fileName {
           font-size: 15px;
           line-height: 1.2;
-          width: 50%;
+          width: 70%;
           position: absolute;
           white-space: nowrap;
           overflow: hidden;
@@ -214,16 +215,10 @@
         }
 
         .fileSize {
-          font-size: 11px;
+          font-size: 12px;
           position: absolute;
           bottom: 0;
-          right: 23%
-        }
-
-        .close {
-          position: absolute;
-          right: 0;
-          font-size: 23px;
+          right: 5%
         }
       }
 
@@ -255,14 +250,20 @@
   }
 
   .uploadFooter {
-    height: 15%;
+    height: 20%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content: space-between;
 
-    > p {
-      font-size: 15px;
-      line-height: 1.4;
+    .message {
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .buttonWrap {
+      &:last-child {
+        margin-left: 15px
+      }
     }
   }
 }

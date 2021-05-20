@@ -12,9 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 
 @Slf4j
@@ -47,22 +46,16 @@ public class HomeController {
     @PostMapping("/upload")
     @ResponseBody
     @Async
-    public String uploadImage(
-            @RequestParam ArrayList<MultipartFile> images,
-            @AuthenticationPrincipal LoginUser loginUser,
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) {
-        System.out.println(images.size());
-        String processId = "longProcess_" + request.getParameter("processId");
-        System.out.println(request.getSession().getAttribute(processId));
-
-
+    public CompletableFuture<String> uploadImage(@RequestParam ArrayList<MultipartFile> images, @AuthenticationPrincipal LoginUser loginUser) {
         for (MultipartFile image : images) {
             s3Service.uploadFile(image, loginUser);
         }
-
-        return "fdfd";
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return CompletableFuture.completedFuture("success");
     }
 
 }
