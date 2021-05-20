@@ -10,14 +10,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.transfer.MultipleFileUpload;
+import com.amazonaws.services.s3.transfer.TransferManager;
+import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.util.IOUtils;
 
 import com.imagepot.xyztk.model.Image;
 import com.imagepot.xyztk.model.LoginUser;
 import com.imagepot.xyztk.model.User;
+import com.imagepot.xyztk.util.XferMgrProgress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -61,25 +66,28 @@ public class StorageService {
         return images;
     }
 
-    public String uploadFile(MultipartFile multipartFile, LoginUser loginUser) {
-        File fileObj = convertMultiPartFileToFile(multipartFile);
+    public String uploadFile(ArrayList<MultipartFile> multipartFileList, LoginUser loginUser) {
+        ArrayList<File> fileList = testConvert(multipartFileList);
+
+        TransferManager xfer_mgr = TransferManagerBuilder.standard()
+                .withS3Client(s3Cliant)
+                .build();
+
         try {
-            InputStream multipartFileInStream = multipartFile.getInputStream();
+//            InputStream multipartFileInStream = multipartFile.getInputStream();
             String folderPrefix = "potuser";
             String filePath = folderPrefix + loginUser.id + "/";
 
-            // 現在日時の取得
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-            String formatNow = formatter.format(now);
+            MultipleFileUpload xfer = xfer_mgr.uploadFileList(bucketName, filePath, new File("."), fileList);
+            XferMgrProgress.showMultiUploadProgress(xfer);
 
-            String fileName = formatNow + "_" + multipartFile.getOriginalFilename();
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentLength(multipartFile.getSize());
-
-            s3Cliant.putObject(new PutObjectRequest(bucketName, filePath + fileName, multipartFileInStream, objectMetadata));
-            fileObj.delete();
-        } catch (IOException e) {
+//            String fileName = formatNow + "_" + multipartFile.getOriginalFilename();
+//            ObjectMetadata objectMetadata = new ObjectMetadata();
+//            objectMetadata.setContentLength(multipartFile.getSize());
+//
+//            s3Cliant.putObject(new PutObjectRequest(bucketName, filePath + fileName, multipartFileInStream, objectMetadata));
+//            fileObj.delete();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -115,5 +123,27 @@ public class StorageService {
             log.error("Error converting multipartFile to file", e);
         }
         return convertedFile;
+    }
+
+    private ArrayList<File> testConvert(ArrayList<MultipartFile> multipartFileList) {
+        ArrayList<File> convertedFileList = new ArrayList<>();
+
+        for(MultipartFile m : multipartFileList) {
+
+            // 現在日時の取得
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+            String formatNow = formatter.format(now);
+
+            File newFile = new File(formatNow + "_" + Objects.requireNonNull(m.getOriginalFilename()));
+
+            try(FileOutputStream fos = new FileOutputStream(newFile)) {
+                fos.write(m.getBytes());
+                convertedFileList.add(newFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return convertedFileList;
     }
 }

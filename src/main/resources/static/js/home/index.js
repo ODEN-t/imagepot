@@ -79,9 +79,9 @@ const uploadModal = new jBox('Modal', {
 
 document.getElementById('fileInput').addEventListener('change', (e) => {
     const files = e.target.files;
-    const LIMIT_MB = 10; // 10MB
+    const LIMIT_MB = 100; // 100MB
     const LIMIT = LIMIT_MB * 1024 * 1024; // B to MB
-    const MAXIMUM_NUMBER_OF_FILES = 10;
+    const MAXIMUM_NUMBER_OF_FILES = 100;
     let fileSize = 0;
 
     console.log(files);

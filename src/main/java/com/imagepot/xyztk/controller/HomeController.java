@@ -5,6 +5,7 @@ import com.imagepot.xyztk.model.LoginUser;
 import com.imagepot.xyztk.service.StorageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +46,7 @@ public class HomeController {
 
     @PostMapping("/upload")
     @ResponseBody
+    @Async
     public String uploadImage(
             @RequestParam ArrayList<MultipartFile> images,
             @AuthenticationPrincipal LoginUser loginUser,
@@ -56,14 +58,12 @@ public class HomeController {
         System.out.println(request.getSession().getAttribute(processId));
 
 
-        for (MultipartFile image : images) {
-            s3Service.uploadFile(image, loginUser);
-        }
         try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
+            s3Service.uploadFile(images, loginUser);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
         return "fdfd";
     }
 
