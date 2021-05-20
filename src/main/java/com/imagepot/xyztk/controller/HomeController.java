@@ -58,10 +58,8 @@ public class HomeController {
         System.out.println(request.getSession().getAttribute(processId));
 
 
-        try {
-            s3Service.uploadFile(images, loginUser);
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (MultipartFile image : images) {
+            s3Service.uploadFile(image, loginUser);
         }
 
         return "fdfd";

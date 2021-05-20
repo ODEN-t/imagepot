@@ -66,27 +66,24 @@ public class StorageService {
         return images;
     }
 
-    public String uploadFile(ArrayList<MultipartFile> multipartFileList, LoginUser loginUser) {
-        ArrayList<File> fileList = testConvert(multipartFileList);
-
-        TransferManager xfer_mgr = TransferManagerBuilder.standard()
-                .withS3Client(s3Cliant)
-                .build();
-
+    public String uploadFile(MultipartFile multipartFile, LoginUser loginUser) {
+        File fileObj = convertMultiPartFileToFile(multipartFile);
         try {
-//            InputStream multipartFileInStream = multipartFile.getInputStream();
+            InputStream multipartFileInStream = multipartFile.getInputStream();
             String folderPrefix = "potuser";
             String filePath = folderPrefix + loginUser.id + "/";
 
-            MultipleFileUpload xfer = xfer_mgr.uploadFileList(bucketName, filePath, new File("."), fileList);
-            XferMgrProgress.showMultiUploadProgress(xfer);
+            // 現在日時の取得
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+            String formatNow = formatter.format(now);
 
-//            String fileName = formatNow + "_" + multipartFile.getOriginalFilename();
-//            ObjectMetadata objectMetadata = new ObjectMetadata();
-//            objectMetadata.setContentLength(multipartFile.getSize());
-//
-//            s3Cliant.putObject(new PutObjectRequest(bucketName, filePath + fileName, multipartFileInStream, objectMetadata));
-//            fileObj.delete();
+            String fileName = formatNow + "_" + multipartFile.getOriginalFilename();
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(multipartFile.getSize());
+
+            s3Cliant.putObject(new PutObjectRequest(bucketName, filePath + fileName, multipartFileInStream, objectMetadata));
+            fileObj.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -123,27 +120,5 @@ public class StorageService {
             log.error("Error converting multipartFile to file", e);
         }
         return convertedFile;
-    }
-
-    private ArrayList<File> testConvert(ArrayList<MultipartFile> multipartFileList) {
-        ArrayList<File> convertedFileList = new ArrayList<>();
-
-        for(MultipartFile m : multipartFileList) {
-
-            // 現在日時の取得
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-            String formatNow = formatter.format(now);
-
-            File newFile = new File(formatNow + "_" + Objects.requireNonNull(m.getOriginalFilename()));
-
-            try(FileOutputStream fos = new FileOutputStream(newFile)) {
-                fos.write(m.getBytes());
-                convertedFileList.add(newFile);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return convertedFileList;
     }
 }
