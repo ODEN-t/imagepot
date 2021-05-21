@@ -1,0 +1,24 @@
+@import "../common/variables";
+
+.p-action {
+  background-color: #fff;
+  width: 100%;
+  padding: 30px 0;
+
+  &__head {
+    max-width: 1320px;
+    margin: 15px auto 0;
+    padding: 0 22px;
+    &__wrap {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+  }
+
+  &__content {
+    max-width: 1320px;
+    margin: 28px auto 0;
+    padding: 0 22px;
+  }
+}

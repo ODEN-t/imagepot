@@ -132,17 +132,20 @@ const clearFormData = () => {
     }
 }
 
+const checkBox = (e) => {
+    console.log(e.target.type);
+}
+
 
 document.getElementById('fileInput').addEventListener('change', inputFormData);
 document.getElementById('js-execute').addEventListener('click', uploader);
 document.getElementById('js-clear').addEventListener('click', clearFormData);
 
-
 document.addEventListener('DOMContentLoaded', () => {
     const wrapperTemplate = `<div class="p-home__postedItem js-intersect"></div>`;
     const childTemplate = `<figure><div class="p-home__postedImg"></div></figure>`;
     const UNIT = 15; // 一度にrenderする画像の数
-    WrapNodesInEachUnit(generateImageTemplateList(childTemplate, imageList.length), UNIT, wrapperTemplate);
+    WrapNodesInEachUnit(generateImageTemplateList(childTemplate, urlList.length), UNIT, wrapperTemplate);
 
     const options = {
         root: null,
@@ -165,19 +168,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 let count = 0;
                 for (let i = 0; i < children.length; i++) {
                     const img = document.createElement('img');
-                    img.src = imageList[i];
+                    img.src = urlList[i];
                     children[i].appendChild(img);
-
                     img.addEventListener('load', () => {
-                        imageList.shift();
+                        urlList.shift();
                         count++;
                         if (count === children.length)
                             parent.classList.add('is-loaded');
                     });
                 }
 
+                $('.p-home__postedCheck').click(function() {
+                    return false;
+                })
                 intersectionObserver.unobserve(entry.target);
             }
         })
     }
 });
+

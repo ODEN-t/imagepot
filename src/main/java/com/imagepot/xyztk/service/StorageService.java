@@ -48,22 +48,25 @@ public class StorageService {
         this.s3Cliant = s3Cliant;
     }
 
-    public Image getObjList(LoginUser loginUser) {
+    public List<Image> getObjList(LoginUser loginUser) {
         String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
         ListObjectsV2Request request = new ListObjectsV2Request()
                 .withBucketName(bucketName).withPrefix(pathToUserFolder);
         ListObjectsV2Result result = s3Cliant.listObjectsV2(request);
 
-        List<URL> imageUrlList = new ArrayList<>();
-        Image images = new Image();
+        List<Image> imageList = new ArrayList<>();
 
         for(S3ObjectSummary objList : result.getObjectSummaries()) {
             if(objList.getSize() <= 0) continue;
-            imageUrlList.add(s3Cliant.getUrl(bucketName, objList.getKey())); //image url
+            Image images = new Image();
+            images.setTitle(objList.getKey().substring(pathToUserFolder.length()));
+            images.setSize(objList.getSize());
+            images.setLastModified(objList.getLastModified());
+            images.setUrl(s3Cliant.getUrl(bucketName, objList.getKey()));
+            imageList.add(images);
         }
 
-        images.setUrlList(imageUrlList);
-        return images;
+        return imageList;
     }
 
     public String uploadFile(MultipartFile multipartFile, LoginUser loginUser) {

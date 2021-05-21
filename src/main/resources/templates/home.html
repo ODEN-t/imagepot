@@ -4,7 +4,7 @@
 <head th:replace="common::meta_header('Home', ~{::link}, ~{::script})">
   <script th:inline="javascript">
       /*<![CDATA[*/
-      const imageList = /*[[${imageList.urlList}]]*/ 'default';
+      const urlList = /*[[${urlList}]]*/ 'default';
       /*]]>*/
   </script>
   <script th:src="@{/dist/home/index.js}" defer></script>
@@ -39,6 +39,10 @@
             <i class="icon-upload2"></i>
             Upload
           </button>
+          <a class="buttonCTA buttonCTA-round buttonCTA-blue" th:href="@{'/action'}">
+            <i class="icon-checkmark"></i>
+            Action
+          </a>
         </div>
       </section>
       <section id="js-uploadModal" class="uploadModal">

@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -20,13 +19,13 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Controller
-@RequestMapping("/home")
-public class HomeController {
+@RequestMapping("/action")
+public class ActionController {
 
     private final StorageService s3Service;
 
     @Autowired
-    public HomeController(StorageService s3Service) {
+    public ActionController(StorageService s3Service) {
         this.s3Service = s3Service;
     }
 
@@ -36,32 +35,12 @@ public class HomeController {
     }
 
     @GetMapping
-    public String getHome(
+    public String getAction(
             @AuthenticationPrincipal LoginUser loginUser,
             List<Image> imageList,
             Model model) {
         log.info(loginUser.toString());
-        List<URL> urlList = new ArrayList<>();
-        for(Image image : imageList) {
-            urlList.add(image.getUrl());
-        }
-        model.addAttribute("urlList", urlList);
-        return "home";
+        model.addAttribute("images", imageList);
+        return "action";
     }
-
-    @PostMapping("/upload")
-    @ResponseBody
-    @Async
-    public CompletableFuture<String> uploadImage(@RequestParam ArrayList<MultipartFile> images, @AuthenticationPrincipal LoginUser loginUser) {
-        for (MultipartFile image : images) {
-            s3Service.uploadFile(image, loginUser);
-        }
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return CompletableFuture.completedFuture("success");
-    }
-
 }

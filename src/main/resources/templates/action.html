@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common::meta_header('Home', ~{::link}, ~{::script})">
+  <script th:src="@{/dist/action/index.js}" defer></script>
+  <link rel="stylesheet" th:href="@{/css/page/action.min.css}">
+</head>
+
+<body>
+<div class="c-globalContainer">
+  <div th:replace="common::sidebar">
+  </div>
+  <div class="c-contents">
+    <div class="p-action">
+      <section class="p-action__head">
+        <div class="p-action__head__wrap">
+          <button class="buttonCTA buttonCTA-round buttonCTA-blue" id="js-upload">
+            <i class="icon-upload2"></i>
+            Download
+          </button>
+          <button class="buttonCTA buttonCTA-round buttonCTA-blue" th:href="@{'/action'}">
+            <i class="icon-checkmark"></i>
+            Delete
+          </button>
+        </div>
+      </section>
+      <section class="p-action__content">
+        <form th:object="${images}" method="post">
+          <ul>
+            <li th:each="image:${images}">
+              <input type="checkbox" name="images"
+                     th:text="${image.title}"
+                     th:value="${image.title}"
+                     th:data="${image.url}">
+            </li>
+          </ul>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>
