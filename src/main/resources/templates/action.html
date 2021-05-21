@@ -22,14 +22,33 @@
       </section>
       <section class="p-action__content">
         <form th:object="${images}" method="post" th:action="@{'/action/delete'}">
-          <ul>
-            <li th:each="image:${images}">
-              <input type="checkbox" name="imgData"
-                     th:text="${image.title}"
-                     th:value="${image.title}"
-                     th:data="${image.url}">
-            </li>
-          </ul>
+          <table>
+            <tr>
+              <th>check</th>
+              <th>Name</th>
+              <th>Size</th>
+              <th>Last Modified</th>
+            </tr>
+            <tr th:each="image:${images}">
+              <td><input type="checkbox" name="imgData" th:value="${image.title}" th:data="${image.url}" th:id="${image.id}"></td>
+              <td><label th:for="${image.id}"><span th:text="${image.title}"></span></label></td>
+              <td><label th:for="${image.id}"><span th:text="${image.size}"></span></label></td>
+              <td><label th:for="${image.id}"><span th:text="${image.lastModified}"></span></label></td>
+            </tr>
+          </table>
+<!--          <ul>-->
+<!--            <li th:each="image:${images}">-->
+<!--              <input type="checkbox" name="imgData"-->
+<!--                     th:value="${image.title}"-->
+<!--                     th:data="${image.url}"-->
+<!--                     th:id="${image.eTag}">-->
+<!--              <label th:for="${image.eTag}">-->
+<!--                <span th:text="${image.title}"></span>-->
+<!--                <span th:text="${image.size}"></span>-->
+<!--                <span th:text="${image.lastModified}"></span>-->
+<!--              </label>-->
+<!--            </li>-->
+<!--          </ul>-->
           <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="delete">
             <i class="icon-checkmark"></i>
             Delete

@@ -7,10 +7,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
@@ -65,6 +62,7 @@ public class StorageService {
         for(S3ObjectSummary objList : result.getObjectSummaries()) {
             if(objList.getSize() <= 0) continue;
             Image images = new Image();
+            images.setId(UUID.randomUUID().toString());
             images.setTitle(objList.getKey().substring(pathToUserFolder.length()));
             images.setSize(objList.getSize());
             images.setLastModified(objList.getLastModified());
