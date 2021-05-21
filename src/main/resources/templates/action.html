@@ -22,18 +22,18 @@
       </section>
       <section class="p-action__content">
         <form th:object="${images}" method="post" th:action="@{'/action/delete'}">
-          <table>
-            <tr>
+          <table class="p-action__table">
+            <tr class="p-action__table__head">
               <th>check</th>
               <th>Name</th>
               <th>Size</th>
               <th>Last Modified</th>
             </tr>
-            <tr th:each="image:${images}">
+            <tr th:each="image:${images}" class="p-action__table__data">
               <td><input type="checkbox" name="imgData" th:value="${image.title}" th:data="${image.url}" th:id="${image.id}"></td>
-              <td><label th:for="${image.id}"><span th:text="${image.title}"></span></label></td>
-              <td><label th:for="${image.id}"><span th:text="${image.size}"></span></label></td>
-              <td><label th:for="${image.id}"><span th:text="${image.lastModified}"></span></label></td>
+              <td><label th:for="${image.id}"><p th:text="${image.title}"></p></label></td>
+              <td><label th:for="${image.id}"><p th:text="${image.size}"></p></label></td>
+              <td><label th:for="${image.id}"><p th:text="${image.lastModified}"></p></label></td>
             </tr>
           </table>
 <!--          <ul>-->

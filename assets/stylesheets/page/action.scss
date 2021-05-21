@@ -21,4 +21,44 @@
     margin: 28px auto 0;
     padding: 0 22px;
   }
+
+  &__table {
+    width: 100%;
+    margin-top: 24px;
+    border-collapse: collapse;
+
+    &__head {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 37px;
+      height: 37px;
+      background: $color-primary-blue;
+      color: #fff;
+
+      > th {
+        text-align: left;
+        font-weight: 700;
+        padding: 3px 8px;
+        border: solid 1px $color-palette-gray-5;
+      }
+    }
+
+    &__data {
+      font-size: 14px;
+      line-height: 29px;
+      height: 29px;
+      padding: 3px;
+      cursor: pointer;
+      transition: opacity .3s ease;
+      &:hover {
+        opacity: 0.6;
+      }
+
+      > td {
+        padding: 3px 8px;
+        border: solid 1px $color-palette-gray-5;
+      }
+    }
+
+  }
 }

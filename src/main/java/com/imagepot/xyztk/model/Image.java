@@ -10,6 +10,6 @@ public class Image {
     private String id;
     private URL url;
     private String title;
-    private long size;
+    private String size;
     private Date lastModified;
 }

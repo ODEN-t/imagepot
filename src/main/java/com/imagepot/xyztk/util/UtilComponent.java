@@ -8,6 +8,9 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Stack;
+
 @Slf4j
 @Component
 public class UtilComponent {
@@ -32,5 +35,15 @@ public class UtilComponent {
                 loginUser.getAuthorities()));
 
         log.info("Security context updated to {}", loginUser.getUsername());
+    }
+
+    public String readableSize(double size) {
+        String[] units = new String[]{"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
+        int i = 0;
+        while(size >= 1024) {
+            size /= 1024;
+            ++i;
+        }
+        return String.format("%." + 2 + "f " + units[i], size);
     }
 }

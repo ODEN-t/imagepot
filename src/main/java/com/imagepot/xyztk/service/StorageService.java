@@ -4,22 +4,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
-import com.amazonaws.services.s3.transfer.MultipleFileUpload;
-import com.amazonaws.services.s3.transfer.TransferManager;
-import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.util.IOUtils;
 
 import com.imagepot.xyztk.model.Image;
 import com.imagepot.xyztk.model.LoginUser;
-import com.imagepot.xyztk.model.User;
-import com.imagepot.xyztk.util.XferMgrProgress;
+import com.imagepot.xyztk.util.UtilComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -39,10 +34,12 @@ public class StorageService {
 
     // クライアント経由でs3を操作
     private final AmazonS3 s3Cliant;
+    private final UtilComponent utilComponent;
 
     @Autowired
-    public StorageService(AmazonS3 s3Cliant) {
+    public StorageService(AmazonS3 s3Cliant, UtilComponent utilComponent) {
         this.s3Cliant = s3Cliant;
+        this.utilComponent = utilComponent;
     }
 
 
@@ -64,7 +61,7 @@ public class StorageService {
             Image images = new Image();
             images.setId(UUID.randomUUID().toString());
             images.setTitle(objList.getKey().substring(pathToUserFolder.length()));
-            images.setSize(objList.getSize());
+            images.setSize(utilComponent.readableSize(objList.getSize()));
             images.setLastModified(objList.getLastModified());
             images.setUrl(s3Cliant.getUrl(bucketName, objList.getKey()));
             imageList.add(images);
