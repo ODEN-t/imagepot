@@ -5,16 +5,12 @@ import com.imagepot.xyztk.model.LoginUser;
 import com.imagepot.xyztk.service.StorageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 
 @Slf4j
@@ -50,8 +46,14 @@ public class ActionController {
             @RequestParam(value = "imgData", required = false)String[] imgData,
             List<Image> imageList,
             Model model) {
-        s3Service.deleteFile(imgData, loginUser);
-        model.addAttribute("images", imageList);
+        try {
+            s3Service.deleteFile(imgData, loginUser);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return "action";
+        } finally {
+            model.addAttribute("images", imageList);
+        }
         return "action";
     }
 }

@@ -9,6 +9,7 @@
     max-width: 1320px;
     margin: 15px auto 0;
     padding: 0 22px;
+
     &__wrap {
       display: flex;
       align-items: center;
@@ -38,7 +39,7 @@
       > th {
         text-align: left;
         font-weight: 700;
-        padding: 3px 8px;
+        padding: 3px 0 3px 10px;
         border: solid 1px $color-palette-gray-5;
       }
     }
@@ -49,16 +50,50 @@
       height: 29px;
       padding: 3px;
       cursor: pointer;
-      transition: opacity .3s ease;
-      &:hover {
-        opacity: 0.6;
-      }
 
       > td {
         padding: 3px 8px;
         border: solid 1px $color-palette-gray-5;
       }
-    }
 
+      .input {
+        padding: 15px;
+      }
+
+      .input, .imageIcon {
+        position: relative;
+      }
+
+      .input > input, .imageIcon > i {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .imageIcon {
+        transition: opacity .3s ease;
+        &:hover {
+          opacity: 0.6;
+        }
+        & > i {
+          font-size: 18px;
+          color: $color-palette-gray-8;
+        }
+      }
+    }
   }
+  &__imgModal {
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.jBox-Modal .jBox-content {
+  padding: 0 !important;
+}
+
+.jBox-content::-webkit-scrollbar {
+  display: none;
 }
