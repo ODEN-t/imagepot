@@ -53,9 +53,7 @@ public class HomeController {
     @ResponseBody
     @Async
     public CompletableFuture<String> uploadImage(@RequestParam ArrayList<MultipartFile> images, @AuthenticationPrincipal LoginUser loginUser) {
-        for (MultipartFile image : images) {
-            s3Service.uploadFile(image, loginUser);
-        }
+        s3Service.uploadFile(images, loginUser);
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {

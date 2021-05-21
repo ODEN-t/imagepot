@@ -39,8 +39,8 @@ public class StrageController {
                 .body(resource);
     }
 
-    @DeleteMapping("/delete/{fileName}")
-    public ResponseEntity<String> deleteFile(@PathVariable String fileName) {
-        return new ResponseEntity<>(service.deleteFile(fileName), HttpStatus.OK);
-    }
+//    @DeleteMapping("/delete/{fileName}")
+//    public ResponseEntity<String> deleteFile(@PathVariable String fileName) {
+//        return new ResponseEntity<>(service.deleteFile(fileName), HttpStatus.OK);
+//    }
 }

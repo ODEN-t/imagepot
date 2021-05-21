@@ -18,22 +18,22 @@
             <i class="icon-upload2"></i>
             Download
           </button>
-          <button class="buttonCTA buttonCTA-round buttonCTA-blue" th:href="@{'/action'}">
-            <i class="icon-checkmark"></i>
-            Delete
-          </button>
         </div>
       </section>
       <section class="p-action__content">
-        <form th:object="${images}" method="post">
+        <form th:object="${images}" method="post" th:action="@{'/action/delete'}">
           <ul>
             <li th:each="image:${images}">
-              <input type="checkbox" name="images"
+              <input type="checkbox" name="imgData"
                      th:text="${image.title}"
                      th:value="${image.title}"
                      th:data="${image.url}">
             </li>
           </ul>
+          <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="delete">
+            <i class="icon-checkmark"></i>
+            Delete
+          </button>
         </form>
       </section>
     </div>

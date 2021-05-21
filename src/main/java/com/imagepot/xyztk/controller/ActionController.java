@@ -43,4 +43,15 @@ public class ActionController {
         model.addAttribute("images", imageList);
         return "action";
     }
+
+    @PostMapping(value = "/delete", params = "delete")
+    public String deleteImages(
+            @AuthenticationPrincipal LoginUser loginUser,
+            @RequestParam(value = "imgData", required = false)String[] imgData,
+            List<Image> imageList,
+            Model model) {
+        s3Service.deleteFile(imgData, loginUser);
+        model.addAttribute("images", imageList);
+        return "action";
+    }
 }

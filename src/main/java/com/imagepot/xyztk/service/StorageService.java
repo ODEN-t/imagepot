@@ -48,6 +48,12 @@ public class StorageService {
         this.s3Cliant = s3Cliant;
     }
 
+
+    /**
+     * ユーザフォルダ内の画像を全て取得しリストで返す
+     * @param loginUser ログインユーザ情報
+     * @return List<Image> Image型のリスト
+     */
     public List<Image> getObjList(LoginUser loginUser) {
         String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
         ListObjectsV2Request request = new ListObjectsV2Request()
@@ -65,32 +71,40 @@ public class StorageService {
             images.setUrl(s3Cliant.getUrl(bucketName, objList.getKey()));
             imageList.add(images);
         }
-
         return imageList;
     }
 
-    public String uploadFile(MultipartFile multipartFile, LoginUser loginUser) {
-        File fileObj = convertMultiPartFileToFile(multipartFile);
-        try {
-            InputStream multipartFileInStream = multipartFile.getInputStream();
-            String folderPrefix = "potuser";
-            String filePath = folderPrefix + loginUser.id + "/";
+    /**
+     * MultipartFileをリネームしバケット内のユーザフォルダに保存する
+     * @param images MultipartFileを格納したリスト
+     * @param loginUser ログインユーザ情報
+     * @return 文字列
+     */
+    public String uploadFile(ArrayList<MultipartFile> images, LoginUser loginUser) {
 
-            // 現在日時の取得
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-            String formatNow = formatter.format(now);
+        for (MultipartFile multipartFile : images) {
+            File fileObj = convertMultiPartFileToFile(multipartFile);
 
-            String fileName = formatNow + "_" + multipartFile.getOriginalFilename();
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentLength(multipartFile.getSize());
+            try {
+                InputStream multipartFileInStream = multipartFile.getInputStream();
+                String folderPrefix = "potuser";
+                String filePath = folderPrefix + loginUser.id + "/";
 
-            s3Cliant.putObject(new PutObjectRequest(bucketName, filePath + fileName, multipartFileInStream, objectMetadata));
-            fileObj.delete();
-        } catch (Exception e) {
-            e.printStackTrace();
+                // 現在日時の取得
+                LocalDateTime now = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+                String formatNow = formatter.format(now);
+
+                String fileName = formatNow + "_" + multipartFile.getOriginalFilename();
+                ObjectMetadata objectMetadata = new ObjectMetadata();
+                objectMetadata.setContentLength(multipartFile.getSize());
+
+                s3Cliant.putObject(new PutObjectRequest(bucketName, filePath + fileName, multipartFileInStream, objectMetadata));
+                fileObj.delete();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
         return "File uploaded";
     }
 
@@ -106,9 +120,17 @@ public class StorageService {
         return null;
     }
 
-    public String deleteFile(String fileName) {
-        s3Cliant.deleteObject(bucketName, fileName);
-        return fileName + " removed ...";
+    public void deleteFile(String[] pathList, LoginUser loginUser) {
+        String folderPrefix = "potuser";
+        String filePath = folderPrefix + loginUser.id + "/";
+        int count = 0;
+
+        for(String path : pathList) {
+            s3Cliant.deleteObject(bucketName, filePath + path);
+            log.info("Delete image :" + filePath + path);
+            count++;
+        }
+        log.info("Deleted " + count + " images");
     }
 
     /*
