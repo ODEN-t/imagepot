@@ -10,7 +10,7 @@ const imgModal = new jBox('Modal', {
     responsiveHeight: true,
     fixed: true,
     content: $('#js-imgModal'),
-    addClass: "testClass",
+    addClass: "add-imgModal",
     closeOnClick: "body",
     closeButton: false,
     reposition: true,
@@ -33,3 +33,7 @@ document.querySelectorAll('.imageIcon').forEach(function (elem){
         imgModal.open();
     })
 });
+
+
+// show result message from backend with modal
+module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error');

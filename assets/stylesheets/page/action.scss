@@ -90,10 +90,11 @@
   }
 }
 
-.jBox-Modal .jBox-content {
-  padding: 0 !important;
-}
-
-.jBox-content::-webkit-scrollbar {
-  display: none;
+.add-imgModal {
+  .jBox-Modal .jBox-content {
+    padding: 0 !important;
+  }
+  .jBox-content::-webkit-scrollbar {
+    display: none;
+  }
 }
