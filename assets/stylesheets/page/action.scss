@@ -10,17 +10,35 @@
     margin: 15px auto 0;
     padding: 0 22px;
 
-    &__wrap {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
+    > h2 {
+      font-size: 27px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    &__info {
+      margin-top: 8px;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #7D7C83;
+      > span:last-child {
+        margin-left: 25px;
+      }
     }
   }
 
   &__content {
+    position: relative;
     max-width: 1320px;
     margin: 28px auto 0;
     padding: 0 22px;
+
+    &__buttonWrap {
+      position: absolute;
+      top: -60px;
+      right: 25px;
+    }
   }
 
   &__table {
@@ -91,7 +109,7 @@
 }
 
 .add-imgModal {
-  .jBox-Modal .jBox-content {
+  .jBox-content {
     padding: 0 !important;
   }
   .jBox-content::-webkit-scrollbar {

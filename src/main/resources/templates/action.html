@@ -13,11 +13,10 @@
   <div class="c-contents">
     <div class="p-action">
       <section class="p-action__head">
-        <div class="p-action__head__wrap">
-          <button class="buttonCTA buttonCTA-round buttonCTA-blue" id="js-upload">
-            <i class="icon-upload2"></i>
-            Download
-          </button>
+        <h2>Images In Storage</h2>
+        <div class="p-action__head__info">
+          <span>Total Images : <span th:text="${totalImages}"></span></span>
+          <span>Total Size : <span th:text="${totalSizeReadable}"></span></span>
         </div>
       </section>
       <section class="p-action__content">
@@ -38,10 +37,16 @@
               <td><label th:for="${image.id}"><p th:text="${image.lastModified}"></p></label></td>
             </tr>
           </table>
-          <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="delete">
-            <i class="icon-checkmark"></i>
-            Delete
-          </button>
+          <div class="p-action__content__buttonWrap">
+            <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="delete">
+              <i class="icon-bin2"></i>
+              Delete
+            </button>
+            <button class="buttonCTA buttonCTA-round buttonCTA-blue" id="js-upload">
+              <i class="icon-download2"></i>
+              Download
+            </button>
+          </div>
         </form>
       </section>
       <section class="p-action__imgModal" id="js-imgModal">

@@ -11,5 +11,6 @@ public class Image {
     private URL url;
     private String title;
     private String size;
+    private double rowSize;
     private Date lastModified;
 }

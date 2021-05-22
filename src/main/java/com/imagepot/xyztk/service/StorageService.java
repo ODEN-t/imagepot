@@ -46,7 +46,7 @@ public class StorageService {
     /**
      * ユーザフォルダ内の画像を全て取得しリストで返す
      * @param loginUser ログインユーザ情報
-     * @return List<Image> Image型のリスト
+     * @return Image型のリスト
      */
     public List<Image> getObjList(LoginUser loginUser) {
         String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
@@ -61,6 +61,7 @@ public class StorageService {
             Image images = new Image();
             images.setId(UUID.randomUUID().toString());
             images.setTitle(objList.getKey().substring(pathToUserFolder.length()));
+            images.setRowSize(objList.getSize());
             images.setSize(utilComponent.readableSize(objList.getSize()));
             images.setLastModified(objList.getLastModified());
             images.setUrl(s3Cliant.getUrl(bucketName, objList.getKey()));
