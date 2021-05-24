@@ -18,13 +18,13 @@ const imgModal = new jBox('Modal', {
     delayOpen: 300,
     onCloseComplete: function () {
         const parent = document.getElementById('js-imgModal');
-        while(parent.firstChild){
+        while (parent.firstChild) {
             parent.removeChild(parent.firstChild)
         }
     }
 });
 
-document.querySelectorAll('.imageIcon').forEach(function (elem){
+document.querySelectorAll('.imageIcon').forEach(function (elem) {
     elem.addEventListener('click', (e) => {
         const img = e.currentTarget.dataset.url;
         let htmlImageElement = document.createElement('img');
@@ -34,6 +34,29 @@ document.querySelectorAll('.imageIcon').forEach(function (elem){
     })
 });
 
+// const requestGetImages = () => {
+//     const elementsByName = document.getElementsByName('imgData');
+//     let fileList = [];
+//     for (const input of elementsByName) {
+//         if(input.checked) fileList.push(input.defaultValue);
+//     }
+//     console.log(fileList);
+//     $.ajax( {
+//         type: "POST",
+//         url: "/action/file/download",
+//         // contentType: "application/json",
+//         data: {
+//             fileList: fileList
+//         },
+//         processData: false,
+//     }).done((data) => {
+//         console.log("OK");
+//     })
+// }
+//
+//
+// document.getElementById('js-download').addEventListener('click', requestGetImages);
+//
 
 // show result message from backend with modal
 module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error');

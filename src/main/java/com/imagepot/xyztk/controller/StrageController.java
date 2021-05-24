@@ -27,17 +27,17 @@ public class StrageController {
 //        return new ResponseEntity<>(service.uploadFile(file), HttpStatus.OK);
 //    }
 
-    @GetMapping("/download/{fileName}")
-    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String fileName) {
-        byte[] data = service.downloadFile(fileName);
-        ByteArrayResource resource = new ByteArrayResource(data);
-        return ResponseEntity
-                .ok()
-                .contentLength(data.length)
-                .header("Content-type", "application/octet-stream")
-                .header("Content-disposition", "attachment; filename=\"" + fileName + "\"")
-                .body(resource);
-    }
+//    @GetMapping("/download/{fileName}")
+//    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String fileName) {
+//        byte[] data = service.downloadFile(fileName);
+//        ByteArrayResource resource = new ByteArrayResource(data);
+//        return ResponseEntity
+//                .ok()
+//                .contentLength(data.length)
+//                .header("Content-type", "application/octet-stream")
+//                .header("Content-disposition", "attachment; filename=\"" + fileName + "\"")
+//                .body(resource);
+//    }
 
 //    @DeleteMapping("/delete/{fileName}")
 //    public ResponseEntity<String> deleteFile(@PathVariable String fileName) {

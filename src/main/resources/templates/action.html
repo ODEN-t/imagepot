@@ -20,7 +20,7 @@
         </div>
       </section>
       <section class="p-action__content">
-        <form th:object="${images}" method="post" th:action="@{'/action/delete'}">
+        <form th:action="@{'/action/file'}" method="post">
           <table class="p-action__table">
             <tr class="p-action__table__head">
               <th></th>
@@ -29,12 +29,12 @@
               <th>Size</th>
               <th>Last Modified</th>
             </tr>
-            <tr th:each="image:${images}" class="p-action__table__data">
-              <td class="input"><input type="checkbox" name="imgData" th:value="${image.title}" th:id="${image.id}"></td>
-              <td class="imageIcon" th:data-url="${image.url}"><i class="icon-file-picture"></i></td>
-              <td><label th:for="${image.id}"><p th:text="${image.title}"></p></label></td>
-              <td><label th:for="${image.id}"><p th:text="${image.size}"></p></label></td>
-              <td><label th:for="${image.id}"><p th:text="${image.lastModified}"></p></label></td>
+            <tr th:each="img : ${imageList}" class="p-action__table__data">
+              <td class="input"><input type="checkbox" th:checked="${img.checked}" name="imgData" th:value="${img.title}" th:id="${img.id}"></td>
+              <td class="imageIcon" th:data-url="${img.url}"><i class="icon-file-picture"></i></td>
+              <td><label th:for="${img.id}"><p th:text="${img.title}"></p></label></td>
+              <td><label th:for="${img.id}"><p th:text="${img.size}"></p></label></td>
+              <td><label th:for="${img.id}"><p th:text="${img.lastModified}"></p></label></td>
             </tr>
           </table>
           <div class="p-action__content__buttonWrap">
@@ -42,7 +42,7 @@
               <i class="icon-bin2"></i>
               Delete
             </button>
-            <button class="buttonCTA buttonCTA-round buttonCTA-blue" id="js-upload">
+            <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="download">
               <i class="icon-download2"></i>
               Download
             </button>

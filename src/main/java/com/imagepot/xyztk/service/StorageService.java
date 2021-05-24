@@ -1,26 +1,34 @@
 package com.imagepot.xyztk.service;
 
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.*;
+import com.amazonaws.util.IOUtils;
+import com.imagepot.xyztk.model.Image;
+import com.imagepot.xyztk.model.LoginUser;
+import com.imagepot.xyztk.util.UtilComponent;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
-
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
-import com.amazonaws.util.IOUtils;
-
-import com.imagepot.xyztk.model.Image;
-import com.imagepot.xyztk.model.LoginUser;
-import com.imagepot.xyztk.util.UtilComponent;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Service
 @Slf4j
@@ -65,6 +73,7 @@ public class StorageService {
             images.setSize(utilComponent.readableSize(objList.getSize()));
             images.setLastModified(objList.getLastModified());
             images.setUrl(s3Cliant.getUrl(bucketName, objList.getKey()));
+            images.setChecked(false);
             imageList.add(images);
         }
         return imageList;
@@ -83,47 +92,60 @@ public class StorageService {
 
             try {
                 InputStream multipartFileInStream = multipartFile.getInputStream();
-                String folderPrefix = "potuser";
-                String filePath = folderPrefix + loginUser.id + "/";
+                String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
 
                 // 現在日時の取得
                 LocalDateTime now = LocalDateTime.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-                String formatNow = formatter.format(now);
+                String nowFormatted = DateTimeFormatter
+                        .ofPattern("HHmmssSSS")
+                        .format(now);
 
-                String fileName = formatNow + "_" + multipartFile.getOriginalFilename();
+                String fileName = nowFormatted + "_" + multipartFile.getOriginalFilename();
                 ObjectMetadata objectMetadata = new ObjectMetadata();
                 objectMetadata.setContentLength(multipartFile.getSize());
 
-                s3Cliant.putObject(new PutObjectRequest(bucketName, filePath + fileName, multipartFileInStream, objectMetadata));
+                s3Cliant.putObject(new PutObjectRequest(bucketName, pathToUserFolder + fileName, multipartFileInStream, objectMetadata));
                 fileObj.delete();
-            } catch (Exception e) {
+            } catch (IOException | AmazonServiceException e) {
                 e.printStackTrace();
             }
         }
         return "File uploaded";
     }
 
-    public byte[] downloadFile(String fileName) {
-        S3Object s3Object = s3Cliant.getObject(bucketName, fileName);
-        S3ObjectInputStream inputStream = s3Object.getObjectContent();
-        try {
-            byte[] content = IOUtils.toByteArray(inputStream);
-            return content;
-        } catch (IOException e) {
+    public ResponseEntity<byte[]> downloadFile(String[] checkedFileNameList, LoginUser loginUser) {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try(ZipOutputStream zos = new ZipOutputStream(baos)) {
+            for (String checkedFileName : checkedFileNameList) {
+                String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
+
+                S3Object s3Object = s3Cliant.getObject(bucketName, pathToUserFolder + checkedFileName);
+                byte[] data = IOUtils.toByteArray(s3Object.getObjectContent());
+
+                ZipEntry zipEntry = new ZipEntry(checkedFileName);
+                zos.putNextEntry(zipEntry);
+                zos.write(data);
+                zos.closeEntry();
+            }
+        } catch (IOException e){
             e.printStackTrace();
         }
-        return null;
+        byte[] responseData = baos.toByteArray();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=data.zip");
+        return new ResponseEntity<>(responseData, httpHeaders, HttpStatus.OK);
     }
 
-    public void deleteFile(String[] pathList, LoginUser loginUser) {
-        String folderPrefix = "potuser";
-        String filePath = folderPrefix + loginUser.id + "/";
+    public void deleteFile(String[] fileNameList, LoginUser loginUser) {
+        String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
         int count = 0;
 
-        for(String path : pathList) {
-            s3Cliant.deleteObject(bucketName, filePath + path);
-            log.info("Delete image :" + filePath + path);
+        for(String fileName : fileNameList) {
+            s3Cliant.deleteObject(bucketName, pathToUserFolder + fileName);
+            log.info("Delete image :" + pathToUserFolder + fileName);
             count++;
         }
         log.info("Deleted " + count + " images");
