@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -128,14 +129,14 @@ public class StorageService {
                 zos.write(data);
                 zos.closeEntry();
             }
-        } catch (IOException e){
+        } catch (IOException | NullPointerException e){
             e.printStackTrace();
         }
         byte[] responseData = baos.toByteArray();
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=data.zip");
+        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=download.zip");
         return new ResponseEntity<>(responseData, httpHeaders, HttpStatus.OK);
     }
 

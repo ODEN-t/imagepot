@@ -28,7 +28,6 @@ const signupModal = new jBox('Modal', {
     createOnInit: true,
 });
 
-
 // switch modal loginModal and signupModal
 const modalSwitch = (...buttons) => {
     for (const button of buttons) {
@@ -58,5 +57,3 @@ if(typeof element !== 'undefined') {
     if(result === 'success' && process === 'signup')
         loginModal.open();
 }
-
-

@@ -147,16 +147,25 @@ usage
 
 /*
   common style for Modal Message
+  モーダルオープン時 is-opened
 */
 .c-message {
   font-size: 17px;
   line-height: 1.2;
   font-weight: 600;
   &-error {
+    opacity: 0;
     color: $color-error-text;
+    &.is-opened {
+      opacity: 1 !important;
+    }
   }
   &-success {
+    opacity: 0;
     color: $color-success-text;
+    &.is-opened {
+      opacity: 1 !important;
+    }
   }
 }
 .add-jboxErrorMessage .jBox-container,  .add-jboxSuccessMessage .jBox-container{

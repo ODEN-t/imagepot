@@ -3,15 +3,15 @@ import $ from 'jquery/dist/jquery.min';
 
 
 // show result message from backend with modal
-export function showResultMessageModal(commonClass, successMessageClass, errorMessageClass, isTop = false) {
+export function showResultMessageModal(commonClass, sucMsgClass, errMsgClass, isTop = false) {
 
-    let errorMessageModal;
-    let successMessageModal;
+    let errMsgModal;
+    let sucMsgModal;
 
     if(isTop) {
-        errorMessageModal = new jBox('Modal', {
+        errMsgModal = new jBox('Modal', {
             id: 'errorTop',
-            content: $(errorMessageClass),
+            content: $(errMsgClass),
             addClass: 'add-jboxErrorMessage',
             overlay: false,
             closeOnClick: false,
@@ -24,12 +24,15 @@ export function showResultMessageModal(commonClass, successMessageClass, errorMe
             animation: {
                 open: 'slide:bottom',
                 close: 'slide:bottom'
+            },
+            onOpen() {
+                $(errMsgClass).addClass('is-opened');
             }
         });
 
-        successMessageModal = new jBox('Modal', {
+        sucMsgModal = new jBox('Modal', {
             id: 'successTop',
-            content: $(successMessageClass),
+            content: $(sucMsgClass),
             addClass: 'add-jboxSuccessMessage',
             overlay: false,
             closeOnClick: false,
@@ -42,12 +45,15 @@ export function showResultMessageModal(commonClass, successMessageClass, errorMe
             animation: {
                 open: 'slide:bottom',
                 close: 'slide:bottom'
+            },
+            onOpen() {
+                $(sucMsgClass).addClass('is-opened');
             }
         });
     } else {
-        errorMessageModal = new jBox('Modal', {
+        errMsgModal = new jBox('Modal', {
             id: 'error',
-            content: $(errorMessageClass),
+            content: $(errMsgClass),
             addClass: 'add-jboxErrorMessage',
             overlay: false,
             closeOnClick: false,
@@ -64,12 +70,15 @@ export function showResultMessageModal(commonClass, successMessageClass, errorMe
             },
             blockScroll: false,
             adjustTracker: true,
-            fixed: true
+            fixed: true,
+            onOpen() {
+                $(errMsgClass).addClass('is-opened');
+            }
         });
 
-        successMessageModal = new jBox('Modal', {
+        sucMsgModal = new jBox('Modal', {
             id: 'success',
-            content: $(successMessageClass),
+            content: $(sucMsgClass),
             addClass: 'add-jboxSuccessMessage',
             overlay: false,
             closeOnClick: false,
@@ -86,7 +95,10 @@ export function showResultMessageModal(commonClass, successMessageClass, errorMe
             },
             blockScroll: false,
             adjustTracker: true,
-            fixed: true
+            fixed: true,
+            onOpen() {
+                $(sucMsgClass).addClass('is-opened');
+            }
         });
     }
 
@@ -95,10 +107,10 @@ export function showResultMessageModal(commonClass, successMessageClass, errorMe
         const messageType = messageElement[0].dataset.message;
         switch (messageType) {
             case 'success' :
-                successMessageModal.open();
+                sucMsgModal.open();
                 break;
             case 'error':
-                errorMessageModal.open();
+                errMsgModal.open();
                 break;
         }
         return messageElement[0];

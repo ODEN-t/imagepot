@@ -14,9 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 
 @Slf4j
@@ -44,12 +42,13 @@ public class ActionController {
     public String getAction(
             @AuthenticationPrincipal LoginUser loginUser,
             List<Image> imageList,
+            HashMap<String, String> info,
             Model model) {
 
         // get result message from deleteUser();
-        Optional.ofNullable(model.getAttribute("deleteError"))
+        Optional.ofNullable(model.getAttribute("actionError"))
                 .ifPresent(model::addAttribute);
-        Optional.ofNullable(model.getAttribute("deleteSuccess"))
+        Optional.ofNullable(model.getAttribute("actionSuccess"))
                 .ifPresent(model::addAttribute);
         Optional.ofNullable(model.getAttribute("message"))
                 .ifPresent(model::addAttribute);
@@ -63,7 +62,7 @@ public class ActionController {
         }
 
         String totalSizeReadable = utilComponent.readableSize(totalSize);
-
+        
         model.addAttribute("totalImages", totalImages);
         model.addAttribute("totalSizeReadable", totalSizeReadable);
         model.addAttribute("imageList", imageList);
@@ -79,25 +78,45 @@ public class ActionController {
             s3Service.deleteFile(imgData, loginUser);
         } catch (NullPointerException e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("deleteError", true);
+            redirectAttributes.addFlashAttribute("actionError", true);
             redirectAttributes.addFlashAttribute("message", messageSource.getMessage("error.deleteImage", null, Locale.ENGLISH));
             return "redirect:/action";
         }
 
-        redirectAttributes.addFlashAttribute("deleteSuccess", true);
+        redirectAttributes.addFlashAttribute("actionSuccess", true);
         redirectAttributes.addFlashAttribute("message", messageSource.getMessage("success.deleteImage", null, Locale.ENGLISH));
         return "redirect:/action";
     }
 
     @PostMapping(value = "/file", params = "download")
-    public ResponseEntity<byte[]> downloadImage(
+    public <T> T downloadImage(
             @AuthenticationPrincipal LoginUser loginUser,
             List<Image> imageList,
+            HashMap<String, String> info,
             Model model,
             @RequestParam(value = "imgData", required = false) String[] checkedFileList) {
 
+        if(checkedFileList == null) {
+            model.addAttribute("actionError", true);
+            model.addAttribute("message", messageSource.getMessage("error.downloadImage", null, Locale.ENGLISH));
+
+            int totalImages = 0;
+            double totalSize = 0;
+
+            for (Image img : imageList) {
+                totalSize += img.getRowSize();
+                totalImages++;
+            }
+
+            String totalSizeReadable = utilComponent.readableSize(totalSize);
+
+            model.addAttribute("totalImages", totalImages);
+            model.addAttribute("totalSizeReadable", totalSizeReadable);
+            return (T) "action";
+        }
+
         ResponseEntity<byte[]> responseEntity = s3Service.downloadFile(checkedFileList, loginUser);
         model.addAttribute("images", imageList);
-        return responseEntity;
+        return (T) responseEntity;
     }
 }

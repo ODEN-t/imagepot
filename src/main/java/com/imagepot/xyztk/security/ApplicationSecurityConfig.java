@@ -46,7 +46,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/").permitAll() // ログインページのhtmlファイルを指定
                 .loginProcessingUrl("/login") // ログイン画面のaction属性
-                .failureUrl("/") // ログイン失敗時の遷移先
+                .failureUrl("/login?auth=top") // ログイン失敗時の遷移先
                 .usernameParameter("email") // ログインに必要なパラメータ
                 .passwordParameter("password")
                 .defaultSuccessUrl("/home", true); // ログイン成功後の遷移先

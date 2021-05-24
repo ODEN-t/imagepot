@@ -40,28 +40,16 @@ const crop = {
                     const formData = new FormData();
                     formData.append('croppedImage', b);
                     console.log(formData);
+
                     $.ajax('/settings/update/user/icon', {
                         method: 'POST',
                         data: formData,
                         processData: false,
-                        contentType: false,
-                        success(response) {
-                            // バックエンドの処理が成功したらリロード
-                            if(response === 'success') {
-                                window.location.href = "/settings";
-                                // location.reload();
-                            }
-                        },
-                        error(response) {
-                            switch (response) {
-                                case 'typeError':
-                                    alert('File type is not supported.');
-                                    break;
-                                case 'sizeError' :
-                                    alert('File size is too large.');
-                                    break;
-                            }
-                        }
+                        contentType: false
+                    }).done(() => {
+                            window.location.href = "/settings";
+                    }).fail(() => {
+                            alert('Critical error occurred. Please reload.')
                     })
                 });
             })
@@ -118,7 +106,6 @@ document.getElementById('fileInput').addEventListener('change', (e) => {
     }
     fileReader.readAsDataURL(file);
 });
-
 
 
 // type=password <=> type=text の切り替え

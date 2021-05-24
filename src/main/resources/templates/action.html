@@ -51,10 +51,10 @@
       </section>
       <section class="p-action__imgModal" id="js-imgModal">
       </section>
-      <div th:if="${deleteError}" data-message="error" class="c-message c-message-error">
+      <div th:if="${actionError}" data-message="error" class="c-message c-message-error">
         <span th:text="${message}"></span>
       </div>
-      <div th:if="${deleteSuccess}" data-message="success" class="c-message c-message-success">
+      <div th:if="${actionSuccess}" data-message="success" class="c-message c-message-success">
         <span th:text="${message}"></span>
       </div>
     </div>

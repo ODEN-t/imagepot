@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -77,7 +78,7 @@ public class SettingsController {
             long LIMIT_MB = 1L; // 1MB
             long LIMIT = LIMIT_MB * 1024 * 1024; // B to MB
 
-            if (!(fileType.equals("image/jpeg") || fileType.equals("image/png"))) {
+            if (!(Objects.requireNonNull(fileType).equals("image/jpeg") || fileType.equals("image/png"))) {
                 return "typeError";
             }
 
@@ -185,17 +186,15 @@ public class SettingsController {
             return "redirect:/settings";
         }
 
-        try{
-            User user = new User();
-            user.setId(loginUser.id);
-            userService.updatePassword(user, passwordEncoder.encode(updateUserPasswordForm.getNewPassword()));
 
-            redirectAttributes.addFlashAttribute("successMessage", messageSource.getMessage("success.updateUserPassword",null, Locale.ENGLISH));
+        User user = new User();
+        user.setId(loginUser.id);
+        userService.updatePassword(user, passwordEncoder.encode(updateUserPasswordForm.getNewPassword()));
 
-            utilComponent.updateSecurityContext(loginUser.email);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        redirectAttributes.addFlashAttribute("successMessage", messageSource.getMessage("success.updateUserPassword",null, Locale.ENGLISH));
+
+        utilComponent.updateSecurityContext(loginUser.email);
+
         return "redirect:/settings";
     }
 }

@@ -13,10 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
 
@@ -43,6 +40,13 @@ public class LoginController {
         return "top";
     }
 
+    @GetMapping("login")
+    public String getFailurePage(Model model, @RequestParam("auth") String status) {
+        SignupForm signupForm = new SignupForm();
+        model.addAttribute(signupForm);
+        return status;
+    }
+
     @PostMapping("login")
     public String postSignIn(Model model) {
         return "home";
@@ -50,7 +54,7 @@ public class LoginController {
 
 
     // SignupForm でバリデーション
-    @PostMapping ("/signup")
+    @PostMapping ("signup")
     public String registerNewUser(
             @ModelAttribute @Validated({SignupFormAllValidations.class}) SignupForm signupForm,
             BindingResult bindingResult,
