@@ -62,7 +62,7 @@ public class ActionController {
         }
 
         String totalSizeReadable = utilComponent.readableSize(totalSize);
-        
+
         model.addAttribute("totalImages", totalImages);
         model.addAttribute("totalSizeReadable", totalSizeReadable);
         model.addAttribute("imageList", imageList);
