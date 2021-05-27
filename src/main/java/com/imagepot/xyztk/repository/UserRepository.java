@@ -12,8 +12,8 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT u FROM User u WHERE u.email = ?1")
-    public Optional<User> selectUserByEmail(String email);
+    @Query("SELECT u FROM User u WHERE u.email = :email")
+    public Optional<User> selectUserByEmail(@Param("email") String email);
 
     @Modifying(clearAutomatically = true)
     @Query("UPDATE User u SET u.icon = :iconData WHERE u.id = :userId")

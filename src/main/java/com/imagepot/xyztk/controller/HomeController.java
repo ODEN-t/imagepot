@@ -1,7 +1,8 @@
 package com.imagepot.xyztk.controller;
 
-import com.imagepot.xyztk.model.Image;
+import com.imagepot.xyztk.model.PotFile;
 import com.imagepot.xyztk.model.LoginUser;
+import com.imagepot.xyztk.service.FileService;
 import com.imagepot.xyztk.service.StorageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,26 +25,28 @@ import java.util.concurrent.CompletableFuture;
 public class HomeController {
 
     private final StorageService s3Service;
+    private final FileService fileService;
 
     @Autowired
-    public HomeController(StorageService s3Service) {
+    public HomeController(StorageService s3Service, FileService fileService) {
         this.s3Service = s3Service;
+        this.fileService = fileService;
     }
 
     @ModelAttribute
-    List<Image> setImageList(@AuthenticationPrincipal LoginUser loginUser) {
-        return s3Service.getObjList(loginUser);
+    List<PotFile> getFileList(@AuthenticationPrincipal LoginUser loginUser) {
+        return fileService.getAllFilesById(loginUser);
     }
 
     @GetMapping
     public String getHome(
             @AuthenticationPrincipal LoginUser loginUser,
-            List<Image> imageList,
+            List<PotFile> potFileList,
             Model model) {
         log.info(loginUser.toString());
         List<URL> urlList = new ArrayList<>();
-        for(Image image : imageList) {
-            urlList.add(image.getUrl());
+        for(PotFile potFile : potFileList) {
+            urlList.add(potFile.getUrl());
         }
         model.addAttribute("urlList", urlList);
         return "home";
@@ -53,13 +56,8 @@ public class HomeController {
     @ResponseBody
     @Async
     public CompletableFuture<String> uploadImage(@RequestParam ArrayList<MultipartFile> images, @AuthenticationPrincipal LoginUser loginUser) {
-        s3Service.uploadFile(images, loginUser);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        List<PotFile> uploadedFiles = s3Service.getUploadedFilesAfterUpload(images, loginUser);
+        fileService.insertFiles(uploadedFiles);
         return CompletableFuture.completedFuture("success");
     }
-
 }

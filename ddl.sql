@@ -21,9 +21,11 @@ CREATE TABLE pot_user(
 );
 
 CREATE TABLE pot_file(
-    file_id char(36) PRIMARY KEY ,
+    file_id uuid PRIMARY KEY ,
     user_id bigint NOT NULL REFERENCES pot_user(user_id),
-    key varchar(2048) NOT NULL UNIQUE,
+    key varchar(400) NOT NULL UNIQUE,
+    url varchar(2083) NOT NULL UNIQUE,
+    name varchar(260) NOT NULL,
     size numeric NOT NULL,
     type varchar(4) NOT NULL,
     last_modified_at timestamp NOT NULL

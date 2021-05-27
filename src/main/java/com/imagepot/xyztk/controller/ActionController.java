@@ -1,7 +1,9 @@
 package com.imagepot.xyztk.controller;
 
+import com.imagepot.xyztk.model.PotFile;
 import com.imagepot.xyztk.model.Image;
 import com.imagepot.xyztk.model.LoginUser;
+import com.imagepot.xyztk.service.FileService;
 import com.imagepot.xyztk.service.StorageService;
 import com.imagepot.xyztk.util.UtilComponent;
 import lombok.extern.slf4j.Slf4j;
@@ -23,26 +25,26 @@ import java.util.*;
 public class ActionController {
 
     private final StorageService s3Service;
+    private final FileService fileService;
     private final MessageSource messageSource;
     private final UtilComponent utilComponent;
 
     @Autowired
-    public ActionController(StorageService s3Service, MessageSource messageSource, UtilComponent utilComponent) {
+    public ActionController(StorageService s3Service, FileService fileService, MessageSource messageSource, UtilComponent utilComponent) {
         this.s3Service = s3Service;
+        this.fileService = fileService;
         this.messageSource = messageSource;
         this.utilComponent = utilComponent;
     }
 
     @ModelAttribute
-    List<Image> setImageList(@AuthenticationPrincipal LoginUser loginUser) {
-        return s3Service.getObjList(loginUser);
+    List<PotFile> getFileList(@AuthenticationPrincipal LoginUser loginUser) {
+        return fileService.getAllFilesById(loginUser);
     }
 
     @GetMapping
     public String getAction(
-            @AuthenticationPrincipal LoginUser loginUser,
-            List<Image> imageList,
-            HashMap<String, String> info,
+            List<PotFile> potFileList,
             Model model) {
 
         // get result message from deleteUser();
@@ -53,29 +55,26 @@ public class ActionController {
         Optional.ofNullable(model.getAttribute("message"))
                 .ifPresent(model::addAttribute);
 
-        int totalImages = 0;
         double totalSize = 0;
-
-        for (Image img : imageList) {
-            totalSize += img.getRowSize();
-            totalImages++;
+        for (PotFile potFile : potFileList) {
+            totalSize += potFile.getSize();
         }
 
         String totalSizeReadable = utilComponent.readableSize(totalSize);
 
-        model.addAttribute("totalImages", totalImages);
+        model.addAttribute("totalFiles", potFileList.size());
         model.addAttribute("totalSizeReadable", totalSizeReadable);
-        model.addAttribute("imageList", imageList);
+        model.addAttribute("fileList", potFileList);
         return "action";
     }
 
     @PostMapping(value = "/file", params = "delete")
     public String deleteImages(
-            @AuthenticationPrincipal LoginUser loginUser,
-            @RequestParam(value = "imgData", required = false) String[] imgData,
+            @RequestParam(value = "fileKey", required = false) String[] fileKeyList,
             RedirectAttributes redirectAttributes) {
         try {
-            s3Service.deleteFile(imgData, loginUser);
+            List<PotFile> deleteFileList = s3Service.getDeleteListAfterDeleteFiles(fileKeyList);
+            fileService.deleteFilesByKey(deleteFileList);
         } catch (NullPointerException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("actionError", true);
