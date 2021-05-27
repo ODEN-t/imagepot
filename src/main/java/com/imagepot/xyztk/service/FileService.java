@@ -2,7 +2,6 @@ package com.imagepot.xyztk.service;
 
 import com.imagepot.xyztk.model.PotFile;
 import com.imagepot.xyztk.model.LoginUser;
-import com.imagepot.xyztk.model.User;
 import com.imagepot.xyztk.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +26,6 @@ public class FileService {
 
     // ログインユーザのファイルデータ全て取得 (getObjList in StorageService)
     public List<PotFile> getAllFilesById(LoginUser loginUser) {
-        User u = new User();
-        u.setId(loginUser.id);
         return fileRepository.selectFilesById(loginUser.id);
     }
 
@@ -38,5 +35,4 @@ public class FileService {
             fileRepository.deleteAllByKey(f.getKey());
         }
     }
-
 }

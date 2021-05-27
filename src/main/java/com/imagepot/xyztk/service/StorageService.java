@@ -136,18 +136,17 @@ public class StorageService {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try(ZipOutputStream zos = new ZipOutputStream(baos)) {
-            for (String checkedFileName : checkedFileNameList) {
-                String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
-
-                S3Object s3Object = s3Cliant.getObject(bucketName, pathToUserFolder + checkedFileName);
+            for (String key : checkedFileNameList) {
+                S3Object s3Object = s3Cliant.getObject(bucketName, key);
                 byte[] data = IOUtils.toByteArray(s3Object.getObjectContent());
 
-                ZipEntry zipEntry = new ZipEntry(checkedFileName);
+                // フォルダ以下のファイル名のみを指定
+                ZipEntry zipEntry = new ZipEntry(key.substring(key.lastIndexOf('/') + 1));
                 zos.putNextEntry(zipEntry);
                 zos.write(data);
                 zos.closeEntry();
             }
-        } catch (IOException | NullPointerException e){
+        } catch (IOException | NullPointerException | AmazonServiceException e){
             e.printStackTrace();
         }
         byte[] responseData = baos.toByteArray();

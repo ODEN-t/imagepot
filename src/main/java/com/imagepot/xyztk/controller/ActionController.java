@@ -1,8 +1,7 @@
 package com.imagepot.xyztk.controller;
 
-import com.imagepot.xyztk.model.PotFile;
-import com.imagepot.xyztk.model.Image;
 import com.imagepot.xyztk.model.LoginUser;
+import com.imagepot.xyztk.model.PotFile;
 import com.imagepot.xyztk.service.FileService;
 import com.imagepot.xyztk.service.StorageService;
 import com.imagepot.xyztk.util.UtilComponent;
@@ -16,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.*;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 
 @Slf4j
@@ -37,17 +38,19 @@ public class ActionController {
         this.utilComponent = utilComponent;
     }
 
+    // ユーザの保持するファイルデータをDBから取得
     @ModelAttribute
     List<PotFile> getFileList(@AuthenticationPrincipal LoginUser loginUser) {
         return fileService.getAllFilesById(loginUser);
     }
+
 
     @GetMapping
     public String getAction(
             List<PotFile> potFileList,
             Model model) {
 
-        // get result message from deleteUser();
+        // 実行結果メッセージ from deleteUser();
         Optional.ofNullable(model.getAttribute("actionError"))
                 .ifPresent(model::addAttribute);
         Optional.ofNullable(model.getAttribute("actionSuccess"))
@@ -55,12 +58,7 @@ public class ActionController {
         Optional.ofNullable(model.getAttribute("message"))
                 .ifPresent(model::addAttribute);
 
-        double totalSize = 0;
-        for (PotFile potFile : potFileList) {
-            totalSize += potFile.getSize();
-        }
-
-        String totalSizeReadable = utilComponent.readableSize(totalSize);
+        String totalSizeReadable = utilComponent.readableSize(getTotalFileSize(potFileList));
 
         model.addAttribute("totalFiles", potFileList.size());
         model.addAttribute("totalSizeReadable", totalSizeReadable);
@@ -68,54 +66,62 @@ public class ActionController {
         return "action";
     }
 
+    // 選択されたファイルデータをs3とDBから削除
     @PostMapping(value = "/file", params = "delete")
     public String deleteImages(
             @RequestParam(value = "fileKey", required = false) String[] fileKeyList,
             RedirectAttributes redirectAttributes) {
+
+        // s3とDBから削除
         try {
             List<PotFile> deleteFileList = s3Service.getDeleteListAfterDeleteFiles(fileKeyList);
             fileService.deleteFilesByKey(deleteFileList);
-        } catch (NullPointerException e) {
+            redirectAttributes.addFlashAttribute("actionSuccess", true);
+            redirectAttributes.addFlashAttribute("message", messageSource.getMessage("success.deleteImage", null, Locale.ENGLISH));
+        }
+        // 未選択の場合エラーメッセージを返す
+        catch (NullPointerException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("actionError", true);
             redirectAttributes.addFlashAttribute("message", messageSource.getMessage("error.deleteImage", null, Locale.ENGLISH));
-            return "redirect:/action";
         }
 
-        redirectAttributes.addFlashAttribute("actionSuccess", true);
-        redirectAttributes.addFlashAttribute("message", messageSource.getMessage("success.deleteImage", null, Locale.ENGLISH));
         return "redirect:/action";
     }
 
+    // 選択されたファイルデータをs3からダウンロード
     @PostMapping(value = "/file", params = "download")
     public <T> T downloadImage(
             @AuthenticationPrincipal LoginUser loginUser,
-            List<Image> imageList,
-            HashMap<String, String> info,
+            List<PotFile> potFileList,
             Model model,
-            @RequestParam(value = "imgData", required = false) String[] checkedFileList) {
+            @RequestParam(value = "fileKey", required = false) String[] checkedFileList) {
 
-        if(checkedFileList == null) {
+        // s3からダウンロード
+        try {
+            ResponseEntity<byte[]> responseEntity = s3Service.downloadFile(checkedFileList, loginUser);
+            return (T) responseEntity;
+        }
+        // 未選択の場合エラーメッセージを返す
+        catch (NullPointerException e) {
             model.addAttribute("actionError", true);
             model.addAttribute("message", messageSource.getMessage("error.downloadImage", null, Locale.ENGLISH));
-
-            int totalImages = 0;
-            double totalSize = 0;
-
-            for (Image img : imageList) {
-                totalSize += img.getRowSize();
-                totalImages++;
-            }
-
-            String totalSizeReadable = utilComponent.readableSize(totalSize);
-
-            model.addAttribute("totalImages", totalImages);
-            model.addAttribute("totalSizeReadable", totalSizeReadable);
             return (T) "action";
         }
+        // ファイルリスト、ファイル数、合計ファイルサイズを返す
+        finally {
+            String totalSizeReadable = utilComponent.readableSize(getTotalFileSize(potFileList));
+            model.addAttribute("totalFiles", potFileList.size());
+            model.addAttribute("totalSizeReadable", totalSizeReadable);
+            model.addAttribute("fileList", potFileList);
+        }
+    }
 
-        ResponseEntity<byte[]> responseEntity = s3Service.downloadFile(checkedFileList, loginUser);
-        model.addAttribute("images", imageList);
-        return (T) responseEntity;
+    public double getTotalFileSize(List<PotFile> fileList) {
+        double totalSize = 0;
+        for (PotFile potFile : fileList) {
+            totalSize += potFile.getSize();
+        }
+        return totalSize;
     }
 }

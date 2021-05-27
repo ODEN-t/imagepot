@@ -20,7 +20,7 @@
         </div>
       </section>
       <section class="p-action__content">
-        <form th:action="@{'/action/potFile'}" method="post">
+        <form th:action="@{'/action/file'}" method="post">
           <table class="p-action__table">
             <tr class="p-action__table__head">
               <th></th>
@@ -29,12 +29,12 @@
               <th>Size</th>
               <th>Last Modified</th>
             </tr>
-            <tr th:each="potFile : ${potFileList}" class="p-action__table__data">
-              <td class="input"><input type="checkbox" th:checked="false" name="fileKey" th:value="${potFile.key}" th:id="${potFile.file_id}"></td>
-              <td class="imageIcon" th:data-url="${potFile.url}"><i class="icon-potFile-picture"></i></td>
-              <td><label th:for="${potFile.file_id}"><p th:text="${potFile.name}"></p></label></td>
-              <td><label th:for="${potFile.file_id}"><p th:text="${potFile.size}"></p></label></td>
-              <td><label th:for="${potFile.file_id}"><p th:text="${potFile.lastModifiedAt}"></p></label></td>
+            <tr th:each="file : ${fileList}" class="p-action__table__data">
+              <td class="input"><input type="checkbox" th:checked="false" name="fileKey" th:value="${file.key}" th:id="${file.file_id}"></td>
+              <td class="imageIcon" th:data-url="${file.url}"><i class="icon-file-picture"></i></td>
+              <td><label th:for="${file.file_id}"><p th:text="${file.name}"></p></label></td>
+              <td><label th:for="${file.file_id}"><p th:text="${file.size}"></p></label></td>
+              <td><label th:for="${file.file_id}"><p th:text="${file.lastModifiedAt}"></p></label></td>
             </tr>
           </table>
           <div class="p-action__content__buttonWrap">
