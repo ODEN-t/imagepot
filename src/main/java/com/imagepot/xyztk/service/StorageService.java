@@ -4,8 +4,9 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
-import com.imagepot.xyztk.model.Image;
 import com.imagepot.xyztk.model.LoginUser;
+import com.imagepot.xyztk.model.PotFile;
+import com.imagepot.xyztk.model.User;
 import com.imagepot.xyztk.util.UtilComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -41,59 +43,52 @@ public class StorageService {
     @Value("${aws.s3.folderPrefix}")
     private String folderPrefix;
 
-    // クライアント経由でs3を操作
     private final AmazonS3 s3Cliant;
-    private final UtilComponent utilComponent;
 
     @Autowired
-    public StorageService(AmazonS3 s3Cliant, UtilComponent utilComponent) {
+    public StorageService(AmazonS3 s3Cliant) {
         this.s3Cliant = s3Cliant;
-        this.utilComponent = utilComponent;
     }
 
 
-    /**
-     * ユーザフォルダ内の画像を全て取得しリストで返す
-     * @param loginUser ログインユーザ情報
-     * @return Image型のリスト
-     */
-    public List<Image> getObjList(LoginUser loginUser) {
+    public List<PotFile> getObjList(LoginUser loginUser) {
         String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
         ListObjectsV2Request request = new ListObjectsV2Request()
                 .withBucketName(bucketName).withPrefix(pathToUserFolder);
         ListObjectsV2Result result = s3Cliant.listObjectsV2(request);
 
-        List<Image> imageList = new ArrayList<>();
+        List<PotFile> fileList = new ArrayList<>();
 
-        for(S3ObjectSummary objList : result.getObjectSummaries()) {
-            if(objList.getSize() <= 0) continue;
-            Image images = new Image();
-            images.setId(UUID.randomUUID().toString());
-            images.setTitle(objList.getKey().substring(pathToUserFolder.length()));
-            images.setRowSize(objList.getSize());
-            images.setSize(utilComponent.readableSize(objList.getSize()));
-            images.setLastModified(objList.getLastModified());
-            images.setUrl(s3Cliant.getUrl(bucketName, objList.getKey()));
-            images.setChecked(false);
-            imageList.add(images);
+        for (S3ObjectSummary objList : result.getObjectSummaries()) {
+            if (objList.getSize() <= 0) continue;
+            PotFile f = new PotFile();
+            f.setKey(objList.getKey());
+            f.setUrl(s3Cliant.getUrl(bucketName, objList.getKey()));
+            f.setName(objList.getKey().substring(pathToUserFolder.length()));
+            f.setSize(objList.getSize());
+            f.setType(objList.getKey().substring(pathToUserFolder.length()).substring(objList.getKey().substring(pathToUserFolder.length()).lastIndexOf(".") + 1));
+            f.setLastModifiedAt((Timestamp) objList.getLastModified());
+
+            fileList.add(f);
         }
-        return imageList;
+        return fileList;
     }
 
     /**
      * MultipartFileをリネームしバケット内のユーザフォルダに保存する
-     * @param images MultipartFileを格納したリスト
+     *
+     * @param images    MultipartFileを格納したリスト
      * @param loginUser ログインユーザ情報
-     * @return 文字列
+     * @return アップロードが成功したファイル情報を詰めたリスト
      */
-    public String uploadFile(ArrayList<MultipartFile> images, LoginUser loginUser) {
+    public List<PotFile> s3UploadFile(ArrayList<MultipartFile> images, LoginUser loginUser) {
+
+        List<String> uploadedKeyList = new ArrayList<>();
+        String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
 
         for (MultipartFile multipartFile : images) {
-            File fileObj = convertMultiPartFileToFile(multipartFile);
-
             try {
                 InputStream multipartFileInStream = multipartFile.getInputStream();
-                String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
 
                 // 現在日時の取得
                 LocalDateTime now = LocalDateTime.now();
@@ -106,63 +101,83 @@ public class StorageService {
                 objectMetadata.setContentLength(multipartFile.getSize());
 
                 s3Cliant.putObject(new PutObjectRequest(bucketName, pathToUserFolder + fileName, multipartFileInStream, objectMetadata));
-                fileObj.delete();
+                uploadedKeyList.add(pathToUserFolder + fileName);
             } catch (IOException | AmazonServiceException e) {
                 e.printStackTrace();
             }
         }
-        return "File uploaded";
+
+        // アップロードしたファイル情報をユーザ情報と一緒に返す
+        User u = new User();
+        u.setId(loginUser.id);
+        List<PotFile> uploadedFileList = new ArrayList<>();
+        for (String key : uploadedKeyList) {
+            S3Object obj = s3Cliant.getObject(new GetObjectRequest(bucketName, key));
+            PotFile f = new PotFile();
+            f.setFile_id(UUID.randomUUID());
+            f.setUser_id(u);
+            f.setKey(obj.getKey());
+            f.setUrl(s3Cliant.getUrl(bucketName, obj.getKey()));
+            f.setName(obj.getKey().substring(pathToUserFolder.length()));
+            f.setSize(s3Cliant.getObjectMetadata(bucketName, key).getContentLength());
+            f.setType(obj.getKey().substring(pathToUserFolder.length()).substring(obj.getKey().substring(pathToUserFolder.length()).lastIndexOf(".") + 1));
+            Date lastModified = s3Cliant.getObjectMetadata(bucketName, key).getLastModified();
+            f.setLastModifiedAt(new Timestamp(lastModified.getTime()));
+
+            uploadedFileList.add(f);
+        }
+        return uploadedFileList;
     }
 
-    public ResponseEntity<byte[]> downloadFile(String[] checkedFileNameList, LoginUser loginUser) {
+    /**
+     * チェックボックスで選択したデータをs3からzip化してダウンロード
+     * @param checkedFileNameList s3オブジェクトへのアクセスに必要なkeyのリスト
+     * @param loginUser           ログインユーザ情報
+     * @return zipファイル
+     * @throws NullPointerException   keyのリストがNull(画面でチェックなし)の場合エラー
+     * @throws IOException ファイル作成過程でのエラー
+     * @throws AmazonServiceException s3側での重大なエラーの場合
+     */
+    public ResponseEntity<byte[]> s3DownloadFile(String[] checkedFileNameList, LoginUser loginUser)
+            throws NullPointerException, IOException, AmazonServiceException {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try(ZipOutputStream zos = new ZipOutputStream(baos)) {
-            for (String checkedFileName : checkedFileNameList) {
-                String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
 
-                S3Object s3Object = s3Cliant.getObject(bucketName, pathToUserFolder + checkedFileName);
-                byte[] data = IOUtils.toByteArray(s3Object.getObjectContent());
+        ZipOutputStream zos = new ZipOutputStream(baos);
+        for (String key : checkedFileNameList) {
+            S3Object s3Object = s3Cliant.getObject(bucketName, key);
+            byte[] data = IOUtils.toByteArray(s3Object.getObjectContent());
 
-                ZipEntry zipEntry = new ZipEntry(checkedFileName);
-                zos.putNextEntry(zipEntry);
-                zos.write(data);
-                zos.closeEntry();
-            }
-        } catch (IOException | NullPointerException e){
-            e.printStackTrace();
+            // フォルダ以下のファイル名のみを指定
+            ZipEntry zipEntry = new ZipEntry(key.substring(key.lastIndexOf('/') + 1));
+            zos.putNextEntry(zipEntry);
+            zos.write(data);
+            zos.closeEntry();
         }
-        byte[] responseData = baos.toByteArray();
 
+        byte[] responseData = baos.toByteArray();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=download.zip");
         return new ResponseEntity<>(responseData, httpHeaders, HttpStatus.OK);
     }
 
-    public void deleteFile(String[] fileNameList, LoginUser loginUser) {
-        String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
-        int count = 0;
 
-        for(String fileName : fileNameList) {
-            s3Cliant.deleteObject(bucketName, pathToUserFolder + fileName);
-            log.info("Delete image :" + pathToUserFolder + fileName);
-            count++;
-        }
-        log.info("Deleted " + count + " images");
-    }
-
-    /*
-     * MultipartFile ファイルのアップロード機能をアプリケーションコード内で透過的に扱うためのクラス
-     * マルチパートリクエストで受信したアップロードファイルを扱う
+    /**
+     * チェックボックスで選択したデータをs3から削除する
+     * @param fileKeyList 削除対象データのs3のkey
+     * @return 削除データの情報を詰めたリスト
      */
-    private File convertMultiPartFileToFile(MultipartFile file) {
-        File convertedFile = new File(file.getOriginalFilename());
-        try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
-            fos.write(file.getBytes());
-        } catch (IOException e) {
-            log.error("Error converting multipartFile to file", e);
+    public List<PotFile> s3DeleteFile(String[] fileKeyList) {
+        List<PotFile> deleteList = new ArrayList<>();
+        for (String key : fileKeyList) {
+            s3Cliant.deleteObject(bucketName, key);
+            PotFile f = new PotFile();
+            f.setKey(key);
+            deleteList.add(f);
+            log.info("Delete image :" + key);
         }
-        return convertedFile;
+
+        return deleteList;
     }
 }

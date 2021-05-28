@@ -41,7 +41,6 @@ public class AdminController {
         Optional.ofNullable(model.getAttribute("message"))
                 .ifPresent(model::addAttribute);
 
-        System.out.println(model);
         return "admin";
     }
 

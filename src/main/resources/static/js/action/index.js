@@ -3,6 +3,7 @@ import 'jbox/dist/jBox.all.css';
 import jBox from 'jbox';
 import * as module from '../module/index';
 
+// 画像表示モーダル
 const imgModal = new jBox('Modal', {
     id: 'imgModal',
     width: 750,
@@ -24,6 +25,77 @@ const imgModal = new jBox('Modal', {
     }
 });
 
+// 画像アップロードモーダル
+const uploadModal = new jBox('Modal', {
+    id: 'upload',
+    width: 725,
+    height: 448,
+    attach: '#js-upload',
+    title: 'Add Images',
+    content: $('#js-uploadModal'),
+    overlayClass: 'add-jboxOverRay',
+    closeOnClick: false,
+    closeButton: 'box',
+    createOnInit: true,
+});
+
+let formData = null;
+
+// インプットしたファイル情報を表示
+const inputFormData = (e) => {
+    const files = e.target.files;
+    const template =
+        `<li class="inputFile">
+                <i class="icon-file-picture"></i>
+                <div>
+                    <div class="fileInfo">
+                        <span class="fileName"></span>
+                        <span class="fileSize"></span>
+                    </div>
+                </div>
+            </li>`
+    const templateList = module.generateImageTemplateList(template, files.length);
+
+    const fileListElement = document.getElementById('js-fileList');
+    for (let i = 0; i < files.length; i++) {
+        templateList[i].querySelector('.fileName').textContent = files[i].name;
+        templateList[i].querySelector('.fileSize').textContent = module.readableFileSize(files[i].size);
+        fileListElement.appendChild(templateList[i]);
+    }
+    formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+        formData.append('images', files[i]);
+    }
+}
+
+// フォームデータをnull & 画面表示からファイル情報を削除
+const clearFormData = () => {
+    formData = null;
+    const parent = document.getElementById('js-fileList');
+    while(parent.firstChild){
+        parent.removeChild(parent.firstChild)
+    }
+}
+
+// バックエンドへアップロードリクエスト
+const uploader = (e) => {
+    if(!formData)
+        return false;
+    uploadModal.ajax({
+        type: 'POST',
+        url: '/action/upload',
+        data: formData,
+        contentType: false,
+        processData: false,
+        spinner: true,
+        setContent: false,
+        success: function () {
+            clearFormData();
+        }
+    })
+}
+
+// 画像モーダル表示クリックイベントを登録
 document.querySelectorAll('.imageIcon').forEach(function (elem) {
     elem.addEventListener('click', (e) => {
         const img = e.currentTarget.dataset.url;
@@ -34,29 +106,9 @@ document.querySelectorAll('.imageIcon').forEach(function (elem) {
     })
 });
 
-// const requestGetImages = () => {
-//     const elementsByName = document.getElementsByName('imgData');
-//     let fileList = [];
-//     for (const input of elementsByName) {
-//         if(input.checked) fileList.push(input.defaultValue);
-//     }
-//     console.log(fileList);
-//     $.ajax( {
-//         type: "POST",
-//         url: "/action/file/download",
-//         // contentType: "application/json",
-//         data: {
-//             fileList: fileList
-//         },
-//         processData: false,
-//     }).done((data) => {
-//         console.log("OK");
-//     })
-// }
-//
-//
-// document.getElementById('js-download').addEventListener('click', requestGetImages);
-//
+document.getElementById('fileInput').addEventListener('change', inputFormData);
+document.getElementById('js-execute').addEventListener('click', uploader);
+document.getElementById('js-clear').addEventListener('click', clearFormData);
 
-// show result message from backend with modal
+// 結果メッセージ表示モーダル
 module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error');

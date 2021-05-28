@@ -20,23 +20,21 @@ CREATE TABLE pot_user(
     created_at timestamp DEFAULT current_timestamp
 );
 
-CREATE TABLE pot_image(
-    user_id integer NOT NULL REFERENCES pot_user(user_id),
-    image_id char(18),
-    path varchar(2048) NOT NULL,
-    title varchar(20) DEFAULT NULL,
-    extension varchar(5) NOT NULL,
-    posted_at timestamp DEFAULT current_timestamp,
-    deleted_at timestamp DEFAULT NULL,
-    restored_at timestamp DEFAULT NULL,
-    is_deleted boolean DEFAULT false,
-    PRIMARY KEY(image_id, user_id)
+CREATE TABLE pot_file(
+    file_id uuid PRIMARY KEY ,
+    user_id bigint NOT NULL REFERENCES pot_user(user_id),
+    key varchar(400) NOT NULL UNIQUE,
+    url varchar(2083) NOT NULL UNIQUE,
+    name varchar(260) NOT NULL,
+    size numeric NOT NULL,
+    type varchar(4) NOT NULL,
+    last_modified_at timestamp NOT NULL
 );
 
 -- 削除(依存関係から上から順に)
-DELETE from pot_image a where a.user_id = 1;
+DELETE from pot_file a where a.user_id = 1;
 DELETE from pot_user a where a.user_id = 1;
-DROP TABLE pot_image;
+DROP TABLE pot_file;
 DROP TABLE pot_user;
 DROP SEQUENCE user_seq;
 

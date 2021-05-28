@@ -1,21 +1,21 @@
 package com.imagepot.xyztk.controller;
 
-import com.imagepot.xyztk.model.Image;
 import com.imagepot.xyztk.model.LoginUser;
-import com.imagepot.xyztk.service.StorageService;
+import com.imagepot.xyztk.model.PotFile;
+import com.imagepot.xyztk.service.FileService;
+import com.imagepot.xyztk.util.UtilComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 
 @Slf4j
@@ -23,43 +23,42 @@ import java.util.concurrent.CompletableFuture;
 @RequestMapping("/home")
 public class HomeController {
 
-    private final StorageService s3Service;
+    private final FileService fileService;
+    private final UtilComponent utilComponent;
 
     @Autowired
-    public HomeController(StorageService s3Service) {
-        this.s3Service = s3Service;
+    public HomeController(FileService fileService, UtilComponent utilComponent) {
+        this.fileService = fileService;
+        this.utilComponent = utilComponent;
     }
 
     @ModelAttribute
-    List<Image> setImageList(@AuthenticationPrincipal LoginUser loginUser) {
-        return s3Service.getObjList(loginUser);
+    List<PotFile> getFileList(@AuthenticationPrincipal LoginUser loginUser) {
+        return fileService.getAllFilesById(loginUser);
     }
 
     @GetMapping
     public String getHome(
             @AuthenticationPrincipal LoginUser loginUser,
-            List<Image> imageList,
+            List<PotFile> potFileList,
             Model model) {
         log.info(loginUser.toString());
         List<URL> urlList = new ArrayList<>();
-        for(Image image : imageList) {
-            urlList.add(image.getUrl());
+        for(PotFile potFile : potFileList) {
+            urlList.add(potFile.getUrl());
         }
+        String totalSizeReadable = utilComponent.readableSize(getTotalFileSize(potFileList));
+        model.addAttribute("totalFiles", urlList.size());
+        model.addAttribute("totalSizeReadable", totalSizeReadable);
         model.addAttribute("urlList", urlList);
         return "home";
     }
 
-    @PostMapping("/upload")
-    @ResponseBody
-    @Async
-    public CompletableFuture<String> uploadImage(@RequestParam ArrayList<MultipartFile> images, @AuthenticationPrincipal LoginUser loginUser) {
-        s3Service.uploadFile(images, loginUser);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public double getTotalFileSize(List<PotFile> fileList) {
+        double totalSize = 0;
+        for (PotFile potFile : fileList) {
+            totalSize += potFile.getSize();
         }
-        return CompletableFuture.completedFuture("success");
+        return totalSize;
     }
-
 }

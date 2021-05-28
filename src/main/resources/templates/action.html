@@ -15,7 +15,7 @@
       <section class="p-action__head">
         <h2>Images In Storage</h2>
         <div class="p-action__head__info">
-          <span>Total Images : <span th:text="${totalImages}"></span></span>
+          <span>Total Images : <span th:text="${totalFiles}"></span></span>
           <span>Total Size : <span th:text="${totalSizeReadable}"></span></span>
         </div>
       </section>
@@ -29,27 +29,63 @@
               <th>Size</th>
               <th>Last Modified</th>
             </tr>
-            <tr th:each="img : ${imageList}" class="p-action__table__data">
-              <td class="input"><input type="checkbox" th:checked="${img.checked}" name="imgData" th:value="${img.title}" th:id="${img.id}"></td>
-              <td class="imageIcon" th:data-url="${img.url}"><i class="icon-file-picture"></i></td>
-              <td><label th:for="${img.id}"><p th:text="${img.title}"></p></label></td>
-              <td><label th:for="${img.id}"><p th:text="${img.size}"></p></label></td>
-              <td><label th:for="${img.id}"><p th:text="${img.lastModified}"></p></label></td>
+            <tr th:each="file, iter : ${fileList}" class="p-action__table__data">
+              <td class="input"><input type="checkbox" th:checked="false" name="fileKey" th:value="${file.key}" th:id="${file.file_id}"></td>
+              <td class="imageIcon" th:data-url="${file.url}"><i class="icon-file-picture"></i></td>
+              <td><label th:for="${file.file_id}"><p th:text="${file.name}"></p></label></td>
+              <td><label th:for="${file.file_id}"><p th:text="${readableSizeList.get(iter.index)}"></p></label></td>
+              <td><label th:for="${file.file_id}"><p th:text="${file.lastModifiedAt}"></p></label></td>
             </tr>
           </table>
           <div class="p-action__content__buttonWrap">
-            <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="delete">
-              <i class="icon-bin2"></i>
-              Delete
-            </button>
+            <div class="buttonCTA buttonCTA-round buttonCTA-blue" id="js-upload">
+              <i class="icon-upload2"></i>
+              Upload
+            </div>
             <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="download">
               <i class="icon-download2"></i>
               Download
+            </button>
+            <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="delete">
+              <i class="icon-bin2"></i>
+              Delete
             </button>
           </div>
         </form>
       </section>
       <section class="p-action__imgModal" id="js-imgModal">
+      </section>
+      <section id="js-uploadModal" class="uploadModal">
+        <div class="uploadMain">
+          <div class="uploadMain__fileArea">
+            <div class="uploadMain__textArea">
+              <i class="icon-upload2"></i>
+              <span class="mainText">Drag images to upload</span>
+              <span class="subText">or select images</span>
+              <div class="buttonWrap">
+                <form enctype="multipart/form-data">
+                  <input type="file" accept=".jpg, .jpeg, .png" id="fileInput" multiple>
+                  <label class="buttonCTA buttonCTA-blue" for="fileInput">Choose Image</label>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="uploadMain__statusArea">
+            <ul class="fileList" id="js-fileList">
+            </ul>
+          </div>
+        </div>
+        <div class="uploadFooter">
+          <div class="message">
+            <p>Acceptable formats: jpg, png</p>
+            <p>Max file size is 10MB.</p>
+            <p>Max size per request is 100MB.</p>
+          </div>
+          <div class="buttonWrap">
+            <button class="buttonCTA" id="js-clear">Clear</button>
+            <button class="buttonCTA" id="js-execute">Upload</button>
+          </div>
+        </div>
       </section>
       <div th:if="${actionError}" data-message="error" class="c-message c-message-error">
         <span th:text="${message}"></span>

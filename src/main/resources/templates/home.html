@@ -18,8 +18,15 @@
   <div class="c-contents">
     <div class="p-home">
       <section class="p-home__head">
-        <div class="p-home__head__wrap">
-          <div class="p-home__head__sortArea">
+        <h2>Images In Storage</h2>
+        <div class="p-home__head__info">
+          <span>Total Images : <span th:text="${totalFiles}"></span></span>
+          <span>Total Size : <span th:text="${totalSizeReadable}"></span></span>
+        </div>
+      </section>
+      <section class="p-home__postedList" id="js-postedList">
+        <div class="p-home__postedList__buttonWrap">
+          <div class="p-home__postedList__sortArea" >
             <span>Sort By</span>
             <select name="" id="">
               <option selected value="">Last Updated</option>
@@ -35,51 +42,11 @@
               </path>
             </svg>
           </div>
-          <button class="buttonCTA buttonCTA-round buttonCTA-blue" id="js-upload">
-            <i class="icon-upload2"></i>
-            Upload
-          </button>
           <a class="buttonCTA buttonCTA-round buttonCTA-blue" th:href="@{'/action'}">
             <i class="icon-checkmark"></i>
             Action
           </a>
         </div>
-      </section>
-      <section id="js-uploadModal" class="uploadModal">
-        <div class="uploadMain">
-          <div class="uploadMain__fileArea">
-            <div class="uploadMain__textArea">
-              <i class="icon-upload2"></i>
-              <span class="mainText">Drag images to upload</span>
-              <span class="subText">or select images</span>
-              <div class="buttonWrap">
-                <form enctype="multipart/form-data">
-                  <input type="file" accept=".jpg, .jpeg, .png" id="fileInput" multiple>
-                  <label class="buttonCTA buttonCTA-blue" for="fileInput">Choose Image</label>
-                </form>
-              </div>
-            </div>
-          </div>
-          <div class="uploadMain__statusArea">
-            <div id="test"></div>
-            <div id="test2"></div>
-            <ul class="fileList" id="js-fileList">
-            </ul>
-          </div>
-        </div>
-        <div class="uploadFooter">
-          <div class="message">
-            <p>Acceptable formats: jpg, png</p>
-            <p>Max file size is 10MB.</p>
-            <p>Max size per request is 100MB.</p>
-          </div>
-          <div class="buttonWrap">
-            <button class="buttonCTA" id="js-clear">Clear</button>
-            <button class="buttonCTA" id="js-execute">Upload</button>
-          </div>
-        </div>
-      </section>
-      <section class="p-home__postedList" id="js-postedList">
       </section>
     </div>
   </div>

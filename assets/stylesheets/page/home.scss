@@ -5,24 +5,53 @@
   width: 100%;
   padding: 30px 0;
 
+
   &__head {
     max-width: 1320px;
     margin: 15px auto 0;
     padding: 0 22px;
-    &__wrap {
+
+    > h2 {
+      font-size: 27px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    &__info {
+      margin-top: 8px;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #7D7C83;
+
+      > span:last-child {
+        margin-left: 25px;
+      }
+    }
+  }
+
+  &__postedList {
+    position: relative;
+    max-width: 1320px;
+    margin: 28px auto 0;
+    padding: 0 22px;
+
+    &__buttonWrap {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      position: absolute;
+      top: -60px;
+      right: 25px;
     }
+
     &__sortArea {
       position: relative;
-      display: flex;
-      align-items: center;
-      margin-right: 38px;
+      margin-right: 10px;
       > span {
         font-size: 13px;
         color: $color-palette-gray-6;
       }
+
       > select {
         cursor: pointer;
         padding: 7px 32px 7px 12px;
@@ -34,41 +63,40 @@
         border-radius: 3px;
         z-index: 2;
       }
+
       > svg {
         fill: $color-palette-gray-6;
         position: absolute;
+        top: 50%;
         right: 12px;
+        transform: translateY(-50%);
         width: 12px;
         height: 12px;
         z-index: 1;
         transition: transform 0.2s ease-in-out
       }
     }
-    .buttonCTA > i {
-      margin-right: 0.3em;
-    }
-  }
-
-  &__postedList {
-    max-width: 1320px;
-    margin: 28px auto 0;
-    padding: 0 22px;
   }
 
   &__postedItem {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     opacity: 0;
     transition: all 0.7s ease-in-out;
+
     &.is-loaded {
       opacity: 1;
     }
 
     > figure {
-      position:relative;
-      flex-basis: calc(100% / 3 - 10px);
+      position: relative;
+      flex-basis: calc(100% / 3 - 20px / 3);
       margin-bottom: 10px;
+      margin-left: 10px;
+
+      &:nth-child(3n+1) {
+        margin-left: 0;
+      }
     }
   }
 
@@ -90,180 +118,3 @@
   }
 }
 
-.uploadModal {
-  height: 100%;
-  display: none;
-
-  .uploadMain {
-    height: 80%;
-    display: flex;
-
-    &__fileArea {
-      position: relative;
-      width: 50%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 26px 20px;
-      &:before {
-        content: "";
-        background-image: linear-gradient(to right, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px),
-        linear-gradient(to right, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px),
-        linear-gradient(to bottom, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px),
-        linear-gradient(to bottom, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px);
-        background-size: 11px 2px, 11px 2px, 2px 11px, 2px 11px;
-        background-position: left top, left bottom, left top, right top;
-        background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        pointer-events: none;
-      }
-    }
-
-    &__textArea {
-      display: flex;
-      flex-direction: column;
-      text-align: center;
-      > i {
-        font-size: 70px;
-        color: $color-palette-gray-2;
-      }
-
-      .mainText {
-        font-size: 21px;
-        margin-top: 20px;
-      }
-      .subText {
-        position: relative;
-        font-size: 16px;
-        margin-top: 19px;
-        &:before, &:after {
-          position: absolute;
-          content: "";
-          border-top: 1px solid;
-          width: 3em;
-          top: calc(50% - 0.5px);
-        }
-        &:before {
-          left: 1.5em;
-        }
-        &:after {
-          right: 1.5em;
-        }
-      }
-      .buttonWrap {
-        margin-top: 22px;
-        input[type="file"] {
-          display: none;
-        }
-      }
-    }
-
-    &__statusArea {
-      width: 50%;
-      padding: 0 13px 0 33px;
-      overflow-y: scroll;
-      > span {
-        font-size: 22px;
-      }
-
-      .fileList {
-        width: 100%;
-        margin-top: 5px;
-      }
-
-      .inputFile {
-        width: 100%;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        box-shadow: 0 1px rgba(0,0,0, 0.11);
-        > i {
-          flex-grow: 0;
-          font-size: 32px;
-          color: #A5A5A5;
-          display: flex;
-          align-items: center;
-        }
-
-        > div {
-          height: 100%;
-          flex-grow: 1;
-          margin-left: 18px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-        }
-      }
-
-      .fileInfo {
-        position: relative;
-        width: 100%;
-        height: 20px;
-
-        .fileName {
-          font-size: 15px;
-          line-height: 1.2;
-          width: 70%;
-          position: absolute;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-
-        .fileSize {
-          font-size: 12px;
-          position: absolute;
-          bottom: 0;
-          right: 5%
-        }
-      }
-
-      .progressWrap {
-        position: relative;
-        overflow: hidden;
-        &:before {
-          content: "";
-          display: block;
-          background-color: $color-palette-gray-2;
-          border-radius: 2.5px; /* 線幅の半分 */
-          height: 5px;
-        }
-      }
-
-      .progress {
-        position: absolute;
-        top: 0;
-        width: 0;
-        &:before {
-          content: "";
-          display: block;
-          background-color: $color-primary-blue;
-          border-radius: 2.5px; /* 線幅の半分 */
-          height: 5px;
-        }
-      }
-    }
-  }
-
-  .uploadFooter {
-    height: 20%;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-
-    .message {
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    .buttonWrap {
-      &:last-child {
-        margin-left: 15px
-      }
-    }
-  }
-}
