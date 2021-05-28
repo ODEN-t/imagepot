@@ -1,5 +1,6 @@
 package com.imagepot.xyztk.controller;
 
+import com.amazonaws.AmazonServiceException;
 import com.imagepot.xyztk.model.LoginUser;
 import com.imagepot.xyztk.model.PotFile;
 import com.imagepot.xyztk.service.FileService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -64,7 +66,6 @@ public class ActionController {
 
         String totalSizeReadable = utilComponent.readableSize(getTotalFileSize(potFileList));
 
-
         List<String> readableSizeList = new ArrayList<>();
         for(PotFile p : potFileList)
             readableSizeList.add(utilComponent.readableSize(p.getSize()));
@@ -84,7 +85,7 @@ public class ActionController {
 
         // s3とDBから削除
         try {
-            List<PotFile> deleteFileList = s3Service.getDeleteListAfterDeleteFiles(fileKeyList);
+            List<PotFile> deleteFileList = s3Service.s3DeleteFile(fileKeyList);
             fileService.deleteFilesByKey(deleteFileList);
             redirectAttributes.addFlashAttribute("actionSuccess", true);
             redirectAttributes.addFlashAttribute("message", messageSource.getMessage("success.deleteImage", null, Locale.ENGLISH));
@@ -109,11 +110,11 @@ public class ActionController {
 
         // s3からダウンロード
         try {
-            ResponseEntity<byte[]> responseEntity = s3Service.downloadFile(checkedFileList, loginUser);
+            ResponseEntity<byte[]> responseEntity = s3Service.s3DownloadFile(checkedFileList, loginUser);
             return (T) responseEntity;
         }
         // 未選択の場合エラーメッセージを返す
-        catch (NullPointerException e) {
+        catch (IOException | NullPointerException | AmazonServiceException e) {
             model.addAttribute("actionError", true);
             model.addAttribute("message", messageSource.getMessage("error.downloadImage", null, Locale.ENGLISH));
             return (T) "action";
@@ -135,7 +136,7 @@ public class ActionController {
     @ResponseBody
     @Async
     public CompletableFuture<String> uploadImage(@RequestParam ArrayList<MultipartFile> images, @AuthenticationPrincipal LoginUser loginUser) {
-        List<PotFile> uploadedFiles = s3Service.getUploadedFilesAfterUpload(images, loginUser);
+        List<PotFile> uploadedFiles = s3Service.s3UploadFile(images, loginUser);
         fileService.insertFiles(uploadedFiles);
         return CompletableFuture.completedFuture("success");
     }
