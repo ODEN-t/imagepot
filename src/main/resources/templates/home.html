@@ -18,8 +18,15 @@
   <div class="c-contents">
     <div class="p-home">
       <section class="p-home__head">
-        <div class="p-home__head__wrap">
-          <div class="p-home__head__sortArea">
+        <h2>Images In Storage</h2>
+        <div class="p-home__head__info">
+          <span>Total Images : <span th:text="${totalFiles}"></span></span>
+          <span>Total Size : <span th:text="${totalSizeReadable}"></span></span>
+        </div>
+      </section>
+      <section class="p-home__postedList" id="js-postedList">
+        <div class="p-home__postedList__buttonWrap">
+          <div class="p-home__postedList__sortArea" >
             <span>Sort By</span>
             <select name="" id="">
               <option selected value="">Last Updated</option>
@@ -40,8 +47,6 @@
             Action
           </a>
         </div>
-      </section>
-      <section class="p-home__postedList" id="js-postedList">
       </section>
     </div>
   </div>

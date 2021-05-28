@@ -4,7 +4,6 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
-import com.imagepot.xyztk.model.Image;
 import com.imagepot.xyztk.model.LoginUser;
 import com.imagepot.xyztk.model.PotFile;
 import com.imagepot.xyztk.model.User;

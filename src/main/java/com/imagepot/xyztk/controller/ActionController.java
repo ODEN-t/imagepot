@@ -64,8 +64,14 @@ public class ActionController {
 
         String totalSizeReadable = utilComponent.readableSize(getTotalFileSize(potFileList));
 
+
+        List<String> readableSizeList = new ArrayList<>();
+        for(PotFile p : potFileList)
+            readableSizeList.add(utilComponent.readableSize(p.getSize()));
+
         model.addAttribute("totalFiles", potFileList.size());
         model.addAttribute("totalSizeReadable", totalSizeReadable);
+        model.addAttribute("readableSizeList", readableSizeList);
         model.addAttribute("fileList", potFileList);
         return "action";
     }
@@ -115,12 +121,15 @@ public class ActionController {
         // ファイルリスト、ファイル数、合計ファイルサイズを返す
         finally {
             String totalSizeReadable = utilComponent.readableSize(getTotalFileSize(potFileList));
+            List<String> readableSizeList = new ArrayList<>();
+            for(PotFile p : potFileList)
+                readableSizeList.add(utilComponent.readableSize(p.getSize()));
+            model.addAttribute("readableSizeList", readableSizeList);
             model.addAttribute("totalFiles", potFileList.size());
             model.addAttribute("totalSizeReadable", totalSizeReadable);
             model.addAttribute("fileList", potFileList);
         }
     }
-
 
     @PostMapping("/upload")
     @ResponseBody
@@ -138,4 +147,5 @@ public class ActionController {
         }
         return totalSize;
     }
+
 }

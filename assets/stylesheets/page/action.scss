@@ -177,6 +177,9 @@
         input[type="file"] {
           display: none;
         }
+        >.buttonCTA:not(:last-child) {
+          margin-right: 3px;
+        }
       }
     }
 

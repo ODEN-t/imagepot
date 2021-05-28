@@ -2,7 +2,7 @@ import jBox from 'jbox';
 import $ from 'jquery/dist/jquery.min';
 
 
-// show result message from backend with modal
+// 実行結果メッセージモーダル表示
 export function showResultMessageModal(commonClass, sucMsgClass, errMsgClass, isTop = false) {
 
     let errMsgModal;
@@ -118,7 +118,7 @@ export function showResultMessageModal(commonClass, sucMsgClass, errMsgClass, is
 }
 
 
-// toggle input type between text and password
+// toggle input=text <=> input=password
 export function inputTypeToggle(elementClass) {
     const nodeList = document.querySelectorAll(elementClass);
     for (const node of nodeList) {

@@ -1,6 +1,7 @@
 package com.imagepot.xyztk.util;
 
 import com.imagepot.xyztk.model.LoginUser;
+import com.imagepot.xyztk.model.PotFile;
 import com.imagepot.xyztk.service.LoginUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,6 +38,11 @@ public class UtilComponent {
         log.info("Security context updated to {}", loginUser.getUsername());
     }
 
+    /**
+     * 最適な単位にバイト変換する
+     * @param size 変換対象の数字
+     * @return 最適な単位を決定し数字+単位の文字列を返す
+     */
     public String readableSize(double size) {
         String[] units = new String[]{"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
         int i = 0;
