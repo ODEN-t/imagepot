@@ -108,6 +108,184 @@
   }
 }
 
+.uploadModal {
+  height: 100%;
+  display: none;
+
+  .uploadMain {
+    height: 80%;
+    display: flex;
+
+    &__fileArea {
+      position: relative;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 26px 20px;
+      &:before {
+        content: "";
+        background-image: linear-gradient(to right, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px),
+        linear-gradient(to right, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px),
+        linear-gradient(to bottom, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px),
+        linear-gradient(to bottom, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px);
+        background-size: 11px 2px, 11px 2px, 2px 11px, 2px 11px;
+        background-position: left top, left bottom, left top, right top;
+        background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+      }
+    }
+
+    &__textArea {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      > i {
+        font-size: 70px;
+        color: $color-palette-gray-2;
+      }
+
+      .mainText {
+        font-size: 21px;
+        margin-top: 20px;
+      }
+      .subText {
+        position: relative;
+        font-size: 16px;
+        margin-top: 19px;
+        &:before, &:after {
+          position: absolute;
+          content: "";
+          border-top: 1px solid;
+          width: 3em;
+          top: calc(50% - 0.5px);
+        }
+        &:before {
+          left: 1.5em;
+        }
+        &:after {
+          right: 1.5em;
+        }
+      }
+      .buttonWrap {
+        margin-top: 22px;
+        input[type="file"] {
+          display: none;
+        }
+      }
+    }
+
+    &__statusArea {
+      width: 50%;
+      padding: 0 13px 0 33px;
+      overflow-y: scroll;
+      > span {
+        font-size: 22px;
+      }
+
+      .fileList {
+        width: 100%;
+        margin-top: 5px;
+      }
+
+      .inputFile {
+        width: 100%;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 1px rgba(0,0,0, 0.11);
+        > i {
+          flex-grow: 0;
+          font-size: 32px;
+          color: #A5A5A5;
+          display: flex;
+          align-items: center;
+        }
+
+        > div {
+          height: 100%;
+          flex-grow: 1;
+          margin-left: 18px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+      }
+
+      .fileInfo {
+        position: relative;
+        width: 100%;
+        height: 20px;
+
+        .fileName {
+          font-size: 15px;
+          line-height: 1.2;
+          width: 70%;
+          position: absolute;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .fileSize {
+          font-size: 12px;
+          position: absolute;
+          bottom: 0;
+          right: 5%
+        }
+      }
+
+      .progressWrap {
+        position: relative;
+        overflow: hidden;
+        &:before {
+          content: "";
+          display: block;
+          background-color: $color-palette-gray-2;
+          border-radius: 2.5px; /* 線幅の半分 */
+          height: 5px;
+        }
+      }
+
+      .progress {
+        position: absolute;
+        top: 0;
+        width: 0;
+        &:before {
+          content: "";
+          display: block;
+          background-color: $color-primary-blue;
+          border-radius: 2.5px; /* 線幅の半分 */
+          height: 5px;
+        }
+      }
+    }
+  }
+
+  .uploadFooter {
+    height: 20%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    .message {
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .buttonWrap {
+      &:last-child {
+        margin-left: 15px
+      }
+    }
+  }
+}
+
 .add-imgModal {
   .jBox-content {
     padding: 0 !important;

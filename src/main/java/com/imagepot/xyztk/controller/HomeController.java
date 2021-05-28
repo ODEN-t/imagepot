@@ -51,13 +51,4 @@ public class HomeController {
         model.addAttribute("urlList", urlList);
         return "home";
     }
-
-    @PostMapping("/upload")
-    @ResponseBody
-    @Async
-    public CompletableFuture<String> uploadImage(@RequestParam ArrayList<MultipartFile> images, @AuthenticationPrincipal LoginUser loginUser) {
-        List<PotFile> uploadedFiles = s3Service.getUploadedFilesAfterUpload(images, loginUser);
-        fileService.insertFiles(uploadedFiles);
-        return CompletableFuture.completedFuture("success");
-    }
 }

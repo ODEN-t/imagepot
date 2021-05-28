@@ -38,18 +38,56 @@
             </tr>
           </table>
           <div class="p-action__content__buttonWrap">
-            <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="delete">
-              <i class="icon-bin2"></i>
-              Delete
-            </button>
+            <div class="buttonCTA buttonCTA-round buttonCTA-blue" id="js-upload">
+              <i class="icon-upload2"></i>
+              Upload
+            </div>
             <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="download">
               <i class="icon-download2"></i>
               Download
+            </button>
+            <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="delete">
+              <i class="icon-bin2"></i>
+              Delete
             </button>
           </div>
         </form>
       </section>
       <section class="p-action__imgModal" id="js-imgModal">
+      </section>
+      <section id="js-uploadModal" class="uploadModal">
+        <div class="uploadMain">
+          <div class="uploadMain__fileArea">
+            <div class="uploadMain__textArea">
+              <i class="icon-upload2"></i>
+              <span class="mainText">Drag images to upload</span>
+              <span class="subText">or select images</span>
+              <div class="buttonWrap">
+                <form enctype="multipart/form-data">
+                  <input type="file" accept=".jpg, .jpeg, .png" id="fileInput" multiple>
+                  <label class="buttonCTA buttonCTA-blue" for="fileInput">Choose Image</label>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="uploadMain__statusArea">
+            <div id="test"></div>
+            <div id="test2"></div>
+            <ul class="fileList" id="js-fileList">
+            </ul>
+          </div>
+        </div>
+        <div class="uploadFooter">
+          <div class="message">
+            <p>Acceptable formats: jpg, png</p>
+            <p>Max file size is 10MB.</p>
+            <p>Max size per request is 100MB.</p>
+          </div>
+          <div class="buttonWrap">
+            <button class="buttonCTA" id="js-clear">Clear</button>
+            <button class="buttonCTA" id="js-execute">Upload</button>
+          </div>
+        </div>
       </section>
       <div th:if="${actionError}" data-message="error" class="c-message c-message-error">
         <span th:text="${message}"></span>

@@ -9,15 +9,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 
 @Slf4j
@@ -115,6 +119,16 @@ public class ActionController {
             model.addAttribute("totalSizeReadable", totalSizeReadable);
             model.addAttribute("fileList", potFileList);
         }
+    }
+
+
+    @PostMapping("/upload")
+    @ResponseBody
+    @Async
+    public CompletableFuture<String> uploadImage(@RequestParam ArrayList<MultipartFile> images, @AuthenticationPrincipal LoginUser loginUser) {
+        List<PotFile> uploadedFiles = s3Service.getUploadedFilesAfterUpload(images, loginUser);
+        fileService.insertFiles(uploadedFiles);
+        return CompletableFuture.completedFuture("success");
     }
 
     public double getTotalFileSize(List<PotFile> fileList) {
