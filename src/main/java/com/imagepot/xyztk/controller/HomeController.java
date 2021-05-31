@@ -37,6 +37,12 @@ public class HomeController {
         return fileService.getAllFilesById(loginUser);
     }
 
+    /**
+     * Home画面を表示する
+     * @param loginUser ログインユーザ情報
+     * @param potFileList ユーザが保持する全ファイル情報
+     * @return View
+     */
     @GetMapping
     public String getHome(
             @AuthenticationPrincipal LoginUser loginUser,
@@ -54,6 +60,11 @@ public class HomeController {
         return "home";
     }
 
+    /**
+     * ファイル情報を詰めたリストから合計ファイルサイズを計算する
+     * @param fileList ユーザが保持する全ファイル情報
+     * @return 合計ファイルサイズ
+     */
     public double getTotalFileSize(List<PotFile> fileList) {
         double totalSize = 0;
         for (PotFile potFile : fileList) {

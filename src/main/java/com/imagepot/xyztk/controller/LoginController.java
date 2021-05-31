@@ -33,6 +33,11 @@ public class LoginController {
         this.passwordEncoder = passwordEncoder;
     }
 
+
+    /**
+     * トップページを表示する
+     * @return View
+     */
     @GetMapping
     public String getTopPage(Model model) {
         SignupForm signupForm = new SignupForm();
@@ -40,6 +45,12 @@ public class LoginController {
         return "top";
     }
 
+
+    /**
+     * ログイン失敗時エラーメッセージを表示する
+     * @param status spring securityが付与するパラメータ
+     * @return spring securityが付与するパラメータ
+     */
     @GetMapping("login")
     public String getFailurePage(Model model, @RequestParam("auth") String status) {
         SignupForm signupForm = new SignupForm();
@@ -47,13 +58,22 @@ public class LoginController {
         return status;
     }
 
+    /**
+     * ログインを試みる。成功時Home画面へ遷移
+     * @return View
+     */
     @PostMapping("login")
     public String postSignIn(Model model) {
         return "home";
     }
 
-
-    // SignupForm でバリデーション
+    /**
+     * サインアップを試みる。バリデーションエラーがある場合はエラーメッセージとともにトップページを表示する。
+     * 成功時はDBへユーザ登録し、サクセスメッセージとともにトップページを表示する。
+     * @param signupForm ユーザが入力したフォーム情報
+     * @param bindingResult バリデーション結果
+     * @return View
+     */
     @PostMapping ("signup")
     public String registerNewUser(
             @ModelAttribute @Validated({SignupFormAllValidations.class}) SignupForm signupForm,

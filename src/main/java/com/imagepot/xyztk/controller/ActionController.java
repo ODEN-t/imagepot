@@ -44,13 +44,23 @@ public class ActionController {
         this.utilComponent = utilComponent;
     }
 
-    // ユーザの保持するファイルデータをDBから取得
+    /**
+     * ユーザの保持するファイル情報をDBから取得する
+     * @param loginUser ログインユーザ情報
+     * @return ログインユーザが保持するファイル情報
+     */
     @ModelAttribute
     List<PotFile> getFileList(@AuthenticationPrincipal LoginUser loginUser) {
         return fileService.getAllFilesById(loginUser);
     }
 
 
+    /**
+     * 実行結果メッセージ、ファイル数、ファイル容量、ファイル情報をmodelにセットしaction.htmlでそれらを表示する
+     * @param potFileList ユーザの保持する全ファイル情報を詰めたリスト
+     * @param model 必要な情報をセットするモデル
+     * @return View
+     */
     @GetMapping
     public String getAction(
             List<PotFile> potFileList,
@@ -77,7 +87,13 @@ public class ActionController {
         return "action";
     }
 
-    // 選択されたファイルデータをs3とDBから削除
+
+
+    /**
+     * ユーザが選択したファイルデータをs3とDBから削除しaction.htmlへリダイレクトさせる
+     * @param fileKeyList ユーザが選択したファイルデータのキー
+     * @return リダイレクト先のView
+     */
     @PostMapping(value = "/file", params = "delete")
     public String deleteImages(
             @RequestParam(value = "fileKey", required = false) String[] fileKeyList,
@@ -100,7 +116,14 @@ public class ActionController {
         return "redirect:/action";
     }
 
-    // 選択されたファイルデータをs3からダウンロード
+
+    /**
+     * ユーザが選択したファイルデータをs3からダウンロード
+     * @param loginUser ログインユーザ情報
+     * @param potFileList ユーザの保持する全ファイル情報を詰めたリスト
+     * @param checkedFileList ユーザが選択したファイルキーのリスト
+     * @return View 成功時：ダウンロード実行  エラー時：エラーメッセージ表示
+     */
     @PostMapping(value = "/file", params = "download")
     public <T> T downloadImage(
             @AuthenticationPrincipal LoginUser loginUser,
@@ -132,6 +155,12 @@ public class ActionController {
         }
     }
 
+    /**
+     * ユーザが選択したファイルをs3にアップロードし、成功時DBに更新分データを書き込む。リクエストはajax経由。
+     * @param images ファイル情報を詰めたマルチパートファイルのリスト
+     * @param loginUser ログインユーザ情報
+     * @return ajaxへ実行結果を返す
+     */
     @PostMapping("/upload")
     @ResponseBody
     @Async
@@ -141,6 +170,11 @@ public class ActionController {
         return CompletableFuture.completedFuture("success");
     }
 
+    /**
+     * ファイル情報を詰めたリストから合計ファイルサイズを計算する
+     * @param fileList ファイル情報を詰めたリスト
+     * @return 合計ファイルサイズ
+     */
     public double getTotalFileSize(List<PotFile> fileList) {
         double totalSize = 0;
         for (PotFile potFile : fileList) {

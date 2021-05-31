@@ -40,14 +40,18 @@ public class SettingsController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * 設定画面を表示する
+     * @param updateUserInfoForm ユーザ情報(ユーザ名。メールアドレス)を変更するフォーム
+     * @param updateUserPasswordForm ユーザパスワードを変更するフォーム
+     * @return View
+     */
     @GetMapping
     public String getSettings(
             @ModelAttribute UpdateUserInfoForm updateUserInfoForm,
             @ModelAttribute UpdateUserPasswordForm updateUserPasswordForm,
             Model model) {
 
-
-        // 実行結果のメッセージ取得
         Optional.ofNullable(model.getAttribute("hasErrors"))
                 .ifPresent(model::addAttribute);
         Optional.ofNullable(model.getAttribute("errorMessage"))
@@ -58,15 +62,26 @@ public class SettingsController {
         return "settings";
     }
 
+
+    /**
+     * ユーザアイコンをデフォルトに戻す
+     * @param loginUser ログインユーザ情報
+     * @return リダイレクト後のView
+     */
     @PostMapping("/reset/user/icon")
     public String resetIcon(@AuthenticationPrincipal LoginUser loginUser) {
-        long userId = loginUser.id;
-        int num = userService.resetIcon(userId);
-        log.info("Reset icon executed, UserID: " + loginUser.id + ". " + num + " column was updated.");
+        log.info("Reset icon executed, UserID: " + loginUser.id + ".");
         utilComponent.updateSecurityContext(loginUser.email);
         return "redirect:/settings";
     }
 
+
+    /**
+     * ユーザのアイコンを変更を変更する。ajax経由でリクエストを受け取りDBへ変更後の画像データを登録する。
+     * @param croppedImage ユーザがアップロードした画像をクロップしたデータ
+     * @param loginUser ログインユーザ情報
+     * @return 成功時：ajaxへ返す 失敗時：設定画面へリダイレクト
+     */
     @PostMapping("/update/user/icon")
     @ResponseBody
     public String setNewIcon(
@@ -74,33 +89,35 @@ public class SettingsController {
             @AuthenticationPrincipal LoginUser loginUser) {
         try {
             String fileType = croppedImage.getContentType();
-            long fileSize = croppedImage.getSize();
-            long LIMIT_MB = 1L; // 1MB
-            long LIMIT = LIMIT_MB * 1024 * 1024; // B to MB
 
-            if (!(Objects.requireNonNull(fileType).equals("image/jpeg") || fileType.equals("image/png"))) {
+            if (!(Objects.requireNonNull(fileType).equals("image/jpeg") || fileType.equals("image/png")))
                 return "typeError";
-            }
-
-            if (fileSize > LIMIT) {
-                return "sizeError";
-            }
 
             long userId = loginUser.id;
             byte[] newIcon = croppedImage.getBytes();
             String email = loginUser.email;
 
-            int num = userService.updateIcon(userId, newIcon);
-            log.info("New icon was uploaded, UserID: " + loginUser.id + ". " + num + " column was updated.");
+            userService.updateIcon(userId, newIcon);
+            log.info("New icon was uploaded, UserID: " + loginUser.id + ".");
             utilComponent.updateSecurityContext(email);
 
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
+            return "redirect:/settings";
         }
 
         return "success";
     }
 
+
+    /**
+     * ユーザが任意にユーザ名、メールアドレスを更新する。
+     * @param updateUserPasswordForm パスワード更新フォーム
+     * @param updateUserInfoForm ユーザ名、メールアドレス更新フォーム
+     * @param result バリデーション結果
+     * @param loginUser ログインユーザ情報
+     * @return View
+     */
     @PostMapping("/update/user/info")
     public String updateUserInfo(
             @ModelAttribute UpdateUserPasswordForm updateUserPasswordForm,
@@ -156,6 +173,14 @@ public class SettingsController {
     }
 
 
+    /**
+     * ユーザが任意にパスワード更新する。
+     * @param updateUserPasswordForm パスワード更新フォーム
+     * @param result バリデーション結果
+     * @param updateUserInfoForm ユーザ名、メールアドレス更新フォーム
+     * @param loginUser ログインユーザ情報
+     * @return View
+     */
     @PostMapping("/update/user/password")
     public String updateUserPassword(
             @ModelAttribute @Validated({UpdateUserPasswordFormAllValidations.class}) UpdateUserPasswordForm updateUserPasswordForm,
@@ -185,7 +210,6 @@ public class SettingsController {
             redirectAttributes.addFlashAttribute("errorMessage", messageSource.getMessage("error.updateUserPassword.isSame",null, Locale.ENGLISH));
             return "redirect:/settings";
         }
-
 
         User user = new User();
         user.setId(loginUser.id);

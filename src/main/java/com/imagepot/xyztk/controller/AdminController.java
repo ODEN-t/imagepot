@@ -26,14 +26,18 @@ public class AdminController {
         this.messageSource = messageSource;
     }
 
+    /**
+     * adminのViewとともにユーザ数、実行結果メッセージを表示する。
+     * @param model 必要な情報をセットするモデル
+     * @return View
+     */
     @GetMapping
     public String getAdmin(Model model) {
         List<User> userList = userService.getUsers();
-        int count = userList.size();
-        model.addAttribute("userList", userList);
-        model.addAttribute("count", count);
 
-        // get result message from deleteUser();
+        model.addAttribute("userList", userList);
+        model.addAttribute("count", userList.size());
+
         Optional.ofNullable(model.getAttribute("deleteError"))
                 .ifPresent(model::addAttribute);
         Optional.ofNullable(model.getAttribute("deleteSuccess"))
@@ -45,6 +49,12 @@ public class AdminController {
     }
 
 
+    /**
+     * ユーザ情報をDBから削除する
+     * @param userId ユーザID
+     * @param redirectAttributes リダイレクト先へパラメータを渡す
+     * @return リダイレクト先View
+     */
     @DeleteMapping("delete/{userId}")
     public String deleteUser(@PathVariable long userId, RedirectAttributes redirectAttributes) {
 

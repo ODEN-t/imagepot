@@ -19,10 +19,10 @@ public class LoginUserService implements UserDetailsService {
     }
 
     /**
-     * ログイン時に入力されたメールアドレスと一致するユーザを走査し返す
-     *
+     * ログイン時に入力したメールアドレスと一致するユーザを返す
      * @param email ユーザが入力したメールアドレス
-     * @return LoginUser
+     * @return LoginUser ログインユーザ情報
+     * @throws UsernameNotFoundException 入力したメールアドレスと一致するユーザ存在しない場合
      */
     @Override
     public LoginUser loadUserByUsername(String email) throws UsernameNotFoundException {

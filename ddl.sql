@@ -37,23 +37,3 @@ DELETE from pot_user a where a.user_id = 1;
 DROP TABLE pot_file;
 DROP TABLE pot_user;
 DROP SEQUENCE user_seq;
-
-
--- 初期insert pot_user
-insert into pot_user (email, password, name, icon, role) values (
-    'monstersinc2311@gmail.com', '$2a$10$TqJfagRv7dqeL8yip5DbwOE.jcIMQ0K1EHhltD01JFC2zgon4DAza', '☆Michael Wazowski★', null, 'ROLE_ADMIN'
-);
-insert into pot_user (email, password, name, role) values (
-    'eren@gmail.com', 'password', 'Eren Yeager', 'ROLE_USER'
-);
-
-
--- 初期insert pot_image
-insert into mywork.pot_image (image_id, image_path, user_id, image_title, image_extension, image_is_deleted) values (
-    to_char(current_timestamp, 'yyyymmddhh24mmssms'), 'https://imagepot-app.s3-ap-northeast-1.amazonaws.com/album1/321_main_visual_name_1-min.jpg', 1, 'モンスターズ・インク', 'jpg', false
-);
-
--- バイナリデータ読み込み
-select pg_read_binary_file('/testimage/monster/mike.jpg');
--- ファイル情報取得
-select * from pg_ls_dir('/testimage/monster/640-min.jpg');

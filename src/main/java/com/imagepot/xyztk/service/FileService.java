@@ -19,17 +19,27 @@ public class FileService {
         this.fileRepository = fileRepository;
     }
 
-    // 全ファイルデータ挿入 (uploadFile in StorageService)
+    /**
+     * ユーザのアップロードしたファイル情報をDBに登録する
+     * @param PotFiles ユーザのアップロードしたファイル情報
+     */
     public void insertFiles(List<PotFile> PotFiles) {
         fileRepository.saveAll(PotFiles);
     }
 
-    // ログインユーザのファイルデータ全て取得 (getObjList in StorageService)
+    /**
+     * ログインユーザのファイルデータを全てDBから取得する
+     * @param loginUser ログインユーザ情報
+     * @return DBに存在するユーザのアップロードしたファイル情報
+     */
     public List<PotFile> getAllFilesById(LoginUser loginUser) {
         return fileRepository.selectFilesById(loginUser.id);
     }
 
-    // 特定のファイルデータ削除 (deleteFile in StorageService)
+    /**
+     * ユーザが選択したファイルをDBから削除する
+     * @param PotFiles 削除対象のファイル情報
+     */
     public void deleteFilesByKey(List<PotFile> PotFiles) {
         for(PotFile f : PotFiles) {
             fileRepository.deleteAllByKey(f.getKey());

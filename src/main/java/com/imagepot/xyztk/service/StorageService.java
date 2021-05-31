@@ -2,12 +2,14 @@ package com.imagepot.xyztk.service;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.util.IOUtils;
 import com.imagepot.xyztk.model.LoginUser;
 import com.imagepot.xyztk.model.PotFile;
 import com.imagepot.xyztk.model.User;
-import com.imagepot.xyztk.util.UtilComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,8 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
@@ -50,29 +50,6 @@ public class StorageService {
         this.s3Cliant = s3Cliant;
     }
 
-
-    public List<PotFile> getObjList(LoginUser loginUser) {
-        String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
-        ListObjectsV2Request request = new ListObjectsV2Request()
-                .withBucketName(bucketName).withPrefix(pathToUserFolder);
-        ListObjectsV2Result result = s3Cliant.listObjectsV2(request);
-
-        List<PotFile> fileList = new ArrayList<>();
-
-        for (S3ObjectSummary objList : result.getObjectSummaries()) {
-            if (objList.getSize() <= 0) continue;
-            PotFile f = new PotFile();
-            f.setKey(objList.getKey());
-            f.setUrl(s3Cliant.getUrl(bucketName, objList.getKey()));
-            f.setName(objList.getKey().substring(pathToUserFolder.length()));
-            f.setSize(objList.getSize());
-            f.setType(objList.getKey().substring(pathToUserFolder.length()).substring(objList.getKey().substring(pathToUserFolder.length()).lastIndexOf(".") + 1));
-            f.setLastModifiedAt((Timestamp) objList.getLastModified());
-
-            fileList.add(f);
-        }
-        return fileList;
-    }
 
     /**
      * MultipartFileをリネームしバケット内のユーザフォルダに保存する
@@ -107,7 +84,7 @@ public class StorageService {
             }
         }
 
-        // アップロードしたファイル情報をユーザ情報と一緒に返す
+        // アップロードしたファイル情報をユーザ情報と紐付けて返す
         User u = new User();
         u.setId(loginUser.id);
         List<PotFile> uploadedFileList = new ArrayList<>();
@@ -131,11 +108,12 @@ public class StorageService {
 
     /**
      * チェックボックスで選択したデータをs3からzip化してダウンロード
+     *
      * @param checkedFileNameList s3オブジェクトへのアクセスに必要なkeyのリスト
      * @param loginUser           ログインユーザ情報
      * @return zipファイル
      * @throws NullPointerException   keyのリストがNull(画面でチェックなし)の場合エラー
-     * @throws IOException ファイル作成過程でのエラー
+     * @throws IOException            ファイル作成過程でのエラー
      * @throws AmazonServiceException s3側での重大なエラーの場合
      */
     public ResponseEntity<byte[]> s3DownloadFile(String[] checkedFileNameList, LoginUser loginUser)
@@ -165,6 +143,7 @@ public class StorageService {
 
     /**
      * チェックボックスで選択したデータをs3から削除する
+     *
      * @param fileKeyList 削除対象データのs3のkey
      * @return 削除データの情報を詰めたリスト
      */
@@ -177,7 +156,6 @@ public class StorageService {
             deleteList.add(f);
             log.info("Delete image :" + key);
         }
-
         return deleteList;
     }
 }

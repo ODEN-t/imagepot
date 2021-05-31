@@ -17,11 +17,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying(clearAutomatically = true)
     @Query("UPDATE User u SET u.icon = :iconData WHERE u.id = :userId")
-    public int updateUserIcon(@Param("userId") long userId, @Param("iconData") byte[] icon);
+    public void updateUserIcon(@Param("userId") long userId, @Param("iconData") byte[] icon);
 
     @Modifying(clearAutomatically = true)
     @Query("UPDATE User u SET u.icon = null WHERE u.id = :userId")
-    public int resetUserIcon(@Param("userId") long userId);
+    public void resetUserIcon(@Param("userId") long userId);
 
     @Modifying(clearAutomatically = true)
     @Query("UPDATE User u SET u.name = :newName WHERE u.id = :userId")

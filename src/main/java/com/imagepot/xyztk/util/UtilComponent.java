@@ -41,7 +41,7 @@ public class UtilComponent {
     /**
      * 最適な単位にバイト変換する
      * @param size 変換対象の数字
-     * @return 最適な単位を決定し数字+単位の文字列を返す
+     * @return 最適な単位を決定しバイト数と最適な単位を結合した文字列を返す
      */
     public String readableSize(double size) {
         String[] units = new String[]{"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
