@@ -81,7 +81,6 @@
   &__postedItem {
     display: flex;
     flex-wrap: wrap;
-    opacity: 0;
     transition: all 0.7s ease-in-out;
 
     &.is-loaded {

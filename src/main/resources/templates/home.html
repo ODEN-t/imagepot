@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="common::meta_header('Home', ~{::link}, ~{::script})">
-  <script th:inline="javascript">
-      /*<![CDATA[*/
-      const urlList = /*[[${urlList}]]*/ 'default';
-      /*]]>*/
-  </script>
+<!--  <script th:inline="javascript">-->
+<!--      /*<![CDATA[*/-->
+<!--      const urlList = /*[[${urlList}]]*/ 'default';-->
+<!--      /*]]>*/-->
+<!--  </script>-->
   <script th:src="@{/dist/home/index.js}" defer></script>
   <link rel="stylesheet" th:href="@{/css/page/home.min.css}">
 </head>
@@ -25,6 +25,13 @@
         </div>
       </section>
       <section class="p-home__postedList" id="js-postedList">
+        <div class="p-home__postedItem">
+          <figure th:each="url, iter : ${urlList}">
+            <div class="p-home__postedImg">
+              <img th:src="${urlList.get(iter.index)}" alt="" loading="lazy">
+            </div>
+          </figure>
+        </div>
         <div class="p-home__postedList__buttonWrap">
 <!--          <div class="p-home__postedList__sortArea" >-->
 <!--            <span>Sort By</span>-->

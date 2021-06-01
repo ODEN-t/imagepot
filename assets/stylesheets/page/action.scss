@@ -109,6 +109,7 @@
 }
 
 .uploadModal {
+  position: relative;
   height: 100%;
   display: none;
 
@@ -186,9 +187,12 @@
     &__statusArea {
       width: 50%;
       padding: 0 13px 0 33px;
+      margin-top: 25px;
       overflow-y: scroll;
       > span {
-        font-size: 22px;
+        position: absolute;
+        top: 0;
+        font-size: 18px;
       }
 
       .fileList {
@@ -240,31 +244,6 @@
           position: absolute;
           bottom: 0;
           right: 5%
-        }
-      }
-
-      .progressWrap {
-        position: relative;
-        overflow: hidden;
-        &:before {
-          content: "";
-          display: block;
-          background-color: $color-palette-gray-2;
-          border-radius: 2.5px; /* 線幅の半分 */
-          height: 5px;
-        }
-      }
-
-      .progress {
-        position: absolute;
-        top: 0;
-        width: 0;
-        &:before {
-          content: "";
-          display: block;
-          background-color: $color-primary-blue;
-          border-radius: 2.5px; /* 線幅の半分 */
-          height: 5px;
         }
       }
     }
