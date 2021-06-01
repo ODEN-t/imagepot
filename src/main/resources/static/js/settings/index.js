@@ -90,14 +90,8 @@ const cropModal = new jBox('Modal', {
 
 document.getElementById('fileInput').addEventListener('change', (e) => {
     const file = e.target.files[0];
-    const LIMIT_MB = 1; // 1MB
-    const LIMIT = LIMIT_MB * 1024 * 1024; // B to MB
-
     if (!(file.type === 'image/jpeg' || file.type === 'image/png'))
         return window.alert('File type is not image/jpeg or image/png');
-
-    if (file.size > LIMIT)
-        return window.alert('File size is too large. The maximum supported file size are ' + LIMIT_MB.toString() + 'MB.');
 
     let fileReader = new FileReader();
     fileReader.onload = () => {

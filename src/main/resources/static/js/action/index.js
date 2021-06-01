@@ -91,6 +91,10 @@ const uploader = (e) => {
         setContent: false,
         success: function () {
             clearFormData();
+            alert('Uploaded successfully!');
+        },
+        error: function (data) {
+            alert('Critical error occurred. Please reload.');
         }
     })
 }

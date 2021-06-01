@@ -3,6 +3,7 @@ package com.imagepot.xyztk.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.imagepot.xyztk.model.LoginUser;
 import com.imagepot.xyztk.model.User;
 import com.imagepot.xyztk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,21 +33,21 @@ public class UserService {
 
     /**
      * ユーザアイコンを更新する
-     * @param userId ユーザ情報
+     * @param loginUser ログイン中のユーザ情報
      * @param icon ユーザがアップロードしたアイコンのバイト配列
      */
-    public void updateIcon(long userId, byte[] icon) {
-        userRepository.updateUserIcon(userId, icon);
+    public void updateIcon(LoginUser loginUser, byte[] icon) {
+        userRepository.updateUserIcon(loginUser.id, icon);
     }
 
 
     /**
      * DBに登録されているアイコン画像をnullに更新する
      *
-     * @param userId ユーザ情報
+     * @param loginUser ユーザ情報
      */
-    public void resetIcon(long userId) {
-        userRepository.resetUserIcon(userId);
+    public void resetIcon(LoginUser loginUser) {
+        userRepository.resetUserIcon(loginUser.id);
     }
 
 
@@ -91,7 +92,7 @@ public class UserService {
      * @param user ユーザ情報
      * @throws IllegalStateException 登録済みのメールアドレスの場合
      */
-    public void addNewUser(User user) {
+    public void insertNewUser(User user) {
         Optional<User> userOptional = userRepository.selectUserByEmail(user.getEmail());
         if (userOptional.isPresent()) {
             throw new IllegalStateException("Email has already been taken.");

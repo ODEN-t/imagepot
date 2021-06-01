@@ -89,7 +89,7 @@ public class LoginController {
             user.setName(signupForm.getName());
             user.setEmail(signupForm.getEmail());
             user.setPassword(passwordEncoder.encode(signupForm.getPassword()));
-            userService.addNewUser(user);
+            userService.insertNewUser(user);
         } catch (IllegalStateException e) {
             log.error(messageSource.getMessage("log.error",null, Locale.ENGLISH) + e.getMessage());
             model.addAttribute("registerError", true);

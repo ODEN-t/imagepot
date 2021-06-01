@@ -61,7 +61,7 @@ public class StorageService {
     public List<PotFile> s3UploadFile(ArrayList<MultipartFile> images, LoginUser loginUser) {
 
         List<String> uploadedKeyList = new ArrayList<>();
-        String pathToUserFolder = folderPrefix + Long.toString(loginUser.id) + "/";
+        String pathToUserFolder = folderPrefix + loginUser.id + "/";
 
         for (MultipartFile multipartFile : images) {
             try {
@@ -110,13 +110,12 @@ public class StorageService {
      * チェックボックスで選択したデータをs3からzip化してダウンロード
      *
      * @param checkedFileNameList s3オブジェクトへのアクセスに必要なkeyのリスト
-     * @param loginUser           ログインユーザ情報
      * @return zipファイル
      * @throws NullPointerException   keyのリストがNull(画面でチェックなし)の場合エラー
      * @throws IOException            ファイル作成過程でのエラー
      * @throws AmazonServiceException s3側での重大なエラーの場合
      */
-    public ResponseEntity<byte[]> s3DownloadFile(String[] checkedFileNameList, LoginUser loginUser)
+    public ResponseEntity<byte[]> s3DownloadFile(String[] checkedFileNameList)
             throws NullPointerException, IOException, AmazonServiceException {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

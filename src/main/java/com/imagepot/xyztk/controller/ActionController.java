@@ -119,21 +119,19 @@ public class ActionController {
 
     /**
      * ユーザが選択したファイルデータをs3からダウンロード
-     * @param loginUser ログインユーザ情報
      * @param potFileList ユーザの保持する全ファイル情報を詰めたリスト
      * @param checkedFileList ユーザが選択したファイルキーのリスト
      * @return View 成功時：ダウンロード実行  エラー時：エラーメッセージ表示
      */
     @PostMapping(value = "/file", params = "download")
     public <T> T downloadImage(
-            @AuthenticationPrincipal LoginUser loginUser,
             List<PotFile> potFileList,
             Model model,
             @RequestParam(value = "fileKey", required = false) String[] checkedFileList) {
 
         // s3からダウンロード
         try {
-            ResponseEntity<byte[]> responseEntity = s3Service.s3DownloadFile(checkedFileList, loginUser);
+            ResponseEntity<byte[]> responseEntity = s3Service.s3DownloadFile(checkedFileList);
             return (T) responseEntity;
         }
         // 未選択の場合エラーメッセージを返す

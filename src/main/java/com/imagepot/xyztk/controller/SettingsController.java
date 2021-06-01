@@ -73,6 +73,7 @@ public class SettingsController {
      */
     @PostMapping("/reset/user/icon")
     public String resetIcon(@AuthenticationPrincipal LoginUser loginUser) {
+        userService.resetIcon(loginUser);
         utilComponent.updateSecurityContext(loginUser.email);
         return "redirect:/settings";
     }
@@ -90,16 +91,17 @@ public class SettingsController {
             @AuthenticationPrincipal LoginUser loginUser) {
         try {
             String fileType = croppedImage.getContentType();
+            long MAX_FILE_SIZE_MB = 1L; // 1MB
+            long MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024; // B to MB
 
             if (!(Objects.requireNonNull(fileType).equals("image/jpeg") || fileType.equals("image/png")))
-                return new ResponseEntity<>(messageSource.getMessage("error.updateUserIcon", null, Locale.ENGLISH), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(messageSource.getMessage("error.updateUserIcon.type", null, Locale.ENGLISH), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 
-            long userId = loginUser.id;
-            byte[] newIcon = croppedImage.getBytes();
-            String email = loginUser.email;
+            if (croppedImage.getSize() > MAX_FILE_SIZE)
+                return new ResponseEntity<>(messageSource.getMessage("error.updateUserIcon.size", null, Locale.ENGLISH), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 
-            userService.updateIcon(userId, newIcon);
-            utilComponent.updateSecurityContext(email);
+            userService.updateIcon(loginUser, croppedImage.getBytes());
+            utilComponent.updateSecurityContext(loginUser.email);
 
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
