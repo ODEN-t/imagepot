@@ -7,6 +7,7 @@ import com.imagepot.xyztk.model.LoginUser;
 import com.imagepot.xyztk.model.User;
 import com.imagepot.xyztk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,7 @@ public class UserService {
      * @return 全ユーザ情報のリスト
      */
     public List<User> getUsers() {
-        return userRepository.findAll();
+        return userRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
 
