@@ -13,7 +13,7 @@ CREATE TABLE pot_user(
     icon bytea,
     role varchar(10) NOT NULL CHECK(role = 'ROLE_USER' or role = 'ROLE_ADMIN') DEFAULT 'ROLE_USER',
     password_updated_at timestamp DEFAULT current_timestamp,
-    signin_miss_times integer DEFAULT 0,
+    login_miss_times integer DEFAULT 0,
     unlock boolean DEFAULT true,
     enabled boolean DEFAULT true,
     updated_at timestamp DEFAULT current_timestamp,
