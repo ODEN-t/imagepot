@@ -61,13 +61,13 @@ public class AdminController {
         try {
             userService.deleteUser(userId);
         } catch (IllegalStateException e) {
-            log.error(messageSource.getMessage("error.deleteUser",null, Locale.ENGLISH) + e.getMessage());
+            log.error(messageSource.getMessage("log.error",null, Locale.ENGLISH) + e.getMessage());
             redirectAttributes.addFlashAttribute("deleteError", true);
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
 
         redirectAttributes.addFlashAttribute("deleteSuccess", true);
-        redirectAttributes.addFlashAttribute("message", messageSource.getMessage("success.deleteUser",null, Locale.ENGLISH));
+        redirectAttributes.addFlashAttribute("message", messageSource.getMessage("success.delete",null, Locale.ENGLISH));
 
         return "redirect:/admin";
     }

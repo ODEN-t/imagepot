@@ -7,6 +7,9 @@ import com.imagepot.xyztk.util.UtilComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -70,7 +73,6 @@ public class SettingsController {
      */
     @PostMapping("/reset/user/icon")
     public String resetIcon(@AuthenticationPrincipal LoginUser loginUser) {
-        log.info("Reset icon executed, UserID: " + loginUser.id + ".");
         utilComponent.updateSecurityContext(loginUser.email);
         return "redirect:/settings";
     }
@@ -83,30 +85,28 @@ public class SettingsController {
      * @return 成功時：ajaxへ返す 失敗時：設定画面へリダイレクト
      */
     @PostMapping("/update/user/icon")
-    @ResponseBody
-    public String setNewIcon(
+    public ResponseEntity<String> updateUserIcon(
             @RequestParam MultipartFile croppedImage,
             @AuthenticationPrincipal LoginUser loginUser) {
         try {
             String fileType = croppedImage.getContentType();
 
             if (!(Objects.requireNonNull(fileType).equals("image/jpeg") || fileType.equals("image/png")))
-                return "typeError";
+                return new ResponseEntity<>(messageSource.getMessage("error.updateUserIcon", null, Locale.ENGLISH), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 
             long userId = loginUser.id;
             byte[] newIcon = croppedImage.getBytes();
             String email = loginUser.email;
 
             userService.updateIcon(userId, newIcon);
-            log.info("New icon was uploaded, UserID: " + loginUser.id + ".");
             utilComponent.updateSecurityContext(email);
 
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
-            return "redirect:/settings";
+            return new ResponseEntity<>(messageSource.getMessage("error.critical", null, Locale.ENGLISH), new HttpHeaders(), HttpStatus.BAD_REQUEST);
         }
 
-        return "success";
+        return new ResponseEntity<>(messageSource.getMessage("success.update", null, Locale.ENGLISH), new HttpHeaders(), HttpStatus.OK);
     }
 
 
@@ -158,7 +158,7 @@ public class SettingsController {
                 userService.updateEmail(user);
                 userService.updateName(user);
             }
-            redirectAttributes.addFlashAttribute("successMessage", messageSource.getMessage("success.updateUserInfo",null, Locale.ENGLISH));
+            redirectAttributes.addFlashAttribute("successMessage", messageSource.getMessage("success.update",null, Locale.ENGLISH));
 
             if(isNewEmail)
                 utilComponent.updateSecurityContext(user.getEmail());
@@ -215,7 +215,7 @@ public class SettingsController {
         user.setId(loginUser.id);
         userService.updatePassword(user, passwordEncoder.encode(updateUserPasswordForm.getNewPassword()));
 
-        redirectAttributes.addFlashAttribute("successMessage", messageSource.getMessage("success.updateUserPassword",null, Locale.ENGLISH));
+        redirectAttributes.addFlashAttribute("successMessage", messageSource.getMessage("success.update",null, Locale.ENGLISH));
 
         utilComponent.updateSecurityContext(loginUser.email);
 

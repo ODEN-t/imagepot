@@ -104,7 +104,7 @@ public class ActionController {
             List<PotFile> deleteFileList = s3Service.s3DeleteFile(fileKeyList);
             fileService.deleteFilesByKey(deleteFileList);
             redirectAttributes.addFlashAttribute("actionSuccess", true);
-            redirectAttributes.addFlashAttribute("message", messageSource.getMessage("success.deleteImage", null, Locale.ENGLISH));
+            redirectAttributes.addFlashAttribute("message", messageSource.getMessage("success.delete", null, Locale.ENGLISH));
         }
         // 未選択の場合エラーメッセージを返す
         catch (NullPointerException e) {

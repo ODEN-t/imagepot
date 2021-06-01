@@ -91,7 +91,7 @@ public class LoginController {
             user.setPassword(passwordEncoder.encode(signupForm.getPassword()));
             userService.addNewUser(user);
         } catch (IllegalStateException e) {
-            log.error(messageSource.getMessage("error.signup",null, Locale.ENGLISH) + e.getMessage());
+            log.error(messageSource.getMessage("log.error",null, Locale.ENGLISH) + e.getMessage());
             model.addAttribute("registerError", true);
             model.addAttribute("message", e.getMessage());
             return "top";
