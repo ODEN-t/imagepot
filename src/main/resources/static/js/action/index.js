@@ -101,7 +101,7 @@ const uploader = (e) => {
         data: formData,
         contentType: false,
         processData: false,
-        spinner: true,
+        spinner: '<div class="loadingMask"></div>',
         setContent: false,
         success: function () {
             clearFormData();
