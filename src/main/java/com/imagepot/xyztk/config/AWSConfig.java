@@ -11,5 +11,7 @@ import lombok.Data;
 @Data
 public class AWSConfig {
     private String bucketName;
+    private String bucketNameResized;
     private String folderPrefix;
+    private String folderPrefixRd;
 }

@@ -51,6 +51,14 @@ public class PotFile {
     private URL url;
 
     @Column(
+            name = "tmb_url",
+            nullable = false,
+            updatable = false,
+            columnDefinition = "VARCHAR"
+    )
+    private URL tmb_url;
+
+    @Column(
             name = "name",
             nullable = false,
             updatable = false,
