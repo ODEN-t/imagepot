@@ -1,51 +1,87 @@
 @import "../common/_variables";
 
 .p-hero {
-  background-size: cover;
-  background-position-y: center;
-  width: 100%;
-  height: 70vh;
-  &-1 {
-    background-image: url("/images/pc/hero1-min.jpg");
-  }
-  &-2 {
-    background-image: url("/images/pc/hero2-min.jpg");
-  }
-  &-3 {
-    background-image: url("/images/pc/hero3-min.jpg");
+  &__slide {
+    background-size: cover;
+    background-position-y: center;
+    width: 100%;
+    height: 70vh;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.23);
+      z-index: 1;
+    }
+
+    &-1 {
+      background-image: url("/images/pc/hero1-min.jpg");
+    }
+
+    &-2 {
+      background-image: url("/images/pc/hero2-min.jpg");
+    }
+
+    &-3 {
+      background-image: url("/images/pc/hero3-min.jpg");
+    }
   }
 
   &__wrap {
+    position: absolute;
     height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
+    z-index: 2;
   }
 
   &__content {
-    width: 610px;
-    text-align: center;
-    margin-left: 50px;
+    width: 900px;
+    margin-left: 90px;
+    color: #fff;
+    line-height: 1.5;
 
-    > h1 {
+    > h2 {
       font-size: 60px;
-      font-weight: 800;
-      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    > h3 {
+      font-size: 32px;
+      font-weight: 600;
     }
 
     > p {
-      margin-top: 2em;
+      position: relative;
       font-size: 22px;
-      line-height: 1.3;
+      line-height: 1.5;
+      margin-top: 33px;
+      padding-left: 3em;
+      &:before {
+        content: '';
+        display: block;
+        width: 2.6em;
+        height: 1.5px;
+        background: #fff;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+      }
     }
 
     .buttonWrap {
       margin-top: 30px;
       display: flex;
-      justify-content: center;
 
       .buttonCTA:first-of-type {
-        margin-right: 10px;
+        margin-right: 15px;
       }
 
       // 良い方法があればpartsに書きたい
@@ -54,17 +90,30 @@
       }
     }
   }
+
+  .slick-dots {
+    bottom: 15px;
+    button:before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #fff;
+    }
+  }
 }
 
 
 .p-modal {
   &__body {
     padding: 15px 25px 35px;
+
     h2 {
       text-align: center;
       font-size: 41px;
       font-weight: 800;
     }
+
     p {
       color: $color-palette-gray-8;
       margin-top: 18px;
@@ -76,23 +125,27 @@
 
   &__form {
     margin-top: 32px;
+
     .inputGroup:not(:nth-of-type(1)) {
       margin-top: 20px;
     }
+
     > .buttonCTA {
       margin-top: 33px;
     }
   }
 
   &__footer {
-    box-shadow: 0 -1px rgba(0,0,0, 0.11);
+    box-shadow: 0 -1px rgba(0, 0, 0, 0.11);
     padding: 24px 24px 9px;
     font-size: 16px;
     line-height: 1.4;
     text-align: center;
+
     > span {
       color: $color-primary-pink;
       cursor: pointer;
+
       &:hover {
         border-bottom: solid 1px $color-primary-pink;
       }

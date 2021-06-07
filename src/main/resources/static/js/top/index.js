@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import 'jbox/dist/jBox.all.css';
 import JBox from 'jbox/dist/jBox.min';
-import slick from 'slick-carousel' ;
+import 'slick-carousel';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import * as module from '../module/index';
@@ -9,7 +9,7 @@ import * as module from '../module/index';
 
 const loginModal = new JBox('Modal', {
     id: 'login',
-    width: 405,
+    width: 440,
     height: 443,
     attach: '#login',
     content: $('#loginModal'),
@@ -22,7 +22,7 @@ const loginModal = new JBox('Modal', {
 
 const signupModal = new JBox('Modal', {
     id: 'signup',
-    width: 405,
+    width: 440,
     height: 573,
     attach: '#signup',
     content: $('#signupModal'),
@@ -32,14 +32,12 @@ const signupModal = new JBox('Modal', {
     createOnInit: true,
 });
 
-console.log(slick);
-$(".test").slick({
-    arrows: false,
+$(".p-hero").slick({
+    arrows: true,
     dots: true,
     autoplay: true,
-    autoplaySpeed: 1500,
-    speed: 1500,
-    fade: true,
+    autoplaySpeed: 10000,
+    speed: 400,
     pauseOnFocus: false,
     pauseOnHover: false,
     pauseOnDotsHover: false,
