@@ -1,3 +1,4 @@
+const webpack = require("webpack");
 const glob = require('glob');
 const path = require('path');
 const srcDir = './src/main/resources/static/js';
@@ -40,5 +41,11 @@ module.exports = {
         fallback: {
             "util": require.resolve("util/"), // aws sdk error
         },
-    }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        })
+    ]
 };

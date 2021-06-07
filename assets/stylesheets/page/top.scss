@@ -1,10 +1,19 @@
 @import "../common/_variables";
 
-.p-top {
-  background-image: url("/images/top-image_1920.png");
+.p-hero {
   background-size: cover;
+  background-position-y: center;
   width: 100%;
-  height: 100vh;
+  height: 70vh;
+  &-1 {
+    background-image: url("/images/pc/hero1-min.jpg");
+  }
+  &-2 {
+    background-image: url("/images/pc/hero2-min.jpg");
+  }
+  &-3 {
+    background-image: url("/images/pc/hero3-min.jpg");
+  }
 
   &__wrap {
     height: 100%;
@@ -13,7 +22,7 @@
     align-items: center;
   }
 
-  &__hero {
+  &__content {
     width: 610px;
     text-align: center;
     margin-left: 50px;
@@ -23,27 +32,33 @@
       font-weight: 800;
       line-height: 1.2;
     }
-    > p{ 
+
+    > p {
       margin-top: 2em;
       font-size: 22px;
       line-height: 1.3;
     }
+
     .buttonWrap {
       margin-top: 30px;
       display: flex;
       justify-content: center;
+
       .buttonCTA:first-of-type {
         margin-right: 10px;
       }
+
       // 良い方法があればpartsに書きたい
       .buttonCTA-adjustWith {
         width: 92px;
       }
     }
   }
+}
 
 
-  &__modalBody {
+.p-modal {
+  &__body {
     padding: 15px 25px 35px;
     h2 {
       text-align: center;
@@ -59,20 +74,17 @@
     }
   }
 
-  &__modalForm {
+  &__form {
     margin-top: 32px;
-
     .inputGroup:not(:nth-of-type(1)) {
       margin-top: 20px;
     }
-
     > .buttonCTA {
       margin-top: 33px;
     }
   }
 
-
-  &__modalFooter {
+  &__footer {
     box-shadow: 0 -1px rgba(0,0,0, 0.11);
     padding: 24px 24px 9px;
     font-size: 16px;

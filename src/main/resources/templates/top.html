@@ -7,99 +7,138 @@
 </head>
 
 <body>
-<section class="p-top">
-  <div class="p-top__wrap">
-    <div class="p-top__hero">
-      <h1>The simple and fast<br>storage service<br>for images!</h1>
-      <p>Store secret images that you don't want to see.</p>
-      <div class="buttonWrap">
-        <button id="login" class="buttonCTA buttonCTA-adjustWith">
-          Login
-        </button>
-        <button id="signup" class="buttonCTA buttonCTA-adjustWith">
-          Sign up
-        </button>
-      </div>
-    </div>
-    <!-- Login Form -->
-    <div style="display: none;" id="loginModal" class="p-top__modalContent">
-      <div class="p-top__modalBody">
-        <h2>Hello!</h2>
-        <p>Login to your account here.</p>
-        <form class="p-top__modalForm" th:method="POST" th:action="@{/login}">
-          <div class="inputGroup">
-            <input class="inputText" type="text" placeholder="Email" name="email">
-            <i class="icon-envelop"></i>
-          </div>
-          <div class="inputGroup">
-            <input class="inputText" type="password" placeholder="Password" name="password">
-            <span class="buttonCTA buttonCTA-show">Show</span>
-            <i class="icon-lock"></i>
-          </div>
-          <button type="submit" class="buttonCTA buttonCTA-fullWidth">Login</button>
-        </form>
-      </div>
-      <div class="p-top__modalFooter">
-        Don't have an account?? <span id="signupSub">Sign up</span>
-      </div>
-    </div>
-    <div th:if="${param.auth} != null and ${param.auth[0].equals('top')}"
-         class="c-message c-message-error"
-         data-message="error"
-         data-process="login">
-      <span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>
-    </div>
 
-    <!-- Signup Form -->
-    <div style="display: none;" class="p-top__modalContent" id="signupModal">
-      <div class="p-top__modalBody">
-        <h2>Join ImgBucket</h2>
-        <p>Use image storage for free.</p>
-        <form class="p-top__modalForm" method="POST" th:action="@{/signup}" th:object="${signupForm}">
-          <div class="inputGroup">
-            <input class="inputText" th:classappend="${#fields.hasErrors('name')}?'is-error'" type="text"
-                   placeholder="Name" th:field="*{name}" maxlength="20">
-            <i class="icon-user"></i>
-          </div>
-          <div class="inputGroup">
-            <input class="inputText" th:classappend="${#fields.hasErrors('email')}?'is-error'" type="text"
-                   placeholder="Email" th:field="*{email}">
-            <i class="icon-envelop"></i>
-          </div>
-          <div class="inputGroup">
-            <input class="inputText" th:classappend="${#fields.hasErrors('password')}?'is-error'"
-                   type="password" placeholder="Password" th:field="*{password}">
-            <span class="buttonCTA buttonCTA-show">Show</span>
-            <i class="icon-lock"></i>
-          </div>
-          <div class="inputGroup">
-            <input class="inputText" th:classappend="${#fields.hasErrors('confirmPassword')}?'is-error'"
-                   type="password" placeholder="Confirm Password" th:field="*{confirmPassword}">
-            <span class="buttonCTA buttonCTA-show">Show</span>
-            <i class="icon-lock"></i>
-          </div>
-          <button type="submit" class="buttonCTA buttonCTA-fullWidth">Create account</button>
-          <div th:if="${#fields.hasErrors('${signupForm.*}')}" data-process="signup" data-message="error"
-               class="c-message c-message-error">
-            <span th:errors="${signupForm.*}"></span>
-          </div>
-          <div th:if="${registerError}" data-message="error" data-process="signup" class="c-message c-message-error">
-            <span th:text="${message}"></span>
-          </div>
-          <div th:if="${registerSuccess}" data-message="success" data-process="signup"
-               class="c-message c-message-success">
-            <span th:text="${message}"></span>
-          </div>
-        </form>
-      </div>
-      <div class="p-top__modalFooter">
-        Already registered? <span id="loginSub">Login</span>
+<section class="test">
+  <section class="p-hero p-hero-1">
+    <div class="p-hero__wrap">
+      <div class="p-hero__content">
+        <h1>Img Bucket</h1>
+        <h2>Simple and secure cloud storage service.</h2>
+        <p>Store your special images safely, and keep it in private.</p>
+        <div class="buttonWrap">
+          <button id="login" class="buttonCTA buttonCTA-adjustWith">
+            Login
+          </button>
+          <button id="signup" class="buttonCTA buttonCTA-adjustWith">
+            Sign up
+          </button>
+        </div>
       </div>
     </div>
+  </section>
 
+  <section class="p-hero p-hero-2">
+    <div class="p-hero__wrap">
+      <div class="p-hero__content">
+        <h1>Img Bucket</h1>
+        <h2>Simple and secure cloud storage service.</h2>
+        <p>Store your special images safely, and keep it in private.</p>
+        <div class="buttonWrap">
+          <button class="buttonCTA buttonCTA-adjustWith">
+            Login
+          </button>
+          <button class="buttonCTA buttonCTA-adjustWith">
+            Sign up
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="p-hero p-hero-3">
+    <div class="p-hero__wrap">
+      <div class="p-hero__content">
+        <h1>Img Bucket</h1>
+        <h2>Simple and secure cloud storage service.</h2>
+        <p>Store your special images safely, and keep it in private.</p>
+        <div class="buttonWrap">
+          <button class="buttonCTA buttonCTA-adjustWith">
+            Login
+          </button>
+          <button class="buttonCTA buttonCTA-adjustWith">
+            Sign up
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+
+<!-- Login Form -->
+<section style="display: none;" id="loginModal" class="p-modal">
+  <div class="p-modal__body">
+    <h2>Hello!</h2>
+    <p>Login to your account here.</p>
+    <form class="p-modal__form" th:method="POST" th:action="@{/login}">
+      <div class="inputGroup">
+        <input class="inputText" type="text" placeholder="Email" name="email">
+        <i class="icon-envelop"></i>
+      </div>
+      <div class="inputGroup">
+        <input class="inputText" type="password" placeholder="Password" name="password">
+        <span class="buttonCTA buttonCTA-show">Show</span>
+        <i class="icon-lock"></i>
+      </div>
+      <button type="submit" class="buttonCTA buttonCTA-fullWidth">Login</button>
+    </form>
+  </div>
+  <div class="p-modal__footer">
+    Don't have an account?? <span id="signupSub">Sign up</span>
+  </div>
+</section>
+<div th:if="${param.auth} != null and ${param.auth[0].equals('top')}"
+     class="c-message c-message-error"
+     data-message="error"
+     data-process="login">
+  <span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>
+</div>
+
+<!-- Signup Form -->
+<section style="display: none;" class="p-modal" id="signupModal">
+  <div class="p-modal__body">
+    <h2>Join ImgBucket</h2>
+    <p>Use image storage for free.</p>
+    <form class="p-modal__form" method="POST" th:action="@{/signup}" th:object="${signupForm}">
+      <div class="inputGroup">
+        <input class="inputText" th:classappend="${#fields.hasErrors('name')}?'is-error'" type="text"
+               placeholder="Name" th:field="*{name}" maxlength="20">
+        <i class="icon-user"></i>
+      </div>
+      <div class="inputGroup">
+        <input class="inputText" th:classappend="${#fields.hasErrors('email')}?'is-error'" type="text"
+               placeholder="Email" th:field="*{email}">
+        <i class="icon-envelop"></i>
+      </div>
+      <div class="inputGroup">
+        <input class="inputText" th:classappend="${#fields.hasErrors('password')}?'is-error'"
+               type="password" placeholder="Password" th:field="*{password}">
+        <span class="buttonCTA buttonCTA-show">Show</span>
+        <i class="icon-lock"></i>
+      </div>
+      <div class="inputGroup">
+        <input class="inputText" th:classappend="${#fields.hasErrors('confirmPassword')}?'is-error'"
+               type="password" placeholder="Confirm Password" th:field="*{confirmPassword}">
+        <span class="buttonCTA buttonCTA-show">Show</span>
+        <i class="icon-lock"></i>
+      </div>
+      <button type="submit" class="buttonCTA buttonCTA-fullWidth">Create account</button>
+      <div th:if="${#fields.hasErrors('${signupForm.*}')}" data-process="signup" data-message="error"
+           class="c-message c-message-error">
+        <span th:errors="${signupForm.*}"></span>
+      </div>
+      <div th:if="${registerError}" data-message="error" data-process="signup" class="c-message c-message-error">
+        <span th:text="${message}"></span>
+      </div>
+      <div th:if="${registerSuccess}" data-message="success" data-process="signup"
+           class="c-message c-message-success">
+        <span th:text="${message}"></span>
+      </div>
+    </form>
+  </div>
+  <div class="p-modal__footer">
+    Already registered? <span id="loginSub">Login</span>
   </div>
 </section>
 </body>
-
-
 </html>
