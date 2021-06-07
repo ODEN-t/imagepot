@@ -34,8 +34,10 @@
         "aws-sdk": "^2.906.0",
         "config": "^3.3.6",
         "cropperjs": "^1.5.11",
+        "imagesloaded": "^4.1.4",
         "jbox": "^1.2.1",
         "jquery": "^3.5.1",
+        "masonry-layout": "^4.2.2",
         "util": "^0.12.3"
     }
 }

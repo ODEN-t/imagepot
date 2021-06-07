@@ -44,6 +44,13 @@ let formData = null;
 // インプットしたファイル情報を表示
 const inputFormData = (e) => {
     const files = e.target.files;
+    const fileSizeElem = document.getElementById('js-totalSize');
+    let totalSize = Number.parseInt(fileSizeElem.dataset.rawsize);
+
+    // if(30 < files.length) {
+    //     return alert('Please select less than 30 files.');
+    // }
+
     const template =
         `<li class="inputFile">
                 <i class="icon-file-picture"></i>
@@ -60,12 +67,16 @@ const inputFormData = (e) => {
     for (let i = 0; i < files.length; i++) {
         templateList[i].querySelector('.fileName').textContent = files[i].name;
         templateList[i].querySelector('.fileSize').textContent = module.readableFileSize(files[i].size);
+        totalSize += Number.parseInt(files[i].size);
         fileListElement.appendChild(templateList[i]);
     }
     formData = new FormData();
     for (let i = 0; i < files.length; i++) {
         formData.append('images', files[i]);
     }
+    fileSizeElem.dataset.rawsize = totalSize.toString();
+    fileSizeElem.textContent = module.readableFileSize(totalSize);
+    console.log(totalSize);
 }
 
 // フォームデータをnull & 画面表示からファイル情報を削除
@@ -75,6 +86,9 @@ const clearFormData = () => {
     while(parent.firstChild){
         parent.removeChild(parent.firstChild)
     }
+    const fileSizeElem = document.getElementById('js-totalSize');
+    fileSizeElem.textContent = '0';
+    fileSizeElem.dataset.rawsize = '0';
 }
 
 // バックエンドへアップロードリクエスト
@@ -87,7 +101,7 @@ const uploader = (e) => {
         data: formData,
         contentType: false,
         processData: false,
-        spinner: true,
+        spinner: '<div class="loadingMask"></div>',
         setContent: false,
         success: function () {
             clearFormData();

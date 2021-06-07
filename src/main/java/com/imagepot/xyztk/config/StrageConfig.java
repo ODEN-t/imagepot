@@ -1,5 +1,6 @@
 package com.imagepot.xyztk.config;
 
+import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -26,8 +27,13 @@ public class StrageConfig {
     // 認証情報を元にクライアントを確立
     public AmazonS3 s3Cliant() {
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
+        ClientConfiguration clientConfiguration = new ClientConfiguration()
+                .withConnectionTimeout(60000)
+                .withMaxConnections(6000)
+                .withSocketTimeout(70000);
         return AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
+                .withClientConfiguration(clientConfiguration)
                 .withRegion(region)
                 .build();
     }

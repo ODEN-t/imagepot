@@ -51,7 +51,7 @@ public class HomeController {
         log.info(loginUser.toString());
         List<URL> urlList = new ArrayList<>();
         for(PotFile potFile : potFileList) {
-            urlList.add(potFile.getUrl());
+            urlList.add(potFile.getTmb_url());
         }
         String totalSizeReadable = utilComponent.readableSize(getTotalFileSize(potFileList));
         model.addAttribute("totalFiles", urlList.size());

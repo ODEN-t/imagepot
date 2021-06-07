@@ -25,6 +25,7 @@ CREATE TABLE pot_file(
     user_id bigint NOT NULL REFERENCES pot_user(user_id),
     key varchar(400) NOT NULL UNIQUE,
     url varchar(2083) NOT NULL UNIQUE,
+    tmb_url varchar(2083) NOT NULL UNIQUE,
     name varchar(260) NOT NULL,
     size numeric NOT NULL,
     type varchar(4) NOT NULL,

@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -40,8 +41,14 @@ public class StorageService {
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
+    @Value("${aws.s3.bucketNameResized}")
+    private String bucketNameRd;
+
     @Value("${aws.s3.folderPrefix}")
     private String folderPrefix;
+
+    @Value("${aws.s3.folderPrefixRd}")
+    private String folderPrefixRd;
 
     private final AmazonS3 s3Cliant;
 
@@ -62,9 +69,11 @@ public class StorageService {
 
         List<String> uploadedKeyList = new ArrayList<>();
         String pathToUserFolder = folderPrefix + loginUser.id + "/";
+        String pathToUserFolderTmb = folderPrefixRd + loginUser.id + "/";
+        List<PotFile> uploadedFileList = new ArrayList<>();
 
-        for (MultipartFile multipartFile : images) {
-            try {
+        try {
+            for (MultipartFile multipartFile : images) {
                 InputStream multipartFileInStream = multipartFile.getInputStream();
 
                 // 現在日時の取得
@@ -79,29 +88,31 @@ public class StorageService {
 
                 s3Cliant.putObject(new PutObjectRequest(bucketName, pathToUserFolder + fileName, multipartFileInStream, objectMetadata));
                 uploadedKeyList.add(pathToUserFolder + fileName);
-            } catch (IOException | AmazonServiceException e) {
-                e.printStackTrace();
             }
-        }
 
-        // アップロードしたファイル情報をユーザ情報と紐付けて返す
-        User u = new User();
-        u.setId(loginUser.id);
-        List<PotFile> uploadedFileList = new ArrayList<>();
-        for (String key : uploadedKeyList) {
-            S3Object obj = s3Cliant.getObject(new GetObjectRequest(bucketName, key));
-            PotFile f = new PotFile();
-            f.setFile_id(UUID.randomUUID());
-            f.setUser_id(u);
-            f.setKey(obj.getKey());
-            f.setUrl(s3Cliant.getUrl(bucketName, obj.getKey()));
-            f.setName(obj.getKey().substring(pathToUserFolder.length()));
-            f.setSize(s3Cliant.getObjectMetadata(bucketName, key).getContentLength());
-            f.setType(obj.getKey().substring(pathToUserFolder.length()).substring(obj.getKey().substring(pathToUserFolder.length()).lastIndexOf(".") + 1));
-            Date lastModified = s3Cliant.getObjectMetadata(bucketName, key).getLastModified();
-            f.setLastModifiedAt(new Timestamp(lastModified.getTime()));
+            User u = new User();
+            u.setId(loginUser.id);
+            for (String key : uploadedKeyList) {
+                S3Object obj = s3Cliant.getObject(new GetObjectRequest(bucketName, key));
+                PotFile f = new PotFile();
+                f.setFile_id(UUID.randomUUID());
+                f.setUser_id(u);
+                f.setKey(obj.getKey());
+                URL originalSizeUrl = s3Cliant.getUrl(bucketName, obj.getKey());
+                String s = originalSizeUrl.toString().replaceFirst(bucketName, bucketNameRd);
+                URL tmbUrl = new URL(s.replaceFirst(pathToUserFolder, pathToUserFolderTmb));
+                f.setUrl(originalSizeUrl);
+                f.setTmb_url(tmbUrl);
+                f.setName(obj.getKey().substring(pathToUserFolder.length()));
+                f.setSize(s3Cliant.getObjectMetadata(bucketName, key).getContentLength());
+                f.setType(obj.getKey().substring(pathToUserFolder.length()).substring(obj.getKey().substring(pathToUserFolder.length()).lastIndexOf(".") + 1));
+                Date lastModified = s3Cliant.getObjectMetadata(bucketName, key).getLastModified();
+                f.setLastModifiedAt(new Timestamp(lastModified.getTime()));
 
-            uploadedFileList.add(f);
+                uploadedFileList.add(f);
+            }
+        } catch (IOException | AmazonServiceException e) {
+            e.printStackTrace();
         }
         return uploadedFileList;
     }
