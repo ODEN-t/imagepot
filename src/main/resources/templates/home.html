@@ -12,9 +12,8 @@
 </head>
 
 <body>
+<div th:replace="common::header"></div>
 <div class="c-globalContainer">
-  <div th:replace="common::sidebar">
-  </div>
   <div class="c-contents">
     <div class="loadingMask">
       <img th:src="@{/images/preloader64.gif}" alt="">
@@ -34,7 +33,6 @@
           </figure>
           <div class="gutter-sizer"></div>
         </div>
-        <div class="p-home__postedList__buttonWrap">
           <!--          <div class="p-home__postedList__sortArea" >-->
           <!--            <span>Sort By</span>-->
           <!--            <select name="" id="">-->
@@ -51,11 +49,6 @@
           <!--              </path>-->
           <!--            </svg>-->
           <!--          </div>-->
-          <a class="buttonCTA buttonCTA-round buttonCTA-blue" th:href="@{'/action'}">
-            <i class="icon-checkmark"></i>
-            Action
-          </a>
-        </div>
       </section>
     </div>
   </div>

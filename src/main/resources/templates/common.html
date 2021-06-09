@@ -18,81 +18,69 @@
 
 <body>
 <header class="c-header" th:fragment="header">
-  <a class="c-header__title" href="/">
-    <span class="logo">ImgBucket</span>
-  </a>
-  <nav class="c-header__nav">
-    <ul class="c-header__navList">
-      <li>
-        <button class="c-header__navItem" id="login">SIGN IN</button>
-      </li>
-      <li>
-        <button class="c-header__navItem c-header__navItem-signup" id="signup">GET STARTED</button>
-      </li>
-    </ul>
-  </nav>
-</header>
-<section class="c-sidebar" th:fragment="sidebar">
-  <div style="display: none;" class="c-sidebar__modalContent" id="iconSettingContent">
-    <div class="c-sidebar__modalBody">
-      <figure class="c-sidebar__userInfo__icon" id="icon2">
-        <img th:src="@{/images/initial_icon.jpg}" alt="">
-      </figure>
-      <form enctype="multipart/form-data" method="POST" id="iconModalForm">
-        <input type="potFile" accept=".jpg, .jpeg, .png" id="inputImage">
-        <button type="submit" id="upload">アップロード</button>
-      </form>
-      <figure class="c-sidebar__userInfo__icon">
-        <canvas id="canvas" width="0" height="0"></canvas>
-      </figure>
-    </div>
+  <div class="c-header__wrap" sec:authorize="!isAuthenticated()">
+    <a class="c-header__title" href="/">
+      <span class="logo">ImgBucket</span>
+    </a>
+    <nav class="c-header__nav">
+      <ul class="c-header__navList">
+        <li>
+          <button class="c-header__navItem" id="login">SIGN IN</button>
+        </li>
+        <li>
+          <button class="c-header__navItem c-header__navItem-signup" id="signup">GET STARTED</button>
+        </li>
+      </ul>
+    </nav>
   </div>
-  <div class="c-sidebar__wrap">
-    <div class="c-sidebar__userInfo" th:switch="${#authentication.principal.icon}">
-      <figure class="c-sidebar__userInfo__icon" th:case="null">
-        <img th:src="@{/images/initial_icon.jpg}" alt="">
-      </figure>
-      <figure class="c-sidebar__userInfo__icon" th:case="*">
-        <img th:src="${#authentication.principal.icon}" alt="">
-      </figure>
-      <div class="c-sidebar__userInfo__name">
-        <span th:text="${#authentication.principal.name}"></span>
-      </div>
-      <div class="c-sidebar__userInfo__email">
-        <span th:text="${#authentication.principal.email}"></span>
-      </div>
-    </div>
-    <nav class="c-sidebar__menu">
-      <ol class="c-sidebar__menu__list">
-        <li class="c-sidebar__menu__item">
-          <a class="c-sidebar__menu__itemLink" th:href="@{'/home'}">
-            <i class="icon-home3"></i>
-            <span>Home</span>
+  <div class="c-header__wrap c-header__wrap-authed" sec:authorize="isAuthenticated()">
+    <a class="c-header__title" href="/home">
+      <span class="logo">ImgBucket</span>
+    </a>
+    <nav class="c-header__nav">
+      <ul class="c-header__navList"  th:switch="${#authentication.principal.icon}">
+        <li>
+          <span class="name" th:text="${#authentication.principal.name}"></span>
+        </li>
+        <li>
+          <figure class="icon" th:case="null">
+            <img th:src="@{/images/initial_icon.jpg}" alt="">
+          </figure>
+          <figure class="icon" th:case="*">
+            <img th:src="${#authentication.principal.icon}" alt="">
+          </figure>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="c-header__menu" id="menu">
+    <div class="c-header__menuWrap">
+      <ul class="c-header__menuList">
+        <li>
+          <a class="c-header__pageLink" th:href="@{'/action'}">
+            <span>Manage Images</span>
           </a>
         </li>
-        <li class="c-sidebar__menu__item">
-          <a class="c-sidebar__menu__itemLink" th:href="@{'/settings'}">
-            <i class="icon-cog"></i>
+        <li>
+          <a class="c-header__pageLink" th:href="@{'/settings'}">
             <span>Settings</span>
           </a>
         </li>
-        <li class="c-sidebar__menu__item" sec:authorize="hasRole('ADMIN')">
-          <a class="c-sidebar__menu__itemLink" th:href="@{'/admin'}">
-            <i class="icon-cogs"></i>
-            <span>Manage</span>
+        <li class="c-header__pageLink" sec:authorize="hasRole('ADMIN')">
+          <a class="c-header__pageLink" th:href="@{'/admin'}">
+            <span>Manage Users</span>
           </a>
         </li>
-        <li class="c-sidebar__menu__item">
-          <a th:href="@{'/logout'}" class="c-sidebar__menu__itemLink" id="logout"
+        <li class="c-header__pageLink">
+          <a th:href="@{'/logout'}" class="c-header__pageLink" id="logout"
              data-confirm="Are you sure you want to logout?">
-            <i class="icon-exit"></i>
             <span>Logout</span>
           </a>
         </li>
-      </ol>
-    </nav>
+      </ul>
+    </div>
   </div>
-</section>
+</header>
 </body>
 
 </html>
