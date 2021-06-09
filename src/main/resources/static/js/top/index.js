@@ -6,7 +6,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import * as module from '../module/index';
 
-
 const loginModal = new JBox('Modal', {
     id: 'login',
     width: 440,
@@ -16,9 +15,15 @@ const loginModal = new JBox('Modal', {
     overlayClass: 'add-jboxOverRay',
     closeOnClick: false,
     closeButton: 'box',
-    createOnInit: true,
+    fixed: true,
+    delayOpen: 200,
+    onOpen: function () {
+        document.getElementById('header').style.paddingRight = '17px';
+    },
+    onClose: function () {
+        document.getElementById('header').style.paddingRight = '0';
+    },
 });
-
 
 const signupModal = new JBox('Modal', {
     id: 'signup',
@@ -29,7 +34,14 @@ const signupModal = new JBox('Modal', {
     overlayClass: 'add-jboxOverRay',
     closeOnClick: false,
     closeButton: 'box',
-    createOnInit: true,
+    fixed: true,
+    delayOpen: 200,
+    onOpen: function () {
+        document.getElementById('header').style.paddingRight = '17px';
+    },
+    onClose: function () {
+        document.getElementById('header').style.paddingRight = '0';
+    }
 });
 
 $(".p-hero").slick({
@@ -43,33 +55,29 @@ $(".p-hero").slick({
     pauseOnDotsHover: false,
 });
 
-
-// switch modal loginModal and signupModal
+// モーダルトグル
 const modalSwitch = (...buttons) => {
     for (const button of buttons) {
-        document.getElementById(button).addEventListener('click', () => {
+        document.getElementById(button).addEventListener('click', (e) => {
             loginModal.toggle();
             signupModal.toggle();
-        })
+        });
     }
 }
 modalSwitch('signupSub', 'loginSub');
 
 
-// toggle input type between text and password
+// input=text input=password のトグル
 module.inputTypeToggle('.buttonCTA-show');
 
 
-// show result message from backend with modal
+// 実行結果メッセージの表示
 const element = module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error', true);
 if (typeof element !== 'undefined') {
     const result = element.dataset.message;
     const process = element.dataset.process;
-
-    if (result === 'error') {
+    if (result === 'error')
         process === 'login' ? loginModal.open() : signupModal.open();
-    }
-
     if (result === 'success' && process === 'signup')
         loginModal.open();
 }

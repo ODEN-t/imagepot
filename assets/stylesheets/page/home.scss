@@ -29,28 +29,6 @@
 .p-home {
   background-color: #fff;
   width: 100%;
-  padding: 58px 59px;
-
-  &__head {
-    margin-top: 35px;
-    > h2 {
-      font-size: 27px;
-      font-weight: 600;
-      line-height: 1.4;
-    }
-
-    &__info {
-      margin-top: 8px;
-      font-size: 17px;
-      font-weight: 600;
-      line-height: 1.4;
-      color: #7D7C83;
-
-      > span:last-child {
-        margin-left: 25px;
-      }
-    }
-  }
 
   &__postedList {
     position: relative;
@@ -100,17 +78,17 @@
   &__postedItem {
 
     .grid-item, .grid-sizer {
-      width: calc(95% / 6);
+      width: calc(96.5% / 6);
     }
     .gutter-sizer {
-      width: 1%;
+      width: 0.7%;
     }
     .grid-item {
-      margin-bottom: 1%;
+      margin-bottom: 0.7%;
     }
     img {
       width: 100%;
-      border-radius: 10px;
+      border-radius: 2px;
     }
   }
 

@@ -5,12 +5,6 @@
 // sidebarとcontents左右に並べるトップページ配下の共通ラッパー
 .c-globalContainer {
   position: relative;
-  display: flex;
-  align-items: stretch;
-}
-
-// Pageコンテンツとfooterをラップする
-.c-contents {
-  position: relative;
   width: 100%;
+  padding: 58px 59px;
 }

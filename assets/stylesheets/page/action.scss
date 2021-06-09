@@ -5,29 +5,6 @@
   width: 100%;
   padding: 30px 0;
 
-  &__head {
-    max-width: 1320px;
-    margin: 15px auto 0;
-    padding: 0 22px;
-
-    > h2 {
-      font-size: 27px;
-      font-weight: 600;
-      line-height: 1.4;
-    }
-
-    &__info {
-      margin-top: 8px;
-      font-size: 17px;
-      font-weight: 600;
-      line-height: 1.4;
-      color: #7D7C83;
-      > span:last-child {
-        margin-left: 25px;
-      }
-    }
-  }
-
   &__content {
     position: relative;
     max-width: 1320px;

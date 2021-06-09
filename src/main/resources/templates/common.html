@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<header class="c-header" th:fragment="header">
+<header class="c-header" th:fragment="header" id="header">
   <div class="c-header__wrap" sec:authorize="!isAuthenticated()">
     <a class="c-header__title" href="/">
       <span class="logo">ImgBucket</span>
@@ -53,7 +53,7 @@
       </ul>
     </nav>
   </div>
-  <div class="c-header__menu" id="menu">
+  <div class="c-header__menu" id="menu" sec:authorize="isAuthenticated()">
     <div class="c-header__menuWrap">
       <ul class="c-header__menuList">
         <li>
@@ -81,6 +81,15 @@
     </div>
   </div>
 </header>
+
+<section class="c-pageHeader" th:fragment="pageHeader">
+  <h2>Your Bucket</h2>
+  <div class="c-pageHeader__storageInfo">
+    <span>Total Images : <span th:text="${totalFiles}"></span></span>
+    <span>Total Size : <span th:text="${totalSizeReadable}"></span></span>
+  </div>
+</section>
+
 </body>
 
 </html>

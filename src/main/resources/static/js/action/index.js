@@ -17,6 +17,12 @@ const imgModal = new jBox('Modal', {
     reposition: true,
     repositionOnOpen: true,
     delayOpen: 300,
+    onOpen: function () {
+        document.getElementById('header').style.paddingRight = '17px';
+    },
+    onClose: function () {
+        document.getElementById('header').style.paddingRight = '0';
+    },
     onCloseComplete: function () {
         const parent = document.getElementById('js-imgModal');
         while (parent.firstChild) {
@@ -37,6 +43,12 @@ const uploadModal = new jBox('Modal', {
     closeOnClick: false,
     closeButton: 'box',
     createOnInit: true,
+    onOpen: function () {
+        document.getElementById('header').style.paddingRight = '17px';
+    },
+    onClose: function () {
+        document.getElementById('header').style.paddingRight = '0';
+    },
 });
 
 let formData = null;

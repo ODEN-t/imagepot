@@ -21,17 +21,6 @@ imgLoaded.on('always', () => {
     msnry.layout();
 });
 
-imgLoaded.on('fail', (instance, image) => {
-    console.log('fail');
-    console.log(instance)
-    console.log(image);
-});
-
-// imgLoaded.on('always', (instance, image) => {
-//     console.log('always');
-//     loadingMask.classList.add('is-loaded');
-// });
-
 imgLoaded.on('progress', function (instance, image) {
     if(!image.isLoaded) {
         image.img.src = "/images/image-not-available.jpg";
