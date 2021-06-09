@@ -16,10 +16,11 @@
 
   &__title {
     font-size: 22px;
-    font-weight: 300;
+    font-weight: 400;
     color: $color-base-white;
     opacity: 0.8;
     transition: all 0.4s ease;
+    font-family: Expletus Sans, serif;
     &:hover {
       opacity: 1;
     }

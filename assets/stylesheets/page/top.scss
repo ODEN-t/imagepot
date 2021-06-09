@@ -1,6 +1,7 @@
 @import "../common/_variables";
 
 .p-top {
+  background-color: $color-palette-gray-1;
   .p-hero {
     &__slide {
       background-size: cover;
@@ -48,21 +49,23 @@
       color: #fff;
       line-height: 1.5;
 
-      > h2 {
-        font-size: 60px;
-        font-weight: 700;
+      > h3 {
+        font-size: 45px;
+        font-weight: 600;
+        line-height: 1.4;
       }
 
-      > h3 {
-        font-size: 32px;
-        font-weight: 600;
+      .logo {
+        font-family: Expletus Sans, serif;
+        font-size: 36px;
+        font-weight: 400;
       }
 
       > p {
         position: relative;
-        font-size: 22px;
+        font-size: 23px;
         line-height: 1.5;
-        margin-top: 33px;
+        margin-top: 17px;
         padding-left: 3em;
 
         &:before {
@@ -101,23 +104,30 @@
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background: #fff;
+        background: $color-base-white;
       }
     }
   }
 
   .p-body {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-bottom: 30px;
+
     &__head {
       box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
-      max-width: 1400px;
-      margin: 0 auto;
       padding: 20px 0;
+      background-color: $color-base-white;
 
       > h4 {
         font-size: 20px;
         font-weight: 500;
         line-height: 1.2;
         text-align: center;
+
+        > span {
+          font-family: Expletus Sans, serif;
+        }
       }
     }
 
@@ -129,26 +139,62 @@
       > li {
         width: 100%;
         text-align: center;
-        img {
-          width: 31%;
-        }
       }
-    }
 
-    .textWrap {
-      margin-top: 10px;
+      > li img {
+        width: 31%;
+      }
 
-      > h5 {
+      .textWrap {
+        margin-top: 10px;
+      }
+
+      .textWrap > h5 {
         font-size: 19px;
         font-weight: 500;
       }
 
-      > p {
+      .textWrap > p {
         font-size: 15px;
         line-height: 1.4;
         margin-top: 10px;
+
       }
     }
+
+    &__panelWrap {
+      margin-top: 30px;
+    }
+
+    &__panel {
+      display: flex;
+      height: 466px;
+      .imgWrap, .textWrap {
+        width: 50%;
+        height: 100%;
+      }
+      .imgWrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .textWrap {
+        padding: 24px 35px;
+        > h4 {
+          font-size: 20px;
+          text-align: center;
+          font-weight: 400;
+        }
+      }
+      &-even {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+  .p-footer {
+    height: 100px;
+    width: 100%;
+    box-shadow: 0 -1px rgba(0, 0, 0, 0.11);
   }
 }
 
