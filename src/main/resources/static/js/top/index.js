@@ -33,7 +33,7 @@ const signupModal = new JBox('Modal', {
 });
 
 $(".p-hero").slick({
-    arrows: true,
+    arrows: false,
     dots: true,
     autoplay: true,
     autoplaySpeed: 10000,

@@ -237,11 +237,11 @@
     text-align: center;
 
     > span {
-      color: $color-primary-pink;
+      color: $color-base-blue;
       cursor: pointer;
 
       &:hover {
-        border-bottom: solid 1px $color-primary-pink;
+        border-bottom: solid 1px $color-base-blue;
       }
     }
   }
