@@ -140,6 +140,7 @@ public class StorageService {
             ZipEntry zipEntry = new ZipEntry(key.substring(key.lastIndexOf('/') + 1));
             zos.putNextEntry(zipEntry);
             zos.write(data);
+            zos.finish();
             zos.closeEntry();
         }
 
