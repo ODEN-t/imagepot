@@ -53,9 +53,9 @@ usage
   align-items: center;
   border-radius: 2px;
   overflow: hidden;
-  font-size: 17px;
-  font-weight: 700;
-  padding: 12px 15px 12px;
+  font-size: 15px;
+  font-weight: 400;
+  padding: 10px 17px;
   vertical-align: baseline;
   cursor: pointer;
   transition: all .15s ease;
@@ -94,13 +94,6 @@ usage
     font-weight: 500;
     padding: 9px 21px 9px;
     letter-spacing: 1px;
-  }
-
-  &-blue {
-    background: $color-primary-blue;
-    &:hover {
-      background: $color-primary-blue-state;
-    }
   }
 
   > i {

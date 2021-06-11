@@ -34,8 +34,9 @@ const imgModal = new jBox('Modal', {
 // 画像アップロードモーダル
 const uploadModal = new jBox('Modal', {
     id: 'upload',
-    width: 725,
-    height: 448,
+    width: 825,
+    height: 510,
+    minHeight: 510,
     attach: '#js-upload',
     title: 'Add Images',
     content: $('#js-uploadModal'),

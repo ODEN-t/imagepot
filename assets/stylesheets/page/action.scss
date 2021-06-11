@@ -19,11 +19,13 @@
     > li {
       width: 50px;
       text-align: center;
+
       i {
         font-size: 17px;
         color: $color-palette-gray-5;
         cursor: pointer;
         transition: all 0.2s ease;
+
         &:hover {
           color: $color-base-blue;
         }
@@ -67,9 +69,11 @@
       padding-top: $fixedRatio;
       overflow: hidden;
       border-radius: 3px;
+
       &:nth-of-type(n+9) {
         margin-top: $gutter;
       }
+
       &:not(:nth-child(8n)) {
         margin-right: 0.5%;
       }
@@ -92,16 +96,15 @@
     border-collapse: collapse;
 
     &__head {
-      font-size: 15px;
-      font-weight: 600;
-      line-height: 37px;
-      height: 37px;
-      background: $color-primary-blue;
-      color: #fff;
+      background: $color-base-blue;
+      color: $color-base-white;
 
       > th {
+        font-size: 15px;
+        font-weight: 400;
         text-align: left;
-        font-weight: 700;
+        line-height: 37px;
+        height: 37px;
         padding: 3px 0 3px 10px;
         border: solid 1px $color-palette-gray-5;
       }
@@ -162,7 +165,7 @@
   display: none;
 
   .uploadMain {
-    height: 80%;
+    height: 82%;
     display: flex;
 
     &__fileArea {
@@ -195,6 +198,7 @@
       display: flex;
       flex-direction: column;
       text-align: center;
+      margin-bottom: 6%;
 
       > i {
         font-size: 70px;
@@ -220,11 +224,11 @@
         }
 
         &:before {
-          left: 1.5em;
+          left: 3.2em;
         }
 
         &:after {
-          right: 1.5em;
+          right: 3.2em;
         }
       }
 
@@ -233,10 +237,6 @@
 
         input[type="file"] {
           display: none;
-        }
-
-        > .buttonCTA:not(:last-child) {
-          margin-right: 3px;
         }
       }
     }
@@ -267,8 +267,8 @@
 
         > i {
           flex-grow: 0;
-          font-size: 32px;
-          color: #A5A5A5;
+          font-size: 25px;
+          color: $color-palette-gray-6;
           display: flex;
           align-items: center;
         }
@@ -309,7 +309,7 @@
   }
 
   .uploadFooter {
-    height: 20%;
+    height: 18%;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -319,10 +319,8 @@
       line-height: 1.7;
     }
 
-    .buttonWrap {
-      &:last-child {
-        margin-left: 15px
-      }
+    .buttonCTA:last-of-type {
+      margin-left: 6px;
     }
   }
 }
