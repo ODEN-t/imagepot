@@ -2,11 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="common::meta_header('Home', ~{::link}, ~{::script})">
-  <!--  <script th:inline="javascript">-->
-  <!--      /*<![CDATA[*/-->
-  <!--      const urlList = /*[[${urlList}]]*/ 'default';-->
-  <!--      /*]]>*/-->
-  <!--  </script>-->
   <script th:src="@{/dist/home/index.js}" defer></script>
   <link rel="stylesheet" th:href="@{/css/page/home.min.css}">
 </head>
