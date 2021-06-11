@@ -125,13 +125,17 @@ const uploader = (e) => {
     })
 }
 
-const classSwitcher = (targetA, targetB, toggleClass) => {
-    document.getElementById('targetA').classList.toggle(toggleClass);
-    document.getElementById('targetB').classList.toggle(toggleClass);
-}
-document.getElementsByName('js-content').forEach(function (elem) {
-    elem.classList.remove('is-show');
+// 画像リスト<=>タイル表示
+document.getElementsByName('js-menuIcon').forEach((elem) => {
+    elem.addEventListener('click', (e) => {
+        const id = e.currentTarget.dataset.sectionId;
+        document.getElementsByName('js-content').forEach(function (elem) {
+            elem.classList.remove('is-show');
+        });
+        document.getElementById(id).classList.add('is-show');
+    })
 })
+
 
 // 画像モーダル表示クリックイベントを登録
 document.querySelectorAll('.imageIcon').forEach(function (elem) {
