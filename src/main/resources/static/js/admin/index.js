@@ -14,7 +14,11 @@ const userDetailModal = new jBox('Modal', {
     closeOnClick: false,
     closeButton: 'box',
     createOnInit: true,
+    onOpen: function () {
+        document.getElementById('header').style.paddingRight = '17px';
+    },
     onClose: function () {
+        document.getElementById('header').style.paddingRight = '0';
         const parent = document.getElementById('js-userDetailsTable');
         while (parent.firstChild) {
             parent.removeChild(parent.firstChild);

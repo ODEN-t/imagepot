@@ -4,79 +4,92 @@
 <head th:fragment="meta_header(title, links, scripts)">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title th:text="${title==null}? 'Image Pot' : ${title}+' | Image Pot'">各ページタイトル | imagepot</title>
+  <title th:text="${title==null}? 'ImgBucket' : ${title}+' | ImgBucket'">各ページタイトル | ImgBucket</title>
+  <link rel="stylesheet" th:href="@{/icomoon/style.css}" type="text/css">
   <link rel="stylesheet" th:href="@{/css/common/index.min.css}" type="text/css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&family=Open+Sans:wght@300;400;600;700;800&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" th:href="@{/icomoon/style.css}" type="text/css">
+      href="https://fonts.googleapis.com/css2?family=Expletus+Sans:wght@400;600&Noto+Sans+JP:wght@300;400&family=Open+Sans:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet">
   <script th:src="@{/dist/common/index.js}" defer></script>
-  <th:block th:replace="${links} ?: _" />
-  <th:block th:replace="${scripts} ?: _" />
+  <th:block th:replace="${links} ?: _"/>
+  <th:block th:replace="${scripts} ?: _"/>
 </head>
 
 <body>
-  <section class="c-sidebar" th:fragment="sidebar">
-    <div style="display: none;" class="c-sidebar__modalContent" id="iconSettingContent">
-      <div class="c-sidebar__modalBody">
-        <figure class="c-sidebar__userInfo__icon" id="icon2">
-          <img th:src="@{/images/initial_icon.jpg}" alt="あいこん２">
-        </figure>
-        <form enctype="multipart/form-data" method="POST" id="iconModalForm">
-          <input type="potFile" accept=".jpg, .jpeg, .png" id="inputImage">
-          <button type="submit" id="upload">アップロード</button>
-        </form>
-        <figure class="c-sidebar__userInfo__icon">
-          <canvas id="canvas" width="0" height="0"></canvas>
-        </figure>
-      </div>
+<header class="c-header" th:fragment="header" id="header">
+  <div class="c-header__wrap" sec:authorize="!isAuthenticated()">
+    <a class="c-header__title" href="/">
+      <span class="logo">ImgBucket</span>
+    </a>
+    <nav class="c-header__nav">
+      <ul class="c-header__navList">
+        <li>
+          <button class="c-header__navItem" id="login">SIGN IN</button>
+        </li>
+        <li>
+          <button class="c-header__navItem c-header__navItem-signup" id="signup">GET STARTED</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="c-header__wrap c-header__wrap-authed" sec:authorize="isAuthenticated()">
+    <a class="c-header__title" href="/home">
+      <span class="logo">ImgBucket</span>
+    </a>
+    <nav class="c-header__nav">
+      <ul class="c-header__navList"  th:switch="${#authentication.principal.icon}">
+        <li>
+          <span class="name" th:text="${#authentication.principal.name}"></span>
+        </li>
+        <li>
+          <figure class="icon" th:case="null">
+            <img th:src="@{/images/initial_icon.jpg}" alt="">
+          </figure>
+          <figure class="icon" th:case="*">
+            <img th:src="${#authentication.principal.icon}" alt="">
+          </figure>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="c-header__menu" id="menu" sec:authorize="isAuthenticated()">
+    <div class="c-header__menuWrap">
+      <ul class="c-header__menuList">
+        <li>
+          <a class="c-header__pageLink" th:href="@{'/action'}">
+            <span>Manage Images</span>
+          </a>
+        </li>
+        <li>
+          <a class="c-header__pageLink" th:href="@{'/settings'}">
+            <span>Settings</span>
+          </a>
+        </li>
+        <li class="c-header__pageLink" sec:authorize="hasRole('ADMIN')">
+          <a class="c-header__pageLink" th:href="@{'/admin'}">
+            <span>Manage Users</span>
+          </a>
+        </li>
+        <li class="c-header__pageLink">
+          <a th:href="@{'/logout'}" class="c-header__pageLink" id="logout"
+             data-confirm="Are you sure you want to logout?">
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
     </div>
-    <div class="c-sidebar__wrap">
-      <div class="c-sidebar__userInfo" th:switch="${#authentication.principal.icon}">
-        <figure class="c-sidebar__userInfo__icon" th:case="null">
-          <img th:src="@{/images/initial_icon.jpg}" alt="">
-        </figure>
-        <figure class="c-sidebar__userInfo__icon" th:case="*">
-          <img th:src="${#authentication.principal.icon}" alt="">
-        </figure>
-        <div class="c-sidebar__userInfo__name">
-          <span th:text="${#authentication.principal.name}"></span>
-        </div>
-        <div class="c-sidebar__userInfo__email">
-          <span th:text="${#authentication.principal.email}"></span>
-        </div>
-      </div>
-      <nav class="c-sidebar__menu">
-        <ol class="c-sidebar__menu__list">
-          <li class="c-sidebar__menu__item">
-            <a class="c-sidebar__menu__itemLink" th:href="@{'/home'}">
-              <i class="icon-home3"></i>
-              <span>Home</span>
-            </a>
-          </li>
-          <li class="c-sidebar__menu__item">
-            <a class="c-sidebar__menu__itemLink" th:href="@{'/settings'}">
-              <i class="icon-cog"></i>
-              <span>Settings</span>
-            </a>
-          </li>
-          <li class="c-sidebar__menu__item" sec:authorize="hasRole('ADMIN')">
-            <a class="c-sidebar__menu__itemLink" th:href="@{'/admin'}">
-              <i class="icon-cogs"></i>
-              <span>Manage</span>
-            </a>
-          </li>
-          <li class="c-sidebar__menu__item">
-            <a th:href="@{'/logout'}" class="c-sidebar__menu__itemLink" id="logout" data-confirm="Are you sure you want to logout?">
-              <i class="icon-exit"></i>
-              <span>Logout</span>
-            </a>
-          </li>
-        </ol>
-      </nav>
-    </div>
-  </section>
+  </div>
+</header>
+
+<section class="c-pageHeader" th:fragment="pageHeader">
+  <h2>Your Bucket</h2>
+  <div class="c-pageHeader__storageInfo">
+    <span>Total Images : <span th:text="${totalFiles}"></span></span>
+    <span>Total Size : <span th:text="${totalSizeReadable}"></span></span>
+  </div>
+</section>
+
 </body>
 
 </html>

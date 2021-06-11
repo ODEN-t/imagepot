@@ -6,6 +6,7 @@
 </head>
 
 <body>
+<div th:replace="common::header"></div>
   <div class="p-error">
     <h1 th:text="${status} + ' ' + ${error}"></h1>
     <p th:text="${message}"></p>

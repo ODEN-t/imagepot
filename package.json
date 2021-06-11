@@ -38,6 +38,7 @@
         "jbox": "^1.2.1",
         "jquery": "^3.5.1",
         "masonry-layout": "^4.2.2",
+        "slick-carousel": "^1.8.1",
         "util": "^0.12.3"
     }
 }

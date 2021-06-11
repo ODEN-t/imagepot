@@ -1,55 +1,213 @@
 @import "../common/_variables";
 
 .p-top {
-  background-image: url("/images/top-image_1920.png");
-  background-size: cover;
-  width: 100%;
-  height: 100vh;
+  background-color: $color-palette-gray-1;
+  .p-hero {
+    &__slide {
+      background-size: cover;
+      background-position-y: center;
+      width: 100%;
+      height: 70vh;
+      position: relative;
 
-  &__wrap {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-  }
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.23);
+        z-index: 1;
+      }
 
-  &__hero {
-    width: 610px;
-    text-align: center;
-    margin-left: 50px;
+      &-1 {
+        background-image: url("/images/pc/hero1-min.jpg");
+      }
 
-    > h1 {
-      font-size: 60px;
-      font-weight: 800;
-      line-height: 1.2;
+      &-2 {
+        background-image: url("/images/pc/hero2-min.jpg");
+      }
+
+      &-3 {
+        background-image: url("/images/pc/hero3-min.jpg");
+      }
     }
-    > p{ 
-      margin-top: 2em;
-      font-size: 22px;
-      line-height: 1.3;
-    }
-    .buttonWrap {
-      margin-top: 30px;
+
+    &__wrap {
+      position: absolute;
+      height: 100%;
+      width: 100%;
       display: flex;
-      justify-content: center;
-      .buttonCTA:first-of-type {
-        margin-right: 10px;
+      align-items: center;
+      z-index: 2;
+    }
+
+    &__content {
+      width: 900px;
+      margin-left: 90px;
+      color: #fff;
+      line-height: 1.5;
+
+      > h3 {
+        font-size: 45px;
+        font-weight: 600;
+        line-height: 1.4;
       }
-      // 良い方法があればpartsに書きたい
-      .buttonCTA-adjustWith {
-        width: 92px;
+
+      .logo {
+        font-family: Expletus Sans, serif;
+        font-size: 36px;
+        font-weight: 400;
+      }
+
+      > p {
+        position: relative;
+        font-size: 23px;
+        line-height: 1.5;
+        margin-top: 17px;
+        padding-left: 3em;
+
+        &:before {
+          content: '';
+          display: block;
+          width: 2.6em;
+          height: 1.5px;
+          background: #fff;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+        }
+      }
+
+      .buttonWrap {
+        margin-top: 30px;
+        display: flex;
+
+        .buttonCTA:first-of-type {
+          margin-right: 15px;
+        }
+
+        // 良い方法があればpartsに書きたい
+        .buttonCTA-adjustWith {
+          width: 92px;
+        }
+      }
+    }
+
+    .slick-dots {
+      bottom: 15px;
+
+      button:before {
+        content: '';
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: $color-base-white;
       }
     }
   }
 
+  .p-body {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-bottom: 30px;
 
-  &__modalBody {
+    &__head {
+      box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+      padding: 20px 0;
+      background-color: $color-base-white;
+
+      > h4 {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 1.2;
+        text-align: center;
+
+        > span {
+          font-family: Expletus Sans, serif;
+        }
+      }
+    }
+
+    &__featureList {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 25px;
+
+      > li {
+        width: 100%;
+        text-align: center;
+      }
+
+      > li img {
+        width: 31%;
+      }
+
+      .textWrap {
+        margin-top: 10px;
+      }
+
+      .textWrap > h5 {
+        font-size: 19px;
+        font-weight: 500;
+      }
+
+      .textWrap > p {
+        font-size: 15px;
+        line-height: 1.4;
+        margin-top: 10px;
+
+      }
+    }
+
+    &__panelWrap {
+      margin-top: 30px;
+    }
+
+    &__panel {
+      display: flex;
+      height: 466px;
+      .imgWrap, .textWrap {
+        width: 50%;
+        height: 100%;
+      }
+      .imgWrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .textWrap {
+        padding: 24px 35px;
+        > h4 {
+          font-size: 20px;
+          text-align: center;
+          font-weight: 400;
+        }
+      }
+      &-even {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+  .p-footer {
+    height: 100px;
+    width: 100%;
+    box-shadow: 0 -1px rgba(0, 0, 0, 0.11);
+  }
+}
+
+.p-modal {
+  &__body {
     padding: 15px 25px 35px;
+
     h2 {
       text-align: center;
       font-size: 41px;
       font-weight: 800;
     }
+
     p {
       color: $color-palette-gray-8;
       margin-top: 18px;
@@ -59,7 +217,7 @@
     }
   }
 
-  &__modalForm {
+  &__form {
     margin-top: 32px;
 
     .inputGroup:not(:nth-of-type(1)) {
@@ -71,18 +229,19 @@
     }
   }
 
-
-  &__modalFooter {
-    box-shadow: 0 -1px rgba(0,0,0, 0.11);
+  &__footer {
+    box-shadow: 0 -1px rgba(0, 0, 0, 0.11);
     padding: 24px 24px 9px;
     font-size: 16px;
     line-height: 1.4;
     text-align: center;
+
     > span {
-      color: $color-primary-pink;
+      color: $color-base-blue;
       cursor: pointer;
+
       &:hover {
-        border-bottom: solid 1px $color-primary-pink;
+        border-bottom: solid 1px $color-base-blue;
       }
     }
   }

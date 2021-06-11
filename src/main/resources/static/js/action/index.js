@@ -17,6 +17,12 @@ const imgModal = new jBox('Modal', {
     reposition: true,
     repositionOnOpen: true,
     delayOpen: 300,
+    onOpen: function () {
+        document.getElementById('header').style.paddingRight = '17px';
+    },
+    onClose: function () {
+        document.getElementById('header').style.paddingRight = '0';
+    },
     onCloseComplete: function () {
         const parent = document.getElementById('js-imgModal');
         while (parent.firstChild) {
@@ -28,8 +34,9 @@ const imgModal = new jBox('Modal', {
 // 画像アップロードモーダル
 const uploadModal = new jBox('Modal', {
     id: 'upload',
-    width: 725,
-    height: 448,
+    width: 825,
+    height: 510,
+    minHeight: 510,
     attach: '#js-upload',
     title: 'Add Images',
     content: $('#js-uploadModal'),
@@ -37,6 +44,12 @@ const uploadModal = new jBox('Modal', {
     closeOnClick: false,
     closeButton: 'box',
     createOnInit: true,
+    onOpen: function () {
+        document.getElementById('header').style.paddingRight = '17px';
+    },
+    onClose: function () {
+        document.getElementById('header').style.paddingRight = '0';
+    },
 });
 
 let formData = null;
@@ -112,6 +125,18 @@ const uploader = (e) => {
         }
     })
 }
+
+// 画像リスト<=>タイル表示
+document.getElementsByName('js-menuIcon').forEach((elem) => {
+    elem.addEventListener('click', (e) => {
+        const id = e.currentTarget.dataset.sectionId;
+        document.getElementsByName('js-content').forEach(function (elem) {
+            elem.classList.remove('is-show');
+        });
+        document.getElementById(id).classList.add('is-show');
+    })
+})
+
 
 // 画像モーダル表示クリックイベントを登録
 document.querySelectorAll('.imageIcon').forEach(function (elem) {

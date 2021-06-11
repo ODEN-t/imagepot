@@ -11,3 +11,10 @@ const signoutPopup = new jBox('Confirm', {
     overlayClass: 'add-jboxOverRay',
     addClass: 'add-popupCustomStyle'
 });
+
+const menu = document.getElementById('menu');
+document.querySelectorAll('.icon').forEach(function (elem) {
+    elem.addEventListener('click', function (e){
+      menu.classList.toggle('is-open');
+    })
+})

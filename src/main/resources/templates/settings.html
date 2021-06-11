@@ -7,125 +7,127 @@
 </head>
 
 <body>
-  <div class="c-globalContainer">
-    <div th:replace="common::sidebar">
-    </div>
-    <div class="c-contents">
-      <div class="p-settings">
-        <h1>Edit Information</h1>
-        <section class="p-settings__editBlock">
-          <div class="p-settings__editBlock__wrap">
-            <h2>Your Profile</h2>
-            <div class="p-settings__editBlock__content">
-              <dl class="p-settings__settingArea">
-                <dt>Your Icon</dt>
-                <dd class="p-settings__settingArea__icon">
-                  <div th:switch="${#authentication.principal.icon}">
-                    <figure class="c-sidebar__userInfo__icon" th:case="null">
-                      <img th:src="@{/images/initial_icon.jpg}" alt="">
-                    </figure>
-                    <figure class="c-sidebar__userInfo__icon" th:case="*">
-                      <img th:src="${#authentication.principal.icon}" alt="">
-                    </figure>
-                  </div>
-                  <div class="buttonWrap">
-                    <div>
-                      <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
-                      <label class="buttonCTA" for="fileInput">Change Icon</label>
-                    </div>
-                    <form class="reload" method="post" th:action="@{/settings/reset/user/icon}" id="resetIcon" data-confirm="Are you sure you want to reset your icon?">
-                      <button type="submit" class="buttonCTA">Reset</button>
-                    </form>
-                  </div>
-                  <div class="cropModal" id="js-cropModal">
-                    <div class="cropWrap">
-                      <div class="cropBody">
-                        <img class="cropImage" id="js-cropImage" src="" alt="">
-                      </div>
-                      <form enctype="multipart/form-data" id="js-newIconForm">
-                        <button class="buttonCTA buttonCTA-fullWidth" id="js-newIconSubmit">Set new icon</button>
-                      </form>
-                    </div>
-                  </div>
-                </dd>
-              </dl>
+<div th:replace="common::header"></div>
+<div class="c-globalContainer">
+  <div class="p-settings">
+    <section class="c-pageHeader">
+      <h2>Edit Information</h2>
+    </section>
+    <section class="p-settings__editBlock">
+      <div class="p-settings__editBlock__wrap">
+        <div class="p-settings__editBlock__content">
+          <h2>Your Profile</h2>
+          <dl class="p-settings__settingArea">
+            <dt>Icon</dt>
+            <dd class="p-settings__settingArea__icon">
+              <div th:switch="${#authentication.principal.icon}">
+                <figure th:case="null">
+                  <img th:src="@{/images/initial_icon.jpg}" alt="">
+                </figure>
+                <figure th:case="*">
+                  <img th:src="${#authentication.principal.icon}" alt="">
+                </figure>
+              </div>
+              <div class="buttonWrap">
+                <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
+                <label class="buttonCTA" for="fileInput">Change Icon</label>
+                <form class="reset" method="post" th:action="@{/settings/reset/user/icon}" id="resetIcon"
+                      data-confirm="Are you sure you want to reset your icon?">
+                  <button type="submit" class="buttonCTA">Reset</button>
+                </form>
+              </div>
 
-              <!-- Name and Email -->
-              <form method="post" th:action="@{/settings/update/user/info}" th:object="${updateUserInfoForm}">
-                <dl class="p-settings__settingArea">
-                  <dt><label for="name">Name</label></dt>
-                  <dd class="inputGroup">
-                    <input class="inputText" type="text" id="name" name="name" th:field="*{name}" th:classappend="${#fields.hasErrors('name')}?'is-error'">
-                    <i class="icon-user"></i>
-                  </dd>
-                </dl>
-                <dl class="p-settings__settingArea">
-                  <dt><label for="email">Email</label></dt>
-                  <dd class="inputGroup">
-                    <input class="inputText" type="text" id="email" name="email" th:field="*{email}" th:classappend="${#fields.hasErrors('email')}?'is-error'">
-                    <i class="icon-envelop"></i>
-                  </dd>
-                </dl>
-                <div class="p-settings__settingArea p-settings__settingArea-buttonBox">
-                  <button type="submit" class="buttonCTA">Update</button>
+              <div class="cropModal" id="js-cropModal">
+                <div class="cropWrap">
+                  <div class="cropBody">
+                    <img class="cropImage" id="js-cropImage" src="" alt="">
+                  </div>
+                  <form enctype="multipart/form-data" id="js-newIconForm">
+                    <button class="buttonCTA buttonCTA-fullWidth" id="js-newIconSubmit">Set new icon</button>
+                  </form>
                 </div>
-                <div th:if="${#fields.hasErrors('${updateUserInfoForm.*}')}" data-message="error" class="c-message c-message-error">
-                  <span th:errors="${updateUserInfoForm.*}"></span>
-                </div>
-              </form>
-            </div>
-          </div>
-        </section>
+              </div>
+            </dd>
+          </dl>
 
-        <!-- password -->
-        <section class="p-settings__editBlock">
-          <div class="p-settings__editBlock__wrap">
-            <h2>Change Password</h2>
-            <div class="p-settings__editBlock__content">
-              <form method="post" th:action="@{/settings/update/user/password}" th:object="${updateUserPasswordForm}">
-                <dl class="p-settings__settingArea">
-                  <dt><label for="currentPassword">Current Password</label></dt>
-                  <dd class="inputGroup">
-                    <input class="inputText" type="password" id="currentPassword" name="currentPassword" th:field="*{currentPassword}" th:classappend="${#fields.hasErrors('currentPassword')}?'is-error'">
-                    <span class="buttonCTA buttonCTA-show">Show</span>
-                    <i class="icon-lock"></i>
-                  </dd>
-                </dl>
-                <dl class="p-settings__settingArea">
-                  <dt><label for="newPassword">New Password</label></dt>
-                  <dd class="inputGroup">
-                    <input class="inputText" type="password" id="newPassword" name="newPassword" th:field="*{newPassword}" th:classappend="${#fields.hasErrors('newPassword')}?'is-error'">
-                    <span class="buttonCTA buttonCTA-show">Show</span>
-                    <i class="icon-lock"></i>
-                  </dd>
-                </dl>
-                <dl class="p-settings__settingArea">
-                  <dt><label for="confirmNewPassword">Confirm New Password</label></dt>
-                  <dd class="inputGroup">
-                    <input class="inputText" type="password" id="confirmNewPassword" name="confirmNewPassword" th:field="*{confirmNewPassword}" th:classappend="${#fields.hasErrors('confirmNewPassword')}?'is-error'">
-                    <span class="buttonCTA buttonCTA-show">Show</span>
-                    <i class="icon-lock"></i>
-                  </dd>
-                </dl>
-                <div class="p-settings__settingArea p-settings__settingArea-buttonBox">
-                  <button type="submit" class="buttonCTA">Update</button>
-                </div>
-                <div th:if="${#fields.hasErrors('${updateUserPasswordForm.*}')}" data-message="error" class="c-message c-message-error">
-                  <span  th:errors="${updateUserPasswordForm.*}"></span>
-                </div>
-              </form>
+          <!-- Name and Email -->
+          <form method="post" th:action="@{/settings/update/user/info}" th:object="${updateUserInfoForm}">
+            <dl class="p-settings__settingArea">
+              <dt><label for="name">Name</label></dt>
+              <dd class="inputGroup">
+                <input class="inputText" type="text" id="name" name="name" th:field="*{name}"
+                       th:classappend="${#fields.hasErrors('name')}?'is-error'">
+                <i class="icon-user"></i>
+              </dd>
+            </dl>
+            <dl class="p-settings__settingArea">
+              <dt><label for="email">Email</label></dt>
+              <dd class="inputGroup">
+                <input class="inputText" type="text" id="email" name="email" th:field="*{email}"
+                       th:classappend="${#fields.hasErrors('email')}?'is-error'">
+                <i class="icon-envelop"></i>
+              </dd>
+            </dl>
+            <div class="p-settings__settingArea p-settings__settingArea-textRight">
+              <button type="submit" class="buttonCTA">Update</button>
             </div>
-          </div>
-        </section>
-        <div th:if="${errorMessage}" data-message="error" class="c-message c-message-error">
-          <span th:text="${errorMessage}"></span>
+            <div th:if="${#fields.hasErrors('${updateUserInfoForm.*}')}" data-message="error"
+                 class="c-message c-message-error">
+              <span th:errors="${updateUserInfoForm.*}"></span>
+            </div>
+          </form>
         </div>
-        <div th:if="${successMessage}" data-message="success" class="c-message c-message-success">
-          <span th:text="${successMessage}"></span>
+        <div class="p-settings__editBlock__content">
+          <h2>Change Password</h2>
+          <form method="post" th:action="@{/settings/update/user/password}" th:object="${updateUserPasswordForm}">
+            <dl class="p-settings__settingArea">
+              <dt><label for="currentPassword">Current Password</label></dt>
+              <dd class="inputGroup">
+                <input class="inputText" type="password" id="currentPassword" name="currentPassword"
+                       th:field="*{currentPassword}"
+                       th:classappend="${#fields.hasErrors('currentPassword')}?'is-error'">
+                <span class="buttonCTA buttonCTA-show">Show</span>
+                <i class="icon-lock"></i>
+              </dd>
+            </dl>
+            <dl class="p-settings__settingArea">
+              <dt><label for="newPassword">New Password</label></dt>
+              <dd class="inputGroup">
+                <input class="inputText" type="password" id="newPassword" name="newPassword" th:field="*{newPassword}"
+                       th:classappend="${#fields.hasErrors('newPassword')}?'is-error'">
+                <span class="buttonCTA buttonCTA-show">Show</span>
+                <i class="icon-lock"></i>
+              </dd>
+            </dl>
+            <dl class="p-settings__settingArea">
+              <dt><label for="confirmNewPassword">Confirm New Password</label></dt>
+              <dd class="inputGroup">
+                <input class="inputText" type="password" id="confirmNewPassword" name="confirmNewPassword"
+                       th:field="*{confirmNewPassword}"
+                       th:classappend="${#fields.hasErrors('confirmNewPassword')}?'is-error'">
+                <span class="buttonCTA buttonCTA-show">Show</span>
+                <i class="icon-lock"></i>
+              </dd>
+            </dl>
+            <div class="p-settings__settingArea p-settings__settingArea-textRight">
+              <button type="submit" class="buttonCTA">Update</button>
+            </div>
+            <div th:if="${#fields.hasErrors('${updateUserPasswordForm.*}')}" data-message="error"
+                 class="c-message c-message-error">
+              <span th:errors="${updateUserPasswordForm.*}"></span>
+            </div>
+          </form>
         </div>
       </div>
+    </section>
+    <div th:if="${errorMessage}" data-message="error" class="c-message c-message-error">
+      <span th:text="${errorMessage}"></span>
+    </div>
+    <div th:if="${successMessage}" data-message="success" class="c-message c-message-success">
+      <span th:text="${successMessage}"></span>
     </div>
   </div>
+</div>
 </body>
 
 </html>
