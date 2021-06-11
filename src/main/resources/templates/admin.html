@@ -9,9 +9,11 @@
 <body>
 <div th:replace="common::header"></div>
 <div class="c-globalContainer">
+  <section class="c-pageHeader">
+    <h2>User List</h2>
+  </section>
   <div class="p-admin">
-    <section class="p-admin__contents" th:fragment="admin__contents">
-      <h1>User List</h1>
+    <section class="p-admin__contents">
       <table class="p-admin__userList">
         <tr class="p-admin__userList__head">
           <th>ID</th>

@@ -75,23 +75,22 @@ public class ActionController {
         Optional.ofNullable(model.getAttribute("message"))
                 .ifPresent(model::addAttribute);
 
-        // ファイル合計サイズ(readable)
-        String totalSizeReadable = utilComponent.readableSize(getTotalFileSize(potFileList));
-
-        // 各ファイルサイズ(readable)
         List<String> readableSizeList = new ArrayList<>();
         for(PotFile p : potFileList)
             readableSizeList.add(utilComponent.readableSize(p.getSize()));
 
-        // サムネイル画像のURL
         List<URL> urlList = new ArrayList<>();
         for(PotFile potFile : potFileList)
             urlList.add(potFile.getTmb_url());
 
+        // ファイル数
         model.addAttribute("totalFiles", potFileList.size());
-        model.addAttribute("totalSizeReadable", totalSizeReadable);
+        // 合計ファイルサイズ(readable)
+        model.addAttribute("totalSizeReadable", utilComponent.getReadableTotalSize(potFileList));
+        // 各ファイルサイズ(readable)
         model.addAttribute("readableSizeList", readableSizeList);
         model.addAttribute("fileList", potFileList);
+        // サムネイル画像のURL
         model.addAttribute("urlList", urlList);
         return "action";
     }
@@ -151,13 +150,12 @@ public class ActionController {
         }
         // ファイルリスト、ファイル数、合計ファイルサイズを返す
         finally {
-            String totalSizeReadable = utilComponent.readableSize(getTotalFileSize(potFileList));
             List<String> readableSizeList = new ArrayList<>();
             for(PotFile p : potFileList)
                 readableSizeList.add(utilComponent.readableSize(p.getSize()));
             model.addAttribute("readableSizeList", readableSizeList);
             model.addAttribute("totalFiles", potFileList.size());
-            model.addAttribute("totalSizeReadable", totalSizeReadable);
+            model.addAttribute("totalSizeReadable", utilComponent.getReadableTotalSize(potFileList));
             model.addAttribute("fileList", potFileList);
         }
     }
@@ -176,18 +174,4 @@ public class ActionController {
         fileService.insertFiles(uploadedFiles);
         return CompletableFuture.completedFuture("success");
     }
-
-    /**
-     * ファイル情報を詰めたリストから合計ファイルサイズを計算する
-     * @param fileList ファイル情報を詰めたリスト
-     * @return 合計ファイルサイズ
-     */
-    public double getTotalFileSize(List<PotFile> fileList) {
-        double totalSize = 0;
-        for (PotFile potFile : fileList) {
-            totalSize += potFile.getSize();
-        }
-        return totalSize;
-    }
-
 }

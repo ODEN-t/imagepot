@@ -96,7 +96,7 @@ public class StorageService {
                 S3Object obj = s3Cliant.getObject(new GetObjectRequest(bucketName, key));
                 PotFile f = new PotFile();
                 f.setFile_id(UUID.randomUUID());
-                f.setUser_id(u);
+                f.setUser(u);
                 f.setKey(obj.getKey());
                 URL originalSizeUrl = s3Cliant.getUrl(bucketName, obj.getKey());
                 String s = originalSizeUrl.toString().replaceFirst(bucketName, bucketNameRd);

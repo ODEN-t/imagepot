@@ -52,23 +52,9 @@ public class HomeController {
         for(PotFile potFile : potFileList) {
             urlList.add(potFile.getTmb_url());
         }
-        String totalSizeReadable = utilComponent.readableSize(getTotalFileSize(potFileList));
         model.addAttribute("totalFiles", urlList.size());
-        model.addAttribute("totalSizeReadable", totalSizeReadable);
+        model.addAttribute("totalSizeReadable", utilComponent.getReadableTotalSize(potFileList));
         model.addAttribute("urlList", urlList);
         return "home";
-    }
-
-    /**
-     * ファイル情報を詰めたリストから合計ファイルサイズを計算する
-     * @param fileList ユーザが保持する全ファイル情報
-     * @return 合計ファイルサイズ
-     */
-    public double getTotalFileSize(List<PotFile> fileList) {
-        double totalSize = 0;
-        for (PotFile potFile : fileList) {
-            totalSize += potFile.getSize();
-        }
-        return totalSize;
     }
 }

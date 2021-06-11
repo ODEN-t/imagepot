@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Repository
 public interface FileRepository extends JpaRepository<PotFile, UUID> {
-    @Query("SELECT f FROM PotFile f WHERE f.user_id.id = :id order by f.lastModifiedAt desc")
+    @Query("SELECT f FROM PotFile f WHERE f.user.id = :id order by f.lastModifiedAt desc")
     public List<PotFile> selectFilesById(@Param("id") long id);
 
     @Modifying(clearAutomatically = true)

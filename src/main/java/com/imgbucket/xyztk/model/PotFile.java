@@ -25,14 +25,14 @@ public class PotFile {
     )
     private UUID file_id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(
             name = "user_id",
             updatable = false,
             nullable = false,
             foreignKey = @ForeignKey(name = "fk_user_id")
     )
-    private User user_id;
+    private User user;
 
     @Column(
             name = "key",
