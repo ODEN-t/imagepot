@@ -125,6 +125,14 @@ const uploader = (e) => {
     })
 }
 
+const classSwitcher = (targetA, targetB, toggleClass) => {
+    document.getElementById('targetA').classList.toggle(toggleClass);
+    document.getElementById('targetB').classList.toggle(toggleClass);
+}
+document.getElementsByName('js-content').forEach(function (elem) {
+    elem.classList.remove('is-show');
+})
+
 // 画像モーダル表示クリックイベントを登録
 document.querySelectorAll('.imageIcon').forEach(function (elem) {
     elem.addEventListener('click', (e) => {

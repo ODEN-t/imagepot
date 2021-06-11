@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -74,16 +75,24 @@ public class ActionController {
         Optional.ofNullable(model.getAttribute("message"))
                 .ifPresent(model::addAttribute);
 
+        // ファイル合計サイズ(readable)
         String totalSizeReadable = utilComponent.readableSize(getTotalFileSize(potFileList));
 
+        // 各ファイルサイズ(readable)
         List<String> readableSizeList = new ArrayList<>();
         for(PotFile p : potFileList)
             readableSizeList.add(utilComponent.readableSize(p.getSize()));
+
+        // サムネイル画像のURL
+        List<URL> urlList = new ArrayList<>();
+        for(PotFile potFile : potFileList)
+            urlList.add(potFile.getTmb_url());
 
         model.addAttribute("totalFiles", potFileList.size());
         model.addAttribute("totalSizeReadable", totalSizeReadable);
         model.addAttribute("readableSizeList", readableSizeList);
         model.addAttribute("fileList", potFileList);
+        model.addAttribute("urlList", urlList);
         return "action";
     }
 

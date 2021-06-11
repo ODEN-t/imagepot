@@ -1,20 +1,87 @@
 @import "../common/variables";
 
 .p-action {
-  background-color: #fff;
+  background-color: $color-base-white;
   width: 100%;
-  padding: 30px 0;
+
+  &__headMenu {
+    box-shadow: 0 1px rgba(0, 0, 0, 0.11);
+    margin-top: 15px;
+    height: 50px;
+  }
+
+  &__menuList {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    > li {
+      width: 50px;
+      text-align: center;
+      i {
+        font-size: 17px;
+        color: $color-palette-gray-5;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        &:hover {
+          color: $color-base-blue;
+        }
+      }
+    }
+  }
 
   &__content {
     position: relative;
-    max-width: 1320px;
-    margin: 28px auto 0;
-    padding: 0 22px;
+    margin-top: 36px;
 
-    &__buttonWrap {
-      position: absolute;
-      top: -60px;
-      right: 25px;
+    @keyframes show {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    &.is-show {
+      display: block;
+      animation-name: show;
+      animation-duration: 0.3s;
+      animation-timing-function: ease;
+    }
+  }
+
+  &__tileList {
+    display: flex;
+    flex-wrap: wrap;
+
+    > li {
+      $row: 8;
+      $gutter: 0.5%;
+      $width: (100% - ($row - 1) * $gutter) / $row;
+      $fixedRatio: $width * (9 / 16); /* 画像比率を16:9に設定 */
+      width: $width;
+      position: relative;
+      padding-top: $fixedRatio;
+      overflow: hidden;
+      border-radius: 3px;
+      &:nth-of-type(n+9) {
+        margin-top: $gutter;
+      }
+      &:not(:nth-child(8n)) {
+        margin-right: 0.5%;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+      }
     }
   }
 
@@ -68,9 +135,11 @@
 
       .imageIcon {
         transition: opacity .3s ease;
+
         &:hover {
           opacity: 0.6;
         }
+
         & > i {
           font-size: 18px;
           color: $color-palette-gray-8;
@@ -78,6 +147,7 @@
       }
     }
   }
+
   &__imgModal {
     img {
       width: 100%;
@@ -101,6 +171,7 @@
       flex-direction: column;
       justify-content: flex-end;
       padding: 26px 20px;
+
       &:before {
         content: "";
         background-image: linear-gradient(to right, $color-palette-gray-5, $color-palette-gray-5 6px, transparent 3px, transparent 8px),
@@ -123,6 +194,7 @@
       display: flex;
       flex-direction: column;
       text-align: center;
+
       > i {
         font-size: 70px;
         color: $color-palette-gray-2;
@@ -132,10 +204,12 @@
         font-size: 21px;
         margin-top: 20px;
       }
+
       .subText {
         position: relative;
         font-size: 16px;
         margin-top: 19px;
+
         &:before, &:after {
           position: absolute;
           content: "";
@@ -143,19 +217,24 @@
           width: 3em;
           top: calc(50% - 0.5px);
         }
+
         &:before {
           left: 1.5em;
         }
+
         &:after {
           right: 1.5em;
         }
       }
+
       .buttonWrap {
         margin-top: 22px;
+
         input[type="file"] {
           display: none;
         }
-        >.buttonCTA:not(:last-child) {
+
+        > .buttonCTA:not(:last-child) {
           margin-right: 3px;
         }
       }
@@ -166,6 +245,7 @@
       padding: 0 13px 0 33px;
       margin-top: 25px;
       overflow-y: scroll;
+
       > span {
         position: absolute;
         top: 0;
@@ -182,7 +262,8 @@
         height: 60px;
         display: flex;
         align-items: center;
-        box-shadow: 0 1px rgba(0,0,0, 0.11);
+        box-shadow: 0 1px rgba(0, 0, 0, 0.11);
+
         > i {
           flex-grow: 0;
           font-size: 32px;
@@ -249,6 +330,7 @@
   .jBox-content {
     padding: 0 !important;
   }
+
   .jBox-content::-webkit-scrollbar {
     display: none;
   }

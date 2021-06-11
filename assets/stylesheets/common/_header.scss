@@ -138,23 +138,3 @@
     }
   }
 }
-
-.c-pageHeader {
-  margin-top: 35px;
-  > h2 {
-    font-size: 27px;
-    font-weight: 600;
-    line-height: 1.4;
-  }
-  &__storageInfo {
-    margin-top: 8px;
-    font-size: 17px;
-    font-weight: 600;
-    line-height: 1.4;
-    color: #7D7C83;
-
-    > span:last-child {
-      margin-left: 25px;
-    }
-  }
-}

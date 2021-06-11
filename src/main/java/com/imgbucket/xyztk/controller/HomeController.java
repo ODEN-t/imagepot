@@ -48,7 +48,6 @@ public class HomeController {
             @AuthenticationPrincipal LoginUser loginUser,
             List<PotFile> potFileList,
             Model model) {
-        log.info(loginUser.toString());
         List<URL> urlList = new ArrayList<>();
         for(PotFile potFile : potFileList) {
             urlList.add(potFile.getTmb_url());

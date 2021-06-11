@@ -1,10 +1,30 @@
-/* 
-* TopPage以外のコンテンツ部の共通ラッパー
-*/
+@import "../common/_variables";
 
 // sidebarとcontents左右に並べるトップページ配下の共通ラッパー
 .c-globalContainer {
   position: relative;
   width: 100%;
   padding: 58px 59px;
+}
+
+.c-pageHeader {
+  margin-top: 35px;
+  display: flex;
+  align-items: baseline;
+  > h2 {
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  &__storageInfo {
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: $color-palette-gray-6;
+    margin-left: 20px;
+
+    > span:last-child {
+      margin-left: 10px;
+    }
+  }
 }

@@ -11,8 +11,42 @@
 <div class="c-globalContainer">
   <div class="p-action">
     <div th:replace="common::pageHeader"></div>
-    <section class="p-action__content">
-      <form th:action="@{'/action/file'}" method="post">
+    <div class="p-action__headMenu">
+      <ul class="p-action__menuList">
+        <li>
+          <i class="icon-menu1" id="iconList"></i>
+        </li>
+        <li>
+          <i class="icon-view-tile" id="iconTile"></i>
+        </li>
+        <li id="js-upload">
+          <i class="icon-upload2"></i>
+        </li>
+        <li>
+          <button type="submit" name="download" form="listForm">
+            <i class="icon-download2"></i>
+          </button>
+        </li>
+        <li>
+          <button type="submit" name="delete" form="listForm">
+            <i class="icon-bin2"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <section class="p-action__content p-action__content-tile" id="displayTile" th:name="js-content">
+      <div class="p-action__tileWrap">
+        <ul class="p-action__tileList">
+          <li th:each="url, iter : ${urlList}">
+            <img th:src="${urlList.get(iter.index)}" alt="" loading="lazy">
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="p-action__content p-action__content-list" id="displayList" th:name="js-content">
+      <form th:action="@{'/action/file'}" method="post" id="listForm">
         <table class="p-action__table">
           <tr class="p-action__table__head">
             <th></th>
@@ -30,24 +64,12 @@
             <td><label th:for="${file.file_id}"><p th:text="${file.lastModifiedAt}"></p></label></td>
           </tr>
         </table>
-        <div class="p-action__content__buttonWrap">
-          <div class="buttonCTA buttonCTA-round buttonCTA-blue" id="js-upload">
-            <i class="icon-upload2"></i>
-            Upload
-          </div>
-          <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="download">
-            <i class="icon-download2"></i>
-            Download
-          </button>
-          <button type="submit" class="buttonCTA buttonCTA-round buttonCTA-blue" name="delete">
-            <i class="icon-bin2"></i>
-            Delete
-          </button>
-        </div>
       </form>
     </section>
+
     <section class="p-action__imgModal" id="js-imgModal">
     </section>
+
     <section id="js-uploadModal" class="uploadModal">
       <div class="uploadMain">
         <div class="uploadMain__fileArea">
