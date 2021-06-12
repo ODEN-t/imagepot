@@ -1,6 +1,6 @@
 package com.imgbucket.xyztk.service;
 
-import com.imgbucket.xyztk.model.PotFile;
+import com.imgbucket.xyztk.model.BktFile;
 import com.imgbucket.xyztk.model.LoginUser;
 import com.imgbucket.xyztk.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +21,10 @@ public class FileService {
 
     /**
      * ユーザのアップロードしたファイル情報をDBに登録する
-     * @param PotFiles ユーザのアップロードしたファイル情報
+     * @param bktFiles ユーザのアップロードしたファイル情報
      */
-    public void insertFiles(List<PotFile> PotFiles) {
-        fileRepository.saveAll(PotFiles);
+    public void insertFiles(List<BktFile> bktFiles) {
+        fileRepository.saveAll(bktFiles);
     }
 
     /**
@@ -32,16 +32,16 @@ public class FileService {
      * @param loginUser ログインユーザ情報
      * @return DBに存在するユーザのアップロードしたファイル情報
      */
-    public List<PotFile> getAllFilesById(LoginUser loginUser) {
+    public List<BktFile> getAllFilesById(LoginUser loginUser) {
         return fileRepository.selectFilesById(loginUser.id);
     }
 
     /**
      * ユーザが選択したファイルをDBから削除する
-     * @param PotFiles 削除対象のファイル情報
+     * @param bktFiles 削除対象のファイル情報
      */
-    public void deleteFilesByKey(List<PotFile> PotFiles) {
-        for(PotFile f : PotFiles) {
+    public void deleteFilesByKey(List<BktFile> bktFiles) {
+        for(BktFile f : bktFiles) {
             fileRepository.deleteAllByKey(f.getKey());
         }
     }

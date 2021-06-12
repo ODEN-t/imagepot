@@ -69,4 +69,4 @@ document.querySelectorAll('.p-admin__userList__data').forEach((f) =>{
 })
 
 // show result message from backend with modal
-module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error');
+module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error', true);

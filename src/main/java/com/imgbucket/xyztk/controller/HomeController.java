@@ -1,7 +1,7 @@
 package com.imgbucket.xyztk.controller;
 
+import com.imgbucket.xyztk.model.BktFile;
 import com.imgbucket.xyztk.model.LoginUser;
-import com.imgbucket.xyztk.model.PotFile;
 import com.imgbucket.xyztk.service.FileService;
 import com.imgbucket.xyztk.util.UtilComponent;
 import lombok.extern.slf4j.Slf4j;
@@ -33,27 +33,27 @@ public class HomeController {
     }
 
     @ModelAttribute
-    List<PotFile> getFileList(@AuthenticationPrincipal LoginUser loginUser) {
+    List<BktFile> getFileList(@AuthenticationPrincipal LoginUser loginUser) {
         return fileService.getAllFilesById(loginUser);
     }
 
     /**
      * Home画面を表示する
      * @param loginUser ログインユーザ情報
-     * @param potFileList ユーザが保持する全ファイル情報
+     * @param bktFileList ユーザが保持する全ファイル情報
      * @return View
      */
     @GetMapping
     public String getHome(
             @AuthenticationPrincipal LoginUser loginUser,
-            List<PotFile> potFileList,
+            List<BktFile> bktFileList,
             Model model) {
         List<URL> urlList = new ArrayList<>();
-        for(PotFile potFile : potFileList) {
-            urlList.add(potFile.getTmb_url());
+        for(BktFile bktFile : bktFileList) {
+            urlList.add(bktFile.getTmb_url());
         }
         model.addAttribute("totalFiles", urlList.size());
-        model.addAttribute("totalSizeReadable", utilComponent.getReadableTotalSize(potFileList));
+        model.addAttribute("totalSizeReadable", utilComponent.getReadableTotalSize(bktFileList));
         model.addAttribute("urlList", urlList);
         return "home";
     }

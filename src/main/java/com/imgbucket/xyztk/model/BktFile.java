@@ -8,14 +8,14 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Data
-@Entity(name = "PotFile")
+@Entity(name = "BktFile")
 @Table(
-        name = "pot_file",
+        name = "bkt_file",
         uniqueConstraints = {
                 @UniqueConstraint(name = "file_key_unique", columnNames = "key")
         }
 )
-public class PotFile {
+public class BktFile {
     @Id
     @Column(
             name = "file_id",

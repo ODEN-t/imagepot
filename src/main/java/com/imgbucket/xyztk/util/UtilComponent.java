@@ -1,7 +1,7 @@
 package com.imgbucket.xyztk.util;
 
+import com.imgbucket.xyztk.model.BktFile;
 import com.imgbucket.xyztk.model.LoginUser;
-import com.imgbucket.xyztk.model.PotFile;
 import com.imgbucket.xyztk.service.LoginUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -57,10 +57,10 @@ public class UtilComponent {
      * @param fileList ファイル情報を詰めたリスト
      * @return 合計ファイルサイズ
      */
-    public double getTotalFileSize(List<PotFile> fileList) {
+    public double getTotalFileSize(List<BktFile> fileList) {
         double totalSize = 0;
-        for (PotFile potFile : fileList) {
-            totalSize += potFile.getSize();
+        for (BktFile bktFile : fileList) {
+            totalSize += bktFile.getSize();
         }
         return totalSize;
     }
@@ -70,7 +70,7 @@ public class UtilComponent {
      * @param fileList ファイル情報を詰めたリスト
      * @return バイト単位を付与した合計ファイルサイズ
      */
-    public String getReadableTotalSize(List<PotFile> fileList) {
+    public String getReadableTotalSize(List<BktFile> fileList) {
         double totalFileSize = getTotalFileSize(fileList);
         return readableSize(totalFileSize);
     }
