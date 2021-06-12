@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 @Data
 @Entity(name = "User")
 @Table(
-        name = "pot_user",
+        name = "bkt_user",
         uniqueConstraints = {
                 @UniqueConstraint(name = "user_email_unique", columnNames = "email")
         }
@@ -65,34 +65,6 @@ public class User {
             insertable = false
     )
     private String role;
-
-    @Column(
-            name = "password_updated_at",
-            columnDefinition = "TIMESTAMP",
-            insertable = false
-    )
-    private Timestamp passwordUpdatedAt;
-
-    @Column(
-            name = "login_miss_times",
-            columnDefinition = "INTEGER",
-            insertable = false
-    )
-    private Integer loginMissTimes;
-
-    @Column(
-            name = "unlock",
-            columnDefinition = "BOOLEAN",
-            insertable = false
-    )
-    private boolean unlock;
-
-    @Column(
-            name = "enabled",
-            columnDefinition = "BOOLEAN",
-            insertable = false
-    )
-    private boolean enabled;
 
     @Column(
             name = "created_at",

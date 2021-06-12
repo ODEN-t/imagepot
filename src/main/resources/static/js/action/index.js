@@ -154,4 +154,4 @@ document.getElementById('js-execute').addEventListener('click', uploader);
 document.getElementById('js-clear').addEventListener('click', clearFormData);
 
 // 結果メッセージ表示モーダル
-module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error');
+module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error', true);

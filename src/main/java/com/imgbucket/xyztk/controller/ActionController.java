@@ -1,8 +1,8 @@
 package com.imgbucket.xyztk.controller;
 
 import com.amazonaws.AmazonServiceException;
+import com.imgbucket.xyztk.model.BktFile;
 import com.imgbucket.xyztk.model.LoginUser;
-import com.imgbucket.xyztk.model.PotFile;
 import com.imgbucket.xyztk.service.FileService;
 import com.imgbucket.xyztk.service.StorageService;
 import com.imgbucket.xyztk.util.UtilComponent;
@@ -51,20 +51,20 @@ public class ActionController {
      * @return ログインユーザが保持するファイル情報
      */
     @ModelAttribute
-    List<PotFile> getFileList(@AuthenticationPrincipal LoginUser loginUser) {
+    List<BktFile> getFileList(@AuthenticationPrincipal LoginUser loginUser) {
         return fileService.getAllFilesById(loginUser);
     }
 
 
     /**
      * 実行結果メッセージ、ファイル数、ファイル容量、ファイル情報をmodelにセットしaction.htmlでそれらを表示する
-     * @param potFileList ユーザの保持する全ファイル情報を詰めたリスト
+     * @param bktFileList ユーザの保持する全ファイル情報を詰めたリスト
      * @param model 必要な情報をセットするモデル
      * @return View
      */
     @GetMapping
     public String getAction(
-            List<PotFile> potFileList,
+            List<BktFile> bktFileList,
             Model model) {
 
         // 実行結果メッセージ from deleteUser();
@@ -76,20 +76,20 @@ public class ActionController {
                 .ifPresent(model::addAttribute);
 
         List<String> readableSizeList = new ArrayList<>();
-        for(PotFile p : potFileList)
+        for(BktFile p : bktFileList)
             readableSizeList.add(utilComponent.readableSize(p.getSize()));
 
         List<URL> urlList = new ArrayList<>();
-        for(PotFile potFile : potFileList)
-            urlList.add(potFile.getTmb_url());
+        for(BktFile bktFile : bktFileList)
+            urlList.add(bktFile.getTmb_url());
 
         // ファイル数
-        model.addAttribute("totalFiles", potFileList.size());
+        model.addAttribute("totalFiles", bktFileList.size());
         // 合計ファイルサイズ(readable)
-        model.addAttribute("totalSizeReadable", utilComponent.getReadableTotalSize(potFileList));
+        model.addAttribute("totalSizeReadable", utilComponent.getReadableTotalSize(bktFileList));
         // 各ファイルサイズ(readable)
         model.addAttribute("readableSizeList", readableSizeList);
-        model.addAttribute("fileList", potFileList);
+        model.addAttribute("fileList", bktFileList);
         // サムネイル画像のURL
         model.addAttribute("urlList", urlList);
         return "action";
@@ -109,7 +109,7 @@ public class ActionController {
 
         // s3とDBから削除
         try {
-            List<PotFile> deleteFileList = s3Service.s3DeleteFile(fileKeyList);
+            List<BktFile> deleteFileList = s3Service.s3DeleteFile(fileKeyList);
             fileService.deleteFilesByKey(deleteFileList);
             redirectAttributes.addFlashAttribute("actionSuccess", true);
             redirectAttributes.addFlashAttribute("message", messageSource.getMessage("success.delete", null, Locale.ENGLISH));
@@ -127,13 +127,13 @@ public class ActionController {
 
     /**
      * ユーザが選択したファイルデータをs3からダウンロード
-     * @param potFileList ユーザの保持する全ファイル情報を詰めたリスト
+     * @param bktFileList ユーザの保持する全ファイル情報を詰めたリスト
      * @param checkedFileList ユーザが選択したファイルキーのリスト
      * @return View 成功時：ダウンロード実行  エラー時：エラーメッセージ表示
      */
     @PostMapping(value = "/file", params = "download")
     public <T> T downloadImage(
-            List<PotFile> potFileList,
+            List<BktFile> bktFileList,
             Model model,
             @RequestParam(value = "fileKey", required = false) String[] checkedFileList) {
 
@@ -151,12 +151,12 @@ public class ActionController {
         // ファイルリスト、ファイル数、合計ファイルサイズを返す
         finally {
             List<String> readableSizeList = new ArrayList<>();
-            for(PotFile p : potFileList)
+            for(BktFile p : bktFileList)
                 readableSizeList.add(utilComponent.readableSize(p.getSize()));
             model.addAttribute("readableSizeList", readableSizeList);
-            model.addAttribute("totalFiles", potFileList.size());
-            model.addAttribute("totalSizeReadable", utilComponent.getReadableTotalSize(potFileList));
-            model.addAttribute("fileList", potFileList);
+            model.addAttribute("totalFiles", bktFileList.size());
+            model.addAttribute("totalSizeReadable", utilComponent.getReadableTotalSize(bktFileList));
+            model.addAttribute("fileList", bktFileList);
         }
     }
 
@@ -170,7 +170,7 @@ public class ActionController {
     @ResponseBody
     @Async
     public CompletableFuture<String> uploadImage(@RequestParam ArrayList<MultipartFile> images, @AuthenticationPrincipal LoginUser loginUser) {
-        List<PotFile> uploadedFiles = s3Service.s3UploadFile(images, loginUser);
+        List<BktFile> uploadedFiles = s3Service.s3UploadFile(images, loginUser);
         fileService.insertFiles(uploadedFiles);
         return CompletableFuture.completedFuture("success");
     }

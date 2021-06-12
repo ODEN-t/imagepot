@@ -106,4 +106,4 @@ document.getElementById('fileInput').addEventListener('change', (e) => {
 module.inputTypeToggle('.buttonCTA-show');
 
 // show result message from backend with modal
-module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error');
+module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error', true);

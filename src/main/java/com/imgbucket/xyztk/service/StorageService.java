@@ -7,8 +7,8 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.util.IOUtils;
+import com.imgbucket.xyztk.model.BktFile;
 import com.imgbucket.xyztk.model.LoginUser;
-import com.imgbucket.xyztk.model.PotFile;
 import com.imgbucket.xyztk.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,12 +65,12 @@ public class StorageService {
      * @param loginUser ログインユーザ情報
      * @return アップロードが成功したファイル情報を詰めたリスト
      */
-    public List<PotFile> s3UploadFile(ArrayList<MultipartFile> images, LoginUser loginUser) {
+    public List<BktFile> s3UploadFile(ArrayList<MultipartFile> images, LoginUser loginUser) {
 
         List<String> uploadedKeyList = new ArrayList<>();
         String pathToUserFolder = folderPrefix + loginUser.id + "/";
         String pathToUserFolderTmb = folderPrefixRd + loginUser.id + "/";
-        List<PotFile> uploadedFileList = new ArrayList<>();
+        List<BktFile> uploadedFileList = new ArrayList<>();
 
         try {
             for (MultipartFile multipartFile : images) {
@@ -94,7 +94,7 @@ public class StorageService {
             u.setId(loginUser.id);
             for (String key : uploadedKeyList) {
                 S3Object obj = s3Cliant.getObject(new GetObjectRequest(bucketName, key));
-                PotFile f = new PotFile();
+                BktFile f = new BktFile();
                 f.setFile_id(UUID.randomUUID());
                 f.setUser(u);
                 f.setKey(obj.getKey());
@@ -158,11 +158,11 @@ public class StorageService {
      * @param fileKeyList 削除対象データのs3のkey
      * @return 削除データの情報を詰めたリスト
      */
-    public List<PotFile> s3DeleteFile(String[] fileKeyList) {
-        List<PotFile> deleteList = new ArrayList<>();
+    public List<BktFile> s3DeleteFile(String[] fileKeyList) {
+        List<BktFile> deleteList = new ArrayList<>();
         for (String key : fileKeyList) {
             s3Cliant.deleteObject(bucketName, key);
-            PotFile f = new PotFile();
+            BktFile f = new BktFile();
             f.setKey(key);
             deleteList.add(f);
             log.info("Delete image :" + key);

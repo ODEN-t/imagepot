@@ -23,9 +23,6 @@ public class LoginUser implements UserDetails {
     public final String password;
     public final String icon;
     public final Set<GrantedAuthority> authorities;
-    public final Integer loginMissTimes;
-    public final boolean unlocked;
-    public final boolean enabled;
 
     public LoginUser(User user) {
         this.user = user;
@@ -39,9 +36,6 @@ public class LoginUser implements UserDetails {
             this.icon = null;
         }
         this.authorities = convertGrantedAuthorities(user.getRole());
-        this.loginMissTimes = user.getLoginMissTimes();
-        this.unlocked = user.isUnlock();
-        this.enabled = user.isEnabled();
     }
 
 
@@ -64,14 +58,16 @@ public class LoginUser implements UserDetails {
         return this.name;
     }
 
+    // 使用しないので常にtrue
     @Override
     public boolean isEnabled() {
-        return this.enabled;
+        return true;
     }
 
+    // 使用しないので常にtrue
     @Override
     public boolean isAccountNonLocked() {
-        return this.unlocked;
+        return true;
     }
 
     // 使用しないので常にtrue
@@ -89,15 +85,12 @@ public class LoginUser implements UserDetails {
     @Override
     public String toString() {
         return "LoginUser{" +
-                "  id=" + id +
+                "user=" + user +
+                ", id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-//                ", icon=" + icon +
                 ", authorities=" + authorities +
-                ", loginMissTimes=" + loginMissTimes +
-                ", unlocked=" + unlocked +
-                ", enabled=" + enabled +
                 '}';
     }
 
