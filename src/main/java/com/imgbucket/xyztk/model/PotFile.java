@@ -29,8 +29,7 @@ public class PotFile {
     @JoinColumn(
             name = "user_id",
             updatable = false,
-            nullable = false,
-            foreignKey = @ForeignKey(name = "fk_user_id")
+            nullable = false
     )
     private User user;
 
