@@ -57,7 +57,7 @@
               <dd class="inputGroup">
                 <input class="inputText" type="text" id="name" name="name" th:field="*{name}"
                        th:classappend="${#fields.hasErrors('name')}?'is-error'">
-                <i class="icon-user"></i>
+                <i class="icon-user1"></i>
               </dd>
             </dl>
             <dl class="p-settings__settingArea">
@@ -65,7 +65,7 @@
               <dd class="inputGroup">
                 <input class="inputText" type="text" id="email" name="email" th:field="*{email}"
                        th:classappend="${#fields.hasErrors('email')}?'is-error'">
-                <i class="icon-envelop"></i>
+                <i class="icon-envelope"></i>
               </dd>
             </dl>
             <div class="p-settings__settingArea p-settings__settingArea-textRight">
@@ -87,7 +87,7 @@
                        th:field="*{currentPassword}"
                        th:classappend="${#fields.hasErrors('currentPassword')}?'is-error'">
                 <span class="buttonCTA buttonCTA-show">Show</span>
-                <i class="icon-lock"></i>
+                <i class="icon-lock-closed"></i>
               </dd>
             </dl>
             <dl class="p-settings__settingArea">
@@ -96,7 +96,7 @@
                 <input class="inputText" type="password" id="newPassword" name="newPassword" th:field="*{newPassword}"
                        th:classappend="${#fields.hasErrors('newPassword')}?'is-error'">
                 <span class="buttonCTA buttonCTA-show">Show</span>
-                <i class="icon-lock"></i>
+                <i class="icon-lock-closed"></i>
               </dd>
             </dl>
             <dl class="p-settings__settingArea">
@@ -106,7 +106,7 @@
                        th:field="*{confirmNewPassword}"
                        th:classappend="${#fields.hasErrors('confirmNewPassword')}?'is-error'">
                 <span class="buttonCTA buttonCTA-show">Show</span>
-                <i class="icon-lock"></i>
+                <i class="icon-lock-closed"></i>
               </dd>
             </dl>
             <div class="p-settings__settingArea p-settings__settingArea-textRight">

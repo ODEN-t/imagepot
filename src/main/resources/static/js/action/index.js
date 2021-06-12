@@ -153,5 +153,8 @@ document.getElementById('fileInput').addEventListener('change', inputFormData);
 document.getElementById('js-execute').addEventListener('click', uploader);
 document.getElementById('js-clear').addEventListener('click', clearFormData);
 
+document.getElementById('js-reload').addEventListener('click', () => {
+    location.reload();
+})
 // 結果メッセージ表示モーダル
 module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error', true);

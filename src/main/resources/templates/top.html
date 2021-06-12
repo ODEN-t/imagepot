@@ -95,12 +95,12 @@
       <form class="p-modal__form" th:method="POST" th:action="@{/login}">
         <div class="inputGroup">
           <input class="inputText" type="text" placeholder="Email" name="email">
-          <i class="icon-envelop"></i>
+          <i class="icon-envelope"></i>
         </div>
         <div class="inputGroup">
           <input class="inputText" type="password" placeholder="Password" name="password">
           <span class="buttonCTA buttonCTA-show">Show</span>
-          <i class="icon-lock"></i>
+          <i class="icon-lock-closed"></i>
         </div>
         <button type="submit" class="buttonCTA buttonCTA-fullWidth">Login</button>
       </form>
@@ -125,24 +125,24 @@
         <div class="inputGroup">
           <input class="inputText" th:classappend="${#fields.hasErrors('name')}?'is-error'" type="text"
                  placeholder="Name" th:field="*{name}" maxlength="20">
-          <i class="icon-user"></i>
+          <i class="icon-user1"></i>
         </div>
         <div class="inputGroup">
           <input class="inputText" th:classappend="${#fields.hasErrors('email')}?'is-error'" type="text"
                  placeholder="Email" th:field="*{email}">
-          <i class="icon-envelop"></i>
+          <i class="icon-envelope"></i>
         </div>
         <div class="inputGroup">
           <input class="inputText" th:classappend="${#fields.hasErrors('password')}?'is-error'"
                  type="password" placeholder="Password" th:field="*{password}">
           <span class="buttonCTA buttonCTA-show">Show</span>
-          <i class="icon-lock"></i>
+          <i class="icon-lock-closed"></i>
         </div>
         <div class="inputGroup">
           <input class="inputText" th:classappend="${#fields.hasErrors('confirmPassword')}?'is-error'"
                  type="password" placeholder="Confirm Password" th:field="*{confirmPassword}">
           <span class="buttonCTA buttonCTA-show">Show</span>
-          <i class="icon-lock"></i>
+          <i class="icon-lock-closed"></i>
         </div>
         <button type="submit" class="buttonCTA buttonCTA-fullWidth">Create account</button>
         <div th:if="${#fields.hasErrors('${signupForm.*}')}" data-process="signup" data-message="error"
