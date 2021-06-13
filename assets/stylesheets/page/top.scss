@@ -1,4 +1,5 @@
 @import "../common/_variables";
+@import "../common/_breakpoint";
 
 .p-top {
   background-color: $color-palette-gray-1;
@@ -50,23 +51,32 @@
       line-height: 1.5;
 
       > h3 {
-        font-size: 45px;
+        font-size: 28px;
         font-weight: 600;
         line-height: 1.4;
+        @include mq(xlg) {
+          font-size: 36px;
+        }
       }
 
       .logo {
         font-family: Expletus Sans, serif;
-        font-size: 36px;
+        font-size: 34px;
         font-weight: 400;
+        @include mq(xlg) {
+          font-size: 38px;
+        }
       }
 
       > p {
         position: relative;
-        font-size: 23px;
+        font-size: 21px;
         line-height: 1.5;
-        margin-top: 17px;
+        margin-top: 12px;
         padding-left: 3em;
+        @include mq(xlg) {
+          font-size: 23px;
+        }
 
         &:before {
           content: '';
@@ -120,10 +130,13 @@
       background-color: $color-base-white;
 
       > h4 {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 500;
         line-height: 1.2;
         text-align: center;
+        @include mq(xlg) {
+          font-size: 20px;
+        }
 
         > span {
           font-family: Expletus Sans, serif;
@@ -139,6 +152,7 @@
       > li {
         width: 100%;
         text-align: center;
+        padding: 0 6px;
       }
 
       > li img {
@@ -150,15 +164,20 @@
       }
 
       .textWrap > h5 {
-        font-size: 19px;
+        font-size: 16px;
         font-weight: 500;
+        @include mq(xlg) {
+          font-size: 18px;
+        }
       }
 
       .textWrap > p {
-        font-size: 15px;
+        font-size: 14px;
         line-height: 1.4;
-        margin-top: 10px;
-
+        margin-top: 3px;
+        @include mq(xlg) {
+          font-size: 15px;
+        }
       }
     }
 
@@ -181,9 +200,12 @@
       .textWrap {
         padding: 24px 35px;
         > h4 {
-          font-size: 20px;
+          font-size: 18px;
           text-align: center;
           font-weight: 400;
+          @include mq(xlg) {
+            font-size: 20px;
+          }
         }
       }
       &-even {
