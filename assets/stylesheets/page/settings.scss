@@ -46,7 +46,7 @@
       margin-top: 10px;
     }
 
-    > dd:not(.inputGroup) {
+    > dd:not(.c-inputGroup) {
       position: relative;
     }
 
@@ -87,7 +87,7 @@
     }
 
     // override
-    .inputGroup {
+    .c-inputGroup {
       .inputText {
         height: 37px;
         line-height: 37px;
@@ -98,7 +98,7 @@
         font-size: 15px;
       }
 
-      .buttonCTA-show {
+      .c-buttonCTA-show {
         font-size: 13px;
         height: 26px;
         line-height: 26px;

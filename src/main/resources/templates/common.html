@@ -4,6 +4,8 @@
 <head th:fragment="meta_header(title, links, scripts)">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
   <title th:text="${title==null}? 'ImgBucket' : ${title}+' | ImgBucket'">各ページタイトル | ImgBucket</title>
   <link rel="stylesheet" th:href="@{/icomoon/style.css}" type="text/css">
   <link rel="stylesheet" th:href="@{/css/common/index.min.css}" type="text/css">

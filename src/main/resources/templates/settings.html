@@ -30,10 +30,10 @@
               </div>
               <div class="buttonWrap">
                 <input type="file" accept=".jpg, .jpeg, .png" id="fileInput">
-                <label class="buttonCTA" for="fileInput">Change Icon</label>
+                <label class="c-buttonCTA" for="fileInput">Change Icon</label>
                 <form class="reset" method="post" th:action="@{/settings/reset/user/icon}" id="resetIcon"
                       data-confirm="Are you sure you want to reset your icon?">
-                  <button type="submit" class="buttonCTA">Reset</button>
+                  <button type="submit" class="c-buttonCTA">Reset</button>
                 </form>
               </div>
 
@@ -43,7 +43,7 @@
                     <img class="cropImage" id="js-cropImage" src="" alt="">
                   </div>
                   <form enctype="multipart/form-data" id="js-newIconForm">
-                    <button class="buttonCTA buttonCTA-fullWidth" id="js-newIconSubmit">Set new icon</button>
+                    <button class="c-buttonCTA c-buttonCTA-fullWidth" id="js-newIconSubmit">Set new icon</button>
                   </form>
                 </div>
               </div>
@@ -54,7 +54,7 @@
           <form method="post" th:action="@{/settings/update/user/info}" th:object="${updateUserInfoForm}">
             <dl class="p-settings__settingArea">
               <dt><label for="name">Name</label></dt>
-              <dd class="inputGroup">
+              <dd class="c-inputGroup">
                 <input class="inputText" type="text" id="name" name="name" th:field="*{name}"
                        th:classappend="${#fields.hasErrors('name')}?'is-error'">
                 <i class="icon-user1"></i>
@@ -62,14 +62,14 @@
             </dl>
             <dl class="p-settings__settingArea">
               <dt><label for="email">Email</label></dt>
-              <dd class="inputGroup">
+              <dd class="c-inputGroup">
                 <input class="inputText" type="text" id="email" name="email" th:field="*{email}"
                        th:classappend="${#fields.hasErrors('email')}?'is-error'">
                 <i class="icon-envelope"></i>
               </dd>
             </dl>
             <div class="p-settings__settingArea p-settings__settingArea-textRight">
-              <button type="submit" class="buttonCTA">Update</button>
+              <button type="submit" class="c-buttonCTA">Update</button>
             </div>
             <div th:if="${#fields.hasErrors('${updateUserInfoForm.*}')}" data-message="error"
                  class="c-message c-message-error">
@@ -82,35 +82,35 @@
           <form method="post" th:action="@{/settings/update/user/password}" th:object="${updateUserPasswordForm}">
             <dl class="p-settings__settingArea">
               <dt><label for="currentPassword">Current Password</label></dt>
-              <dd class="inputGroup">
+              <dd class="c-inputGroup">
                 <input class="inputText" type="password" id="currentPassword" name="currentPassword"
                        th:field="*{currentPassword}"
                        th:classappend="${#fields.hasErrors('currentPassword')}?'is-error'">
-                <span class="buttonCTA buttonCTA-show">Show</span>
+                <span class="c-buttonCTA c-buttonCTA-show">Show</span>
                 <i class="icon-lock-closed"></i>
               </dd>
             </dl>
             <dl class="p-settings__settingArea">
               <dt><label for="newPassword">New Password</label></dt>
-              <dd class="inputGroup">
+              <dd class="c-inputGroup">
                 <input class="inputText" type="password" id="newPassword" name="newPassword" th:field="*{newPassword}"
                        th:classappend="${#fields.hasErrors('newPassword')}?'is-error'">
-                <span class="buttonCTA buttonCTA-show">Show</span>
+                <span class="c-buttonCTA c-buttonCTA-show">Show</span>
                 <i class="icon-lock-closed"></i>
               </dd>
             </dl>
             <dl class="p-settings__settingArea">
               <dt><label for="confirmNewPassword">Confirm New Password</label></dt>
-              <dd class="inputGroup">
+              <dd class="c-inputGroup">
                 <input class="inputText" type="password" id="confirmNewPassword" name="confirmNewPassword"
                        th:field="*{confirmNewPassword}"
                        th:classappend="${#fields.hasErrors('confirmNewPassword')}?'is-error'">
-                <span class="buttonCTA buttonCTA-show">Show</span>
+                <span class="c-buttonCTA c-buttonCTA-show">Show</span>
                 <i class="icon-lock-closed"></i>
               </dd>
             </dl>
             <div class="p-settings__settingArea p-settings__settingArea-textRight">
-              <button type="submit" class="buttonCTA">Update</button>
+              <button type="submit" class="c-buttonCTA">Update</button>
             </div>
             <div th:if="${#fields.hasErrors('${updateUserPasswordForm.*}')}" data-message="error"
                  class="c-message c-message-error">

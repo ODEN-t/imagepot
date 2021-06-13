@@ -89,14 +89,13 @@ const inputFormData = (e) => {
     }
     fileSizeElem.dataset.rawsize = totalSize.toString();
     fileSizeElem.textContent = module.readableFileSize(totalSize);
-    console.log(totalSize);
 }
 
 // フォームデータをnull & 画面表示からファイル情報を削除
 const clearFormData = () => {
     formData = null;
     const parent = document.getElementById('js-fileList');
-    while(parent.firstChild){
+    while (parent.firstChild) {
         parent.removeChild(parent.firstChild)
     }
     const fileSizeElem = document.getElementById('js-totalSize');
@@ -104,9 +103,10 @@ const clearFormData = () => {
     fileSizeElem.dataset.rawsize = '0';
 }
 
+
 // バックエンドへアップロードリクエスト
 const uploader = (e) => {
-    if(!formData)
+    if (!formData)
         return false;
     uploadModal.ajax({
         type: 'POST',
@@ -114,13 +114,20 @@ const uploader = (e) => {
         data: formData,
         contentType: false,
         processData: false,
-        spinner: '<div class="loadingMask"></div>',
+        spinner:
+            `<img class="c-ajaxLoading" src="../../images/preloader32.gif" alt="">`,
         setContent: false,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(
+                $("meta[name='_csrf_header']").attr("content"),
+                $("meta[name='_csrf']").attr("content")
+            );
+        },
         success: function () {
             clearFormData();
             alert('Uploaded successfully!');
         },
-        error: function (data) {
+        error: function () {
             alert('Critical error occurred. Please reload.');
         }
     })

@@ -93,16 +93,16 @@
       <h2>Hello!</h2>
       <p>Login to your account here.</p>
       <form class="p-modal__form" th:method="POST" th:action="@{/login}">
-        <div class="inputGroup">
+        <div class="c-inputGroup">
           <input class="inputText" type="text" placeholder="Email" name="email">
           <i class="icon-envelope"></i>
         </div>
-        <div class="inputGroup">
+        <div class="c-inputGroup">
           <input class="inputText" type="password" placeholder="Password" name="password">
-          <span class="buttonCTA buttonCTA-show">Show</span>
+          <span class="c-buttonCTA c-buttonCTA-show">Show</span>
           <i class="icon-lock-closed"></i>
         </div>
-        <button type="submit" class="buttonCTA buttonCTA-fullWidth">Login</button>
+        <button type="submit" class="c-buttonCTA c-buttonCTA-fullWidth">Login</button>
       </form>
     </div>
     <div class="p-modal__footer">
@@ -122,29 +122,29 @@
       <h2>Join ImgBucket</h2>
       <p>Use image storage for free.</p>
       <form class="p-modal__form" method="POST" th:action="@{/signup}" th:object="${signupForm}">
-        <div class="inputGroup">
+        <div class="c-inputGroup">
           <input class="inputText" th:classappend="${#fields.hasErrors('name')}?'is-error'" type="text"
                  placeholder="Name" th:field="*{name}" maxlength="20">
           <i class="icon-user1"></i>
         </div>
-        <div class="inputGroup">
+        <div class="c-inputGroup">
           <input class="inputText" th:classappend="${#fields.hasErrors('email')}?'is-error'" type="text"
                  placeholder="Email" th:field="*{email}">
           <i class="icon-envelope"></i>
         </div>
-        <div class="inputGroup">
+        <div class="c-inputGroup">
           <input class="inputText" th:classappend="${#fields.hasErrors('password')}?'is-error'"
                  type="password" placeholder="Password" th:field="*{password}">
-          <span class="buttonCTA buttonCTA-show">Show</span>
+          <span class="c-buttonCTA c-buttonCTA-show">Show</span>
           <i class="icon-lock-closed"></i>
         </div>
-        <div class="inputGroup">
+        <div class="c-inputGroup">
           <input class="inputText" th:classappend="${#fields.hasErrors('confirmPassword')}?'is-error'"
                  type="password" placeholder="Confirm Password" th:field="*{confirmPassword}">
-          <span class="buttonCTA buttonCTA-show">Show</span>
+          <span class="c-buttonCTA c-buttonCTA-show">Show</span>
           <i class="icon-lock-closed"></i>
         </div>
-        <button type="submit" class="buttonCTA buttonCTA-fullWidth">Create account</button>
+        <button type="submit" class="c-buttonCTA c-buttonCTA-fullWidth">Create account</button>
         <div th:if="${#fields.hasErrors('${signupForm.*}')}" data-process="signup" data-message="error"
              class="c-message c-message-error">
           <span th:errors="${signupForm.*}"></span>
