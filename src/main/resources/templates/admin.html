@@ -45,9 +45,7 @@
       <table id="js-userDetailsTable" class="p-admin__userDetails__table">
       </table>
       <div class="buttonWrap">
-        <form id="js-deleteForm" th:method="delete">
-          <button class="c-buttonCTA">DELETE</button>
-        </form>
+        <button class="c-buttonCTA" id="js-delete">DELETE</button>
       </div>
     </section>
     <div th:if="${deleteError}" data-message="error" class="c-message c-message-error">

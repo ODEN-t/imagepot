@@ -50,7 +50,8 @@ const textEdit = (text) => {
 
 const buildUserData = (e) => {
     const data = e.currentTarget.dataset;
-    document.getElementById('js-deleteForm').action = '/admin/delete/' + data.id;
+    const parent = document.getElementById('js-userDetailsTable');
+    parent.dataset.userId = data.id;
     for(const prop in data) {
         let tr = document.createElement('tr');
         let th = document.createElement('th');
@@ -59,14 +60,38 @@ const buildUserData = (e) => {
         td.innerText = data[prop];
         tr.appendChild(th);
         tr.appendChild(td);
-        document.getElementById('js-userDetailsTable').appendChild(tr);
+        parent.appendChild(tr);
     }
 }
 
+const deleteRequest = () => {
+    const userId = document.getElementById('js-userDetailsTable').dataset.userId;
+    userDetailModal.ajax( {
+        method: 'DELETE',
+        url: '/admin/delete/' + userId,
+        processData: false,
+        contentType: false,
+        setContent: false,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(
+                $("meta[name='_csrf_header']").attr("content"),
+                $("meta[name='_csrf']").attr("content")
+            );
+        },
+        success: function () {
+            if(!alert('Deleted successfully!')){window.location.reload();}
+        },
+        error: function () {
+            alert('Critical error occurred. Please reload.');
+        }
+    })
+}
 
 document.querySelectorAll('.p-admin__userList__data').forEach((f) =>{
     f.addEventListener('click', buildUserData)
 })
+
+document.getElementById('js-delete').addEventListener('click', deleteRequest);
 
 // show result message from backend with modal
 module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error', true);

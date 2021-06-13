@@ -45,7 +45,13 @@ const crop = {
                         method: 'POST',
                         data: formData,
                         processData: false,
-                        contentType: false
+                        contentType: false,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader(
+                                $("meta[name='_csrf_header']").attr("content"),
+                                $("meta[name='_csrf']").attr("content")
+                            );
+                        },
                     }).done(() => {
                             window.location.href = "/settings";
                     }).fail(() => {
@@ -103,7 +109,7 @@ document.getElementById('fileInput').addEventListener('change', (e) => {
 
 
 // type=password <=> type=text の切り替え
-module.inputTypeToggle('.buttonCTA-show');
+module.inputTypeToggle('.c-buttonCTA-show');
 
 // show result message from backend with modal
 module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error', true);

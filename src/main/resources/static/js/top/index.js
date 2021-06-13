@@ -68,7 +68,7 @@ modalSwitch('signupSub', 'loginSub');
 
 
 // input=text input=password のトグル
-module.inputTypeToggle('.buttonCTA-show');
+module.inputTypeToggle('.c-buttonCTA-show');
 
 
 // 実行結果メッセージの表示

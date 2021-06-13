@@ -6,14 +6,20 @@
 </head>
 
 <body>
-<div th:replace="common::header"></div>
-  <div class="p-error">
-    <h1 th:text="${status} + ' ' + ${error}"></h1>
-    <p th:text="${message}"></p>
-    <form method="POST" th:action="@{/signout}">
-      <button class="c-buttonCTA" type="submit">
-        Go back to the login page
-      </button>
-    </form>
+<header class="c-header" id="header">
+  <div class="c-header__wrap">
+    <a class="c-header__title" href="/">
+      <span class="logo">ImgBucket</span>
+    </a>
   </div>
+</header>
+<div class="c-globalContainer">
+  <div class="p-error">
+    <h2 th:text="${status} + ' ' + ${error}"></h2>
+    <p th:text="${message}"></p>
+    <a th:href="@{'/logout'}" class="c-buttonCTA" type="submit">
+      Go back to the login page
+    </a>
+  </div>
+</div>
 </body>

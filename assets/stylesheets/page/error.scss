@@ -1,7 +1,12 @@
-.p-error {
-  padding: 30px;
+@import "../common/breakpoint";
 
-  > h1 {
+.p-error {
+  margin-top: 23px;
+  @include mq(xlg) {
+    margin-top: 36px;
+  }
+
+  > h2 {
     font-size: 40px;
     font-weight: 600;
   }

@@ -147,38 +147,6 @@ export function generateImageTemplateList (template, number) {
     return templateList;
 }
 
-/**
- *　引数に渡した配列を指定した数毎にラップしHTML要素として追加する
- *
- * @param {Array} listOfElement HTMLElementを詰めた配列
- * @param {Number} unit 何個ずつwrapしたいかを指定
- * @param {String} wrapperTemplate wrapする親要素を表現したテンプレートリテラル
- * @return void
- */
-export function WrapNodesInEachUnit(listOfElement, unit, wrapperTemplate) {
-    const contents = document.getElementById('js-postedList');
-    const NUMBER_OF_ELEMENTS = listOfElement.length; // 要素の数
-    const NUMBER_OF_WRAPPERS = Math.ceil(NUMBER_OF_ELEMENTS / unit); // 要素をラップするラッパーの合計数
-    const domParser = new DOMParser();
-    let wrapNumber = 0;
-    let eachNum = unit;　// 各ラッパー内に追加する要素数
-    let elemNum = 0;
-
-    while (wrapNumber <= NUMBER_OF_WRAPPERS) {
-        let wrapper = domParser.parseFromString(wrapperTemplate, "text/html").body.firstChild;
-        while (elemNum < eachNum) {
-            if (NUMBER_OF_ELEMENTS <= elemNum) break;
-            wrapper.appendChild(listOfElement[elemNum]);
-            elemNum++;
-        }
-        contents.appendChild(wrapper);
-        if (NUMBER_OF_ELEMENTS <= elemNum) break;
-        eachNum += unit;
-        wrapNumber++;
-    }
-}
-
-
 export function readableFileSize(size) {
     const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
     let i = 0;
