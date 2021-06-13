@@ -1,4 +1,5 @@
 @import "../common/variables";
+@import "../common/breakpoint";
 
 .p-action {
   background-color: $color-base-white;
@@ -6,8 +7,11 @@
 
   &__headMenu {
     box-shadow: 0 1px rgba(0, 0, 0, 0.11);
-    margin-top: 15px;
+    margin-top: 8px;
     height: 50px;
+    @include mq(xlg) {
+      margin-top: 15px;
+    }
   }
 
   &__menuList {
@@ -23,6 +27,9 @@
       i {
         font-size: 17px;
         color: $color-palette-gray-5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
         transition: all 0.2s ease;
 
@@ -35,8 +42,11 @@
 
   &__content {
     position: relative;
-    margin-top: 36px;
+    margin-top: 28px;
     display: none;
+    @include mq(xlg) {
+      margin-top: 36px;
+    }
 
     @keyframes show {
       from {
@@ -60,22 +70,38 @@
     flex-wrap: wrap;
 
     > li {
-      $row: 8;
       $gutter: 0.5%;
-      $width: (100% - ($row - 1) * $gutter) / $row;
-      $fixedRatio: $width * (9 / 16); /* 画像比率を16:9に設定 */
-      width: $width;
+      /* xlg */
+      $row-xlg: 8;
+      $width-xlg: (100% - ($row-xlg - 1) * $gutter) / $row-xlg;
+      $fixedRatio-xlg: $width-xlg * (9 / 16); /* 画像比率を16:9に設定 */
+      /* lg */
+      $row-lg: 6;
+      $width-lg: (100% - ($row-lg - 1) * $gutter) / $row-lg;
+      $fixedRatio-lg: $width-lg * (9 / 16); /* 画像比率を16:9に設定 */
+
+      width: $width-lg;
       position: relative;
-      padding-top: $fixedRatio;
+      padding-top: $fixedRatio-lg;
       overflow: hidden;
       border-radius: 3px;
-
-      &:nth-of-type(n+9) {
-        margin-top: $gutter;
+      @include mq {
+        &:nth-of-type(n+7) {
+          margin-top: $gutter;
+        }
+        &:not(:nth-child(6n)) {
+          margin-right: 0.5%;
+        }
       }
-
-      &:not(:nth-child(8n)) {
-        margin-right: 0.5%;
+      @include mq(xlg) {
+        width: $width-xlg;
+        padding-top: $fixedRatio-xlg;
+        &:nth-of-type(n+9) {
+          margin-top: $gutter;
+        }
+        &:not(:nth-child(8n)) {
+          margin-right: 0.5%;
+        }
       }
 
       img {
