@@ -1,30 +1,43 @@
-@import "../common/_variables";
+@import "variables";
+@import "breakpoint";
 
 // sidebarとcontents左右に並べるトップページ配下の共通ラッパー
 .c-globalContainer {
   position: relative;
   width: 100%;
-  padding: 58px 59px;
+  padding: 58px 39px;
+  @include mq(xlg) {
+    padding: 58px 59px;
+  }
 }
 
 .c-pageHeader {
-  margin-top: 35px;
+  margin-top: 23px;
   display: flex;
   align-items: baseline;
+  @include mq(xlg) {
+    font-size: 35px;
+  }
   > h2 {
-    font-size: 25px;
+    font-size: 23px;
     font-weight: 600;
     line-height: 1.4;
+    @include mq(xlg) {
+      font-size: 25px;
+    }
   }
   &__storageInfo {
-    font-size: 19px;
+    font-size: 17px;
     font-weight: 500;
     line-height: 1.4;
     color: $color-palette-gray-6;
-    margin-left: 20px;
+    margin-left: 1em;
+    @include mq(xlg) {
+      font-size: 19px;
+    }
 
     > span:last-child {
-      margin-left: 10px;
+      margin-left: 0.5em;
     }
   }
 }
