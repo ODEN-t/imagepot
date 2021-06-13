@@ -1,4 +1,5 @@
 @import "../common/variables";
+@import "../common/breakpoint";
 
 .loadingMask {
   position: absolute;
@@ -13,6 +14,7 @@
   opacity: 1;
   visibility: visible;
   transition: all 0.5s ease-in-out;
+
   &.is-loaded {
     opacity: 0;
     visibility: hidden;
@@ -32,19 +34,15 @@
 
   &__postedList {
     position: relative;
-    margin-top: 36px;
-
-    &__buttonWrap {
-      display: flex;
-      align-items: center;
-      position: absolute;
-      top: -60px;
-      right: 25px;
+    margin-top: 23px;
+    @include mq(xlg) {
+      margin-top: 36px;
     }
 
     &__sortArea {
       position: relative;
       margin-right: 10px;
+
       > span {
         font-size: 13px;
         color: $color-palette-gray-6;
@@ -75,17 +73,30 @@
       }
     }
   }
+
   &__postedItem {
 
+    $gutter-sizer: 0.7%;
+    $num-lg: 5;
+    $num-xlg: 6;
+    $width-lg: (100% - $gutter-sizer * ($num-lg - 1)) / $num-lg;
+    $width-xlg: (100% - $gutter-sizer * ($num-xlg - 1)) / $num-xlg;
+
     .grid-item, .grid-sizer {
-      width: calc(96.5% / 6);
+      width: $width-lg;
+      @include mq(xlg) {
+        width: $width-xlg;
+      }
     }
+
     .gutter-sizer {
       width: 0.7%;
     }
+
     .grid-item {
       margin-bottom: 0.7%;
     }
+
     img {
       width: 100%;
       border-radius: 2px;
@@ -96,12 +107,14 @@
   &__postedItemTest {
     column-count: 6;
     column-gap: 0.5%;
+
     figure {
-      position:relative;
+      position: relative;
       display: inline-block;
       width: 100%;
       margin-bottom: 3%;
     }
+
     img {
       width: 100%;
       border-radius: 5px;
