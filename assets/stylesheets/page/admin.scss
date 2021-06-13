@@ -53,8 +53,7 @@
   &__userDetails {
 
     > h2 {
-      color: $color-base-blue;
-      font-size: 32px;
+      font-size: 26px;
       font-weight: 600;
     }
 
@@ -72,7 +71,7 @@
       th {
         width: 30%;
         color: #fff;
-        background-color: $color-primary-blue;
+        background-color: $color-base-blue;
       }
     }
 

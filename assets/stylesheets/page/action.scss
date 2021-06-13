@@ -33,6 +33,11 @@
         cursor: pointer;
         transition: all 0.2s ease;
 
+        &.icon-reload {
+          font-size: 19px;
+          margin-top: 5px;
+        }
+
         &:hover {
           color: $color-base-blue;
         }

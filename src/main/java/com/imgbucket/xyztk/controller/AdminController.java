@@ -33,10 +33,9 @@ public class AdminController {
      */
     @GetMapping
     public String getAdmin(Model model) {
-        List<User> userList = userService.getUsers();
 
-        model.addAttribute("userList", userList);
-        model.addAttribute("count", userList.size());
+        model.addAttribute("userList", userService.getUsers());
+        model.addAttribute("count", userService.getUsers().size());
 
         Optional.ofNullable(model.getAttribute("deleteError"))
                 .ifPresent(model::addAttribute);

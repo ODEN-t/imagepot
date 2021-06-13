@@ -1,4 +1,5 @@
 @import "../common/_variables";
+@import "../common/_breakpoint";
 
 .c-globalContainer {
   background: $color-palette-gray-1;
@@ -54,12 +55,16 @@
       align-items: flex-end;
 
       figure {
-        width: 200px;
-        height: 200px;
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
         position: relative;
         overflow: hidden;
         margin: 0;
+        @include mq(xlg) {
+          width: 150px;
+          height: 150px;
+        }
 
         > img {
           width: 100%;
@@ -70,9 +75,11 @@
       .buttonWrap {
         margin-left: 23px;
         display: flex;
+
         input[type="file"] {
           display: none;
         }
+
         .reset {
           margin-left: 12px;
         }
@@ -86,9 +93,11 @@
         line-height: 37px;
         text-align: left;
       }
+
       > i {
         font-size: 15px;
       }
+
       .buttonCTA-show {
         font-size: 13px;
         height: 26px;
