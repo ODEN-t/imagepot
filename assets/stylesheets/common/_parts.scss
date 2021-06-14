@@ -26,6 +26,7 @@ usage
     height: 45px;
     padding: 0 15px 0 45px;
     font-size: 15px;
+    font-family: $body-font;
     &::placeholder {
       color: #ddd;
       font-weight: 400;
@@ -36,6 +37,10 @@ usage
     }
     &:focus~i {
       color: $color-base-blue;
+    }
+    &:-webkit-autofill::first-line {
+      font-family: $body-font;
+      font-size: 15px;
     }
   }
 }
@@ -88,14 +93,6 @@ usage
     width: 100%;
   }
 
-  &-round {
-    border-radius: 17px;
-    font-size: 15px;
-    font-weight: 500;
-    padding: 9px 21px 9px;
-    letter-spacing: 1px;
-  }
-
   > i {
     margin-right: 0.3em;
   }
@@ -128,18 +125,22 @@ usage
     background: #fff !important;
   }
   .jBox-Confirm-button-cancel {
-    background: #f5f5f5;
+    background: $color-palette-gray-4;
+    transition: all .15s ease;
     &:hover, &:active {
-      background: #f1f1f1;
+      opacity: 0.8;
+      background: $color-palette-gray-4;
     }
     &:active {
       box-shadow: none;
     }
   }
   .jBox-Confirm-button-submit {
-    background: $color-primary-yellow;
+    background: $color-base-blue;
+    transition: all .15s ease;
     &:hover, &:active {
-      background: $color-primary-yellow-state;
+      background: $color-base-blue;
+      opacity: 0.8;
     }
     &:active {
       box-shadow: none;
@@ -152,9 +153,9 @@ usage
   モーダルオープン時 is-opened
 */
 .c-message {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.2;
-  font-weight: 600;
+  font-weight: 400;
   &-error {
     opacity: 0;
     color: $color-error-text;

@@ -1,7 +1,6 @@
 @import "variables";
 @import "breakpoint";
 
-// sidebarとcontents左右に並べるトップページ配下の共通ラッパー
 .c-globalContainer {
   position: relative;
   width: 100%;
@@ -38,6 +37,84 @@
 
     > span:last-child {
       margin-left: 0.5em;
+    }
+  }
+}
+
+// Login Signup ページ
+.c-formPage {
+  min-height: 100vh;
+  background-size: cover;
+  object-fit: cover;
+  background-image: url("/images/bg-min.png");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__window-login {
+    width: 450px;
+    height: 520px;
+  }
+
+  &__window-signup {
+    width: 450px;
+    height: 635px;
+  }
+
+  &__window {
+    background-color: $color-base-white;
+    border-radius: 2px;
+    box-shadow: 5px 5px 15px 0 rgba(18, 25, 48, 0.1);
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 65px;
+      padding: 0 35px 40px;
+
+      h2 {
+        text-align: center;
+        font-size: 41px;
+        font-weight: 800;
+      }
+
+      p {
+        color: $color-palette-gray-8;
+        margin-top: 18px;
+        line-height: 1.2;
+        font-size: 17px;
+        text-align: center;
+      }
+    }
+
+    &__form {
+      margin-top: 32px;
+
+      .c-inputGroup:not(:nth-of-type(1)) {
+        margin-top: 20px;
+      }
+
+      > .c-buttonCTA {
+        margin-top: 33px;
+      }
+    }
+
+    &__footer {
+      box-shadow: 0 -1px rgba(0, 0, 0, 0.11);
+      padding: 24px 24px 9px;
+      font-size: 16px;
+      line-height: 1.4;
+      text-align: center;
+
+      > a {
+        color: $color-base-blue;
+        cursor: pointer;
+
+        &:hover {
+          border-bottom: solid 1px $color-base-blue;
+        }
+      }
     }
   }
 }

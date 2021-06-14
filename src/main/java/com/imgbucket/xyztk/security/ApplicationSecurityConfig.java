@@ -37,16 +37,18 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/dist/**").permitAll()
                 .antMatchers("/icomoon/**").permitAll()
                 .antMatchers("/images/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/signup").permitAll()
+                .antMatchers("/").permitAll() // ランディングページ
+                .antMatchers("/signup").permitAll()
                 .antMatchers("/admin").hasAnyAuthority("ROLE_ADMIN") // adminのみ許可
+                .antMatchers("/login", "/login?error=true").permitAll()
                 .antMatchers("/logout").permitAll()
                 .anyRequest().authenticated();// それ以外は直リンク禁止
 
         // ログイン処理
         http.formLogin()
-                .loginPage("/").permitAll() // ログインページのhtmlファイルを指定
+                .loginPage("/login").permitAll() // ログインページのhtmlファイルを指定
                 .loginProcessingUrl("/login") // ログイン画面のaction属性
-                .failureUrl("/login?auth=top") // ログイン失敗時の遷移先
+                .failureUrl("/login?error=true") // ログイン失敗時の遷移先
                 .usernameParameter("email") // ログインに必要なパラメータ
                 .passwordParameter("password")
                 .defaultSuccessUrl("/home", true); // ログイン成功後の遷移先
@@ -54,7 +56,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         // ログアウト処理
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/login");
+
+        http.sessionManagement()
+                .maximumSessions(1);
     }
 
     @Override

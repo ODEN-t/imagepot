@@ -4,17 +4,22 @@ import jBox from 'jbox';
 
 // Logout Modal の設定値
 const signoutPopup = new jBox('Confirm', {
-    title: 'Logout',
+    title: 'Sign Out',
     attach: $('#logout'),
-    confirmButton: 'LOGOUT',
+    confirmButton: 'SIGN OUT',
     cancelButton: 'CANCEL',
     overlayClass: 'add-jboxOverRay',
-    addClass: 'add-popupCustomStyle'
+    addClass: 'add-popupCustomStyle',
+    onOpen: function () {
+        document.getElementById('header').style.paddingRight = '17px';
+    },
+    onClose: function () {
+        document.getElementById('header').style.paddingRight = '0';
+    }
 });
 
-const menu = document.getElementById('menu');
 document.querySelectorAll('.icon').forEach(function (elem) {
     elem.addEventListener('click', function (e){
-      menu.classList.toggle('is-open');
+        document.getElementById('menu').classList.toggle('is-open');
     })
 })
