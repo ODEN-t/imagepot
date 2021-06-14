@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="common::meta_header('Signin', ~{::link}, ~{::script})">
+  <script th:src="@{/dist/login/index.js}" defer></script>
 </head>
 <body>
 <div th:replace="common::header"></div>
@@ -28,8 +29,7 @@
   </section>
   <div th:if="${param.auth} != null and ${param.auth[0].equals('top')}"
        class="c-message c-message-error"
-       data-message="error"
-       data-process="login">
+       data-message="error">
     <span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>
   </div>
 </div>

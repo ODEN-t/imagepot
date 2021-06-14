@@ -26,6 +26,7 @@ usage
     height: 45px;
     padding: 0 15px 0 45px;
     font-size: 15px;
+    font-family: $body-font;
     &::placeholder {
       color: #ddd;
       font-weight: 400;
@@ -36,6 +37,10 @@ usage
     }
     &:focus~i {
       color: $color-base-blue;
+    }
+    &:-webkit-autofill::first-line {
+      font-family: $body-font;
+      font-size: 15px;
     }
   }
 }
@@ -144,9 +149,9 @@ usage
   モーダルオープン時 is-opened
 */
 .c-message {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.2;
-  font-weight: 600;
+  font-weight: 400;
   &-error {
     opacity: 0;
     color: $color-error-text;

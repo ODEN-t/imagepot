@@ -8,11 +8,11 @@
   <meta name="_csrf_header" th:content="${_csrf.headerName}">
   <title th:text="${title==null}? 'ImgBucket' : ${title}+' | ImgBucket'">各ページタイトル | ImgBucket</title>
   <link rel="stylesheet" th:href="@{/icomoon/style.css}" type="text/css">
-  <link rel="stylesheet" th:href="@{/css/common/index.min.css}" type="text/css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link
       href="https://fonts.googleapis.com/css2?family=Expletus+Sans:wght@400;600&Noto+Sans+JP:wght@300;400&family=Open+Sans:wght@300;400;600;700;800&display=swap"
       rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/common/index.min.css}" type="text/css">
   <script th:src="@{/dist/common/index.js}" defer></script>
   <th:block th:replace="${links} ?: _"/>
   <th:block th:replace="${scripts} ?: _"/>
@@ -40,7 +40,7 @@
       <span class="logo">ImgBucket</span>
     </a>
     <nav class="c-header__nav">
-      <ul class="c-header__navList"  th:switch="${#authentication.principal.icon}">
+      <ul class="c-header__navList" th:switch="${#authentication.principal.icon}">
         <li>
           <span class="name" th:text="${#authentication.principal.name}"></span>
         </li>

@@ -65,19 +65,3 @@ const modalSwitch = (...buttons) => {
     }
 }
 modalSwitch('signupSub', 'loginSub');
-
-
-// input=text input=password のトグル
-module.inputTypeToggle('.c-buttonCTA-show');
-
-
-// 実行結果メッセージの表示
-const element = module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error', true);
-if (typeof element !== 'undefined') {
-    const result = element.dataset.message;
-    const process = element.dataset.process;
-    if (result === 'error')
-        process === 'login' ? loginModal.open() : signupModal.open();
-    if (result === 'success' && process === 'signup')
-        loginModal.open();
-}
