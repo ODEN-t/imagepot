@@ -1,3 +1,5 @@
+@import "variables";
+
 /*! destyle.css v2.0.2 | MIT License | https://github.com/nicolas-cusan/destyle.css */
 
 /* Reset box-model and set borders */
@@ -37,6 +39,7 @@ body {
   margin: 0;
   font-family: 'Open Sans', 'Noto Sans JP', 'Expletus Sans', cursive, sans-serif;
   font-weight: 400;
+  color: $color-base-dark;
 }
 
 /**

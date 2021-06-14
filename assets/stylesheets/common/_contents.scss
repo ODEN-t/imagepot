@@ -64,6 +64,7 @@
   &__window {
     background-color: $color-base-white;
     border-radius: 2px;
+    box-shadow: 5px 5px 15px 0 rgba(18, 25, 48, 0.1);
 
     &__body {
       display: flex;

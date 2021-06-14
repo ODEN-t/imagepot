@@ -125,18 +125,22 @@ usage
     background: #fff !important;
   }
   .jBox-Confirm-button-cancel {
-    background: #f5f5f5;
+    background: $color-palette-gray-4;
+    transition: all .15s ease;
     &:hover, &:active {
-      background: #f1f1f1;
+      opacity: 0.8;
+      background: $color-palette-gray-4;
     }
     &:active {
       box-shadow: none;
     }
   }
   .jBox-Confirm-button-submit {
-    background: $color-primary-yellow;
+    background: $color-base-blue;
+    transition: all .15s ease;
     &:hover, &:active {
-      background: $color-primary-yellow-state;
+      background: $color-base-blue;
+      opacity: 0.8;
     }
     &:active {
       box-shadow: none;
