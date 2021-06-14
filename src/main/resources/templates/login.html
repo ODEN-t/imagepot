@@ -20,7 +20,7 @@
           <span class="c-buttonCTA c-buttonCTA-show">Show</span>
           <i class="icon-lock-closed"></i>
         </div>
-        <button type="submit" class="c-buttonCTA c-buttonCTA-fullWidth">Login</button>
+        <button type="submit" class="c-buttonCTA c-buttonCTA-fullWidth">Sign in</button>
       </form>
     </div>
     <div class="c-formPage__window__footer">
@@ -31,6 +31,10 @@
        class="c-message c-message-error"
        data-message="error">
     <span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>
+  </div>
+  <div th:if="${registerSuccess}" data-message="success" data-process="signup"
+       class="c-message c-message-success">
+    <span th:text="${message}"></span>
   </div>
 </div>
 </body>

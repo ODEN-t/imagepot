@@ -44,7 +44,7 @@ public class SignupController {
 
     /**
      * サインアップを試みる。バリデーションエラーがある場合はエラーメッセージとともにトップページを表示する。
-     * 成功時はDBへユーザ登録し、サクセスメッセージとともにトップページを表示する。
+     * 成功時はDBへユーザ登録し、サクセスメッセージとともにログインページを表示する。
      * @param signupForm ユーザが入力したフォーム情報
      * @param bindingResult バリデーション結果
      * @return View
@@ -56,7 +56,7 @@ public class SignupController {
             Model model) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("hasErrors", true);
-            return "top";
+            return "signup";
         }
 
         try {
@@ -69,11 +69,11 @@ public class SignupController {
             log.error(messageSource.getMessage("log.error",null, Locale.ENGLISH) + e.getMessage());
             model.addAttribute("registerError", true);
             model.addAttribute("message", e.getMessage());
-            return "top";
+            return "signup";
         }
 
         model.addAttribute("registerSuccess", true);
         model.addAttribute("message", messageSource.getMessage("success.signup",null, Locale.ENGLISH));
-        return "top";
+        return "login";
     }
 }
