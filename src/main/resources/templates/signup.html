@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="common::meta_header('Signup', ~{::link}, ~{::script})">
+</head>
+<body>
+<div th:replace="common::header"></div>
+<div class="c-formPage">
+  <section class="c-formPage__window c-formPage__window-signup">
+    <div class="c-formPage__window__body">
+      <h2>Join ImgBucket</h2>
+      <p>Use image storage for free.</p>
+      <form class="c-formPage__window__form" method="POST" th:action="@{/signup}" th:object="${signupForm}">
+        <div class="c-inputGroup">
+          <input class="inputText" th:classappend="${#fields.hasErrors('name')}?'is-error'" type="text"
+                 placeholder="Name" th:field="*{name}" maxlength="20">
+          <i class="icon-user1"></i>
+        </div>
+        <div class="c-inputGroup">
+          <input class="inputText" th:classappend="${#fields.hasErrors('email')}?'is-error'" type="text"
+                 placeholder="Email" th:field="*{email}">
+          <i class="icon-envelope"></i>
+        </div>
+        <div class="c-inputGroup">
+          <input class="inputText" th:classappend="${#fields.hasErrors('password')}?'is-error'"
+                 type="password" placeholder="Password" th:field="*{password}">
+          <span class="c-buttonCTA c-buttonCTA-show">Show</span>
+          <i class="icon-lock-closed"></i>
+        </div>
+        <div class="c-inputGroup">
+          <input class="inputText" th:classappend="${#fields.hasErrors('confirmPassword')}?'is-error'"
+                 type="password" placeholder="Confirm Password" th:field="*{confirmPassword}">
+          <span class="c-buttonCTA c-buttonCTA-show">Show</span>
+          <i class="icon-lock-closed"></i>
+        </div>
+        <button type="submit" class="c-buttonCTA c-buttonCTA-fullWidth">Create account</button>
+        <div th:if="${#fields.hasErrors('${signupForm.*}')}" data-process="signup" data-message="error"
+             class="c-message c-message-error">
+          <span th:errors="${signupForm.*}"></span>
+        </div>
+        <div th:if="${registerError}" data-message="error" data-process="signup" class="c-message c-message-error">
+          <span th:text="${message}"></span>
+        </div>
+        <div th:if="${registerSuccess}" data-message="success" data-process="signup"
+             class="c-message c-message-success">
+          <span th:text="${message}"></span>
+        </div>
+      </form>
+    </div>
+    <div class="c-formPage__window__footer">
+      Already registered? <a href="/login">Login</a>
+    </div>
+  </section>
+</div>
+</body>
+</html>

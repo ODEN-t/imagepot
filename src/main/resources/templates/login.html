@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="common::meta_header('Signin', ~{::link}, ~{::script})">
+</head>
+<body>
+<div th:replace="common::header"></div>
+<div class="c-formPage">
+  <section class="c-formPage__window c-formPage__window-login">
+    <div class="c-formPage__window__body">
+      <h2>Hello!</h2>
+      <p>Sign in to your account here.</p>
+      <form class="c-formPage__window__form" th:method="POST" th:action="@{/login}">
+        <div class="c-inputGroup">
+          <input class="inputText" type="text" placeholder="Email" name="email">
+          <i class="icon-envelope"></i>
+        </div>
+        <div class="c-inputGroup">
+          <input class="inputText" type="password" placeholder="Password" name="password">
+          <span class="c-buttonCTA c-buttonCTA-show">Show</span>
+          <i class="icon-lock-closed"></i>
+        </div>
+        <button type="submit" class="c-buttonCTA c-buttonCTA-fullWidth">Login</button>
+      </form>
+    </div>
+    <div class="c-formPage__window__footer">
+      Don't have an account?? <a href="/signup">Sign up</a>
+    </div>
+  </section>
+  <div th:if="${param.auth} != null and ${param.auth[0].equals('top')}"
+       class="c-message c-message-error"
+       data-message="error"
+       data-process="login">
+    <span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>
+  </div>
+</div>
+</body>
+</html>
