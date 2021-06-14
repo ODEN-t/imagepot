@@ -27,7 +27,7 @@
       Don't have an account?? <a href="/signup">Sign up</a>
     </div>
   </section>
-  <div th:if="${param.auth} != null and ${param.auth[0].equals('top')}"
+  <div th:if="${param.error} != null and ${param.error[0].equals('true')}"
        class="c-message c-message-error"
        data-message="error">
     <span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>

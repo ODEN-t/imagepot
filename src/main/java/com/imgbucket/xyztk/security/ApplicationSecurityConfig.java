@@ -40,7 +40,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll() // ランディングページ
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/admin").hasAnyAuthority("ROLE_ADMIN") // adminのみ許可
-                .antMatchers("/login", "/login/**").permitAll()
+                .antMatchers("/login", "/login?error=true").permitAll()
                 .antMatchers("/logout").permitAll()
                 .anyRequest().authenticated();// それ以外は直リンク禁止
 
@@ -48,7 +48,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/login").permitAll() // ログインページのhtmlファイルを指定
                 .loginProcessingUrl("/login") // ログイン画面のaction属性
-                .failureUrl("/login?auth=top") // ログイン失敗時の遷移先
+                .failureUrl("/login?error=true") // ログイン失敗時の遷移先
                 .usernameParameter("email") // ログインに必要なパラメータ
                 .passwordParameter("password")
                 .defaultSuccessUrl("/home", true); // ログイン成功後の遷移先
