@@ -1,10 +1,13 @@
 package com.imgbucket.xyztk.controller;
 
+import com.imgbucket.xyztk.model.LoginUser;
 import com.imgbucket.xyztk.model.User;
 import com.imgbucket.xyztk.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +33,7 @@ public class AdminController {
 
     /**
      * adminのViewとともにユーザ数、実行結果メッセージを表示する。
+     *
      * @param model 必要な情報をセットするモデル
      * @return View
      */
@@ -51,27 +55,30 @@ public class AdminController {
 
 
     /**
-     * ユーザ情報をDBから削除する
+     * 選択したユーザをDBから削除する。ajaxからコールされる。
      * @param userId ユーザID
-     * @param redirectAttributes リダイレクト先へパラメータを渡す
-     * @return リダイレクト先View
+     * @param loginUser ログインユーザ情報
+     * @return リクエスト結果をjsに返却
      */
     @DeleteMapping("delete/{userId}")
     @ResponseBody
-    @Async
-    public CompletableFuture<String> deleteUser(@PathVariable long userId, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<?> deleteUser(@PathVariable long userId, @AuthenticationPrincipal LoginUser loginUser) {
+
+        String result = "";
+        if(userId == loginUser.id) {
+            result = messageSource.getMessage("error.deleteUser", null, Locale.ENGLISH);
+            return ResponseEntity.badRequest().body(result);
+        }
 
         try {
             userService.deleteUser(userId);
+            result = messageSource.getMessage("success.delete", null, Locale.ENGLISH);
         } catch (IllegalStateException e) {
-            log.error(messageSource.getMessage("log.error",null, Locale.ENGLISH) + e.getMessage());
-            redirectAttributes.addFlashAttribute("deleteError", true);
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            log.error(messageSource.getMessage("log.error", null, Locale.ENGLISH) + e.getMessage());
+            result = messageSource.getMessage("error.critical", null, Locale.ENGLISH);
+            return ResponseEntity.badRequest().body(result);
         }
 
-        redirectAttributes.addFlashAttribute("deleteSuccess", true);
-        redirectAttributes.addFlashAttribute("message", messageSource.getMessage("success.delete",null, Locale.ENGLISH));
-
-        return CompletableFuture.completedFuture("success");
+        return ResponseEntity.ok(result);
     }
 }

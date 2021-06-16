@@ -78,11 +78,11 @@ const deleteRequest = () => {
                 $("meta[name='_csrf']").attr("content")
             );
         },
-        success: function () {
-            if(!alert('Deleted successfully!')){window.location.reload();}
+        success: function (data) {
+            if(!alert(data)){window.location.reload();}
         },
-        error: function () {
-            alert('Critical error occurred. Please reload.');
+        error: function (data) {
+            alert(data.responseText);
         }
     })
 }
