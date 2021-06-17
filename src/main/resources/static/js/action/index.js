@@ -37,7 +37,7 @@ const uploadModal = new jBox('Modal', {
     width: 825,
     height: 510,
     minHeight: 510,
-    attach: '#js-upload',
+    attach: '#js-uploadModalIcon',
     title: 'Add Images',
     content: $('#js-uploadModal'),
     overlayClass: 'add-jboxOverRay',
@@ -52,17 +52,14 @@ const uploadModal = new jBox('Modal', {
     },
 });
 
+
 let formData = null;
 
 // インプットしたファイル情報を表示
 const inputFormData = (e) => {
-    const files = e.target.files;
+    const files = e.target.files || e.dataTransfer.files;
     const fileSizeElem = document.getElementById('js-totalSize');
     let totalSize = Number.parseInt(fileSizeElem.dataset.rawsize);
-
-    // if(30 < files.length) {
-    //     return alert('Please select less than 30 files.');
-    // }
 
     const template =
         `<li class="inputFile">
@@ -133,11 +130,20 @@ const uploader = (e) => {
     })
 }
 
+
+const displaySwitchIcons = document.getElementsByName('js-displaySwitcher');
+const imageIcons = document.querySelectorAll('.imageIcon');
+const dropArea = document.getElementById('js-dropArea');
+const fileInputBtn = document.getElementById('js-fileInput');
+const fileUploadBtn = document.getElementById('js-upload');
+const fileInputClearBtn = document.getElementById('js-clear');
+const reloadBtn = document.getElementById('js-reload');
+
 // 画像リスト<=>タイル表示
-document.getElementsByName('js-menuIcon').forEach((elem) => {
-    elem.addEventListener('click', (e) => {
+displaySwitchIcons.forEach((icon) => {
+    icon.addEventListener('click', (e) => {
         const id = e.currentTarget.dataset.sectionId;
-        document.getElementsByName('js-content').forEach(function (elem) {
+        document.getElementsByName('js-content').forEach((elem) => {
             elem.classList.remove('is-show');
         });
         document.getElementById(id).classList.add('is-show');
@@ -146,8 +152,8 @@ document.getElementsByName('js-menuIcon').forEach((elem) => {
 
 
 // 画像モーダル表示クリックイベントを登録
-document.querySelectorAll('.imageIcon').forEach(function (elem) {
-    elem.addEventListener('click', (e) => {
+imageIcons.forEach( (icon) => {
+    icon.addEventListener('click', (e) => {
         const img = e.currentTarget.dataset.url;
         let htmlImageElement = document.createElement('img');
         htmlImageElement.src = img;
@@ -156,12 +162,27 @@ document.querySelectorAll('.imageIcon').forEach(function (elem) {
     })
 });
 
-document.getElementById('fileInput').addEventListener('change', inputFormData);
-document.getElementById('js-execute').addEventListener('click', uploader);
-document.getElementById('js-clear').addEventListener('click', clearFormData);
 
-document.getElementById('js-reload').addEventListener('click', () => {
+dropArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.add('is-drag');
+});
+dropArea.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove('is-drag');
+})
+dropArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove('is-drag');
+    inputFormData(e);
+});
+
+fileInputBtn.addEventListener('change', inputFormData);
+fileUploadBtn.addEventListener('click', uploader);
+fileInputClearBtn.addEventListener('click', clearFormData);
+reloadBtn.addEventListener('click', () => {
     location.reload();
 })
+
 // 結果メッセージ表示モーダル
 module.showResultMessageModal('.c-message', '.c-message-success', '.c-message-error', true);

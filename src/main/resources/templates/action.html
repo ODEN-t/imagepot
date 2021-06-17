@@ -14,13 +14,13 @@
     <div class="p-action__headMenu">
       <ul class="p-action__menuList">
         <li>
-          <i class="icon-menu1" data-section-id="displayList" th:name="js-menuIcon"></i>
+          <i class="icon-menu1" data-section-id="displayList" th:name="js-displaySwitcher"></i>
         </li>
         <li>
-          <i class="icon-view-tile" data-section-id="displayTile" th:name="js-menuIcon"></i>
+          <i class="icon-view-tile" data-section-id="displayTile" th:name="js-displaySwitcher"></i>
         </li>
         <li>
-          <i class="icon-upload2" id="js-upload"></i>
+          <i class="icon-upload2" id="js-uploadModalIcon"></i>
         </li>
         <li>
           <button type="submit" name="download" form="listForm">
@@ -75,15 +75,15 @@
 
     <section id="js-uploadModal" class="uploadModal">
       <div class="uploadMain">
-        <div class="uploadMain__fileArea">
+        <div class="uploadMain__fileArea" id="js-dropArea">
           <div class="uploadMain__textArea">
             <i class="icon-upload2"></i>
             <span class="mainText">Drag images to upload</span>
             <span class="subText">or select images</span>
             <div class="buttonWrap">
               <form enctype="multipart/form-data">
-                <input type="file" accept=".jpg, .jpeg, .png" id="fileInput" multiple>
-                <label class="c-buttonCTA" for="fileInput">Choose Image</label>
+                <input type="file" accept=".jpg, .jpeg, .png" id="js-fileInput" multiple>
+                <label class="c-buttonCTA" for="js-fileInput">Choose Image</label>
               </form>
             </div>
           </div>
@@ -102,7 +102,7 @@
         </div>
         <div class="buttonWrap">
           <button class="c-buttonCTA" id="js-clear">Clear</button>
-          <button class="c-buttonCTA" id="js-execute">Upload</button>
+          <button class="c-buttonCTA" id="js-upload">Upload</button>
         </div>
       </div>
     </section>

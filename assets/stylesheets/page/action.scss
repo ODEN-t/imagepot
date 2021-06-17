@@ -206,6 +206,14 @@
       flex-direction: column;
       justify-content: flex-end;
       padding: 26px 20px;
+      transition: all 0.2s ease;
+
+      &.is-drag {
+        background-color: $color-palette-gray-1;
+        .uploadMain__textArea > i {
+          color: $color-base-blue;
+        }
+      }
 
       &:before {
         content: "";
@@ -234,6 +242,7 @@
       > i {
         font-size: 70px;
         color: $color-palette-gray-2;
+        transition: all 0.2s ease;
       }
 
       .mainText {
